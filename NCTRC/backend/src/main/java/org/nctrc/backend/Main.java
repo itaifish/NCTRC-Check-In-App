@@ -1,3 +1,5 @@
+package org.nctrc.backend;
+
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
