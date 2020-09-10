@@ -6,3 +6,9 @@ If you're getting the error:
 ```
 run:
 `$ git config --global core.autocrlf true `
+
+Notes:
+====
+https://javalin.io/tutorials/javalin-java-10-google-guice
+
+OAuth
