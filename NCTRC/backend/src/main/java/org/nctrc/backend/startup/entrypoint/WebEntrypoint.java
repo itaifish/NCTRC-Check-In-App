@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import io.javalin.Javalin;
 import java.util.Collections;
 import java.util.Set;
+import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.routers.Routing;
 
 public class WebEntrypoint implements AppEntrypoint {
@@ -20,8 +21,7 @@ public class WebEntrypoint implements AppEntrypoint {
   @Override
   public void boot(String[] args) {
     bindRoutes();
-    javalin.port(7000);
-    javalin.start();
+    javalin.start(Constants.PORT);
   }
 
   private void bindRoutes() {
