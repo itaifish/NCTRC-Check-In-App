@@ -9,24 +9,24 @@
     <version>0.0.1</version>
 
     <!-- Add Guice beta repo to fix bug-->
-    <repositories>
-        <repository>
-            <id>guice-betas</id>
-            <url>https://mcculls.github.io/guice-betas/maven2/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>guice-betas</id>-->
+<!--            <url>https://mcculls.github.io/guice-betas/maven2/</url>-->
+<!--            <releases>-->
+<!--                <enabled>true</enabled>-->
+<!--            </releases>-->
+<!--            <snapshots>-->
+<!--                <enabled>false</enabled>-->
+<!--            </snapshots>-->
+<!--        </repository>-->
+<!--    </repositories>-->
 
     <dependencies>
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
-            <version>4.2.4-20200419-NEWAOP-BETA</version>
+            <version>4.2.2</version>
         </dependency>
         <dependency>
             <groupId>com.google.inject.extensions</groupId>
@@ -60,9 +60,29 @@
             <version>1.7.30</version>
         </dependency>
         <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-core</artifactId>
+            <version>2.0.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>swagger-ui</artifactId>
+            <version>3.24.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>redoc</artifactId>
+            <version>2.0.0-rc.2</version>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.9.5</version>
+            <artifactId>jackson-databind</artifactId> <!-- only required if you use Java -->
+            <version>2.10.1</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.classgraph</groupId>
+            <artifactId>classgraph</artifactId> <!-- only required for annotated static handlers in Java -->
+            <version>4.8.90</version>
         </dependency>
     </dependencies>
 

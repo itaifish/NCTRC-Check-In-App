@@ -13,9 +13,14 @@ import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.startup.entrypoint.AppEntrypoint;
 import org.nctrc.backend.startup.entrypoint.EntrypointType;
 import org.nctrc.backend.startup.entrypoint.WebEntrypoint;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WebModule extends AbstractModule {
+
   private final Javalin javalin;
+
+  private static final Logger logger = LoggerFactory.getLogger(WebModule.class);
 
   private WebModule(Javalin javalin) {
     this.javalin = javalin;
@@ -37,6 +42,8 @@ public class WebModule extends AbstractModule {
                       sslConnector.setPort(443);
                       server.addConnector(sslConnector);
                     } catch (FileNotFoundException e) {
+                      logger.warn("Error with setting up SSL server: " + e.getMessage());
+                    } finally {
                       final ServerConnector httpConnector = new ServerConnector(server);
                       httpConnector.setPort(Constants.PORT);
                       server.addConnector(httpConnector);
@@ -52,7 +59,8 @@ public class WebModule extends AbstractModule {
     if (keystorePath == null) {
       throw new FileNotFoundException("Can't find keystore.jsk file");
     }
-    sslContextFactory.setKeyStorePath(keystorePath.toString());
+    sslContextFactory.setKeyStorePath(keystorePath.toExternalForm());
+    sslContextFactory.setKeyStorePassword("password");
     return sslContextFactory;
   }
 
