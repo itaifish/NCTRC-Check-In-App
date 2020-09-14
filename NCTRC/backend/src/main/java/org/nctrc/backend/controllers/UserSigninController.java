@@ -26,7 +26,7 @@ public class UserSigninController extends Controller {
   @OpenApi(
       summary = "Login existing user",
       operationId = "loginUser",
-      path = Constants.USER_SIGNIN_PATH,
+      path = "/" + Constants.MAIN_PATH + Constants.USER_SIGNIN_PATH,
       method = HttpMethod.POST,
       tags = {"User"},
       requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = RequestUserModel.class)}),
@@ -46,7 +46,7 @@ public class UserSigninController extends Controller {
   @OpenApi(
       summary = "Create user",
       operationId = "createUser",
-      path = Constants.USER_CREATION_PATH,
+      path = "/" + Constants.MAIN_PATH + Constants.USER_CREATION_PATH,
       method = HttpMethod.POST,
       tags = {"User"},
       requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = RequestUserModel.class)}),
