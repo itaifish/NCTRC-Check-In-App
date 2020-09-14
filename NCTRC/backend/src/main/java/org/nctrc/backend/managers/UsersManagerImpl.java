@@ -1,23 +1,24 @@
 package org.nctrc.backend.managers;
 
-import io.javalin.http.Context;
 import java.util.HashSet;
 import java.util.Set;
+import org.nctrc.backend.model.request.RequestUserModel;
 import org.nctrc.backend.model.response.Result;
-import org.nctrc.backend.model.response.User;
 
 public class UsersManagerImpl implements UsersManager {
 
-  private Set<User> users;
+  private Set<RequestUserModel> users;
 
   public UsersManagerImpl() {
     users = new HashSet<>();
   }
 
   @Override
-  public Result signinUser(final User user) {
+  public Result signinUser(final RequestUserModel user) {
     if (users.contains(user)) {
       // set user to be signed in
+
+      //
       return new Result(200, "Success");
     } else {
       return new Result(401, "User does not exist");
@@ -25,8 +26,13 @@ public class UsersManagerImpl implements UsersManager {
   }
 
   @Override
-  public Result addUser(final Context context) {
+  public Result addUser(final RequestUserModel user) {
+    if (users.contains(user)) {
+      return new Result(401, "Email " + user.getEmail() + " already exists!");
+    } else {
+      // add user and set to be signed in
 
-    return null;
+      return new Result(200, "Success");
+    }
   }
 }

@@ -1,15 +1,15 @@
-package org.nctrc.backend.model.response;
+package org.nctrc.backend.model.request;
 
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import org.jetbrains.annotations.NotNull;
 
-public class User {
+public class RequestUserModel {
 
   @Nonnull private final String name;
   @Nonnull private final String email;
 
-  public User(@NotNull final String name, @NotNull final String email) {
+  public RequestUserModel(@NotNull final String name, @NotNull final String email) {
     this.name = name;
     this.email = email;
   }
@@ -32,12 +32,12 @@ public class User {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    User user = (User) o;
-    return name.equals(user.name) && email.equals(user.email);
+    RequestUserModel user = (RequestUserModel) o;
+    return email.equals(user.email);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, email);
+    return Objects.hash(email);
   }
 }

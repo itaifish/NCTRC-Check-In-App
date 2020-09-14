@@ -10,8 +10,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.managers.UsersManagerImpl;
+import org.nctrc.backend.model.request.RequestUserModel;
 import org.nctrc.backend.model.response.Result;
-import org.nctrc.backend.model.response.User;
 
 @Singleton
 public class UserSigninController extends Controller {
@@ -29,7 +29,7 @@ public class UserSigninController extends Controller {
       path = Constants.USER_SIGNIN_PATH,
       method = HttpMethod.POST,
       tags = {"User"},
-      requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = User.class)}),
+      requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = RequestUserModel.class)}),
       responses = {
         @OpenApiResponse(status = "201"),
         @OpenApiResponse(
@@ -37,7 +37,27 @@ public class UserSigninController extends Controller {
             content = {@OpenApiContent(from = Result.class)})
       })
   public void login(final Context ctx) {
-    final Result result = manager.signinUser(ctx.bodyAsClass(User.class));
+    final Result result = manager.signinUser(ctx.bodyAsClass(RequestUserModel.class));
+    if (this.resultIsIn2xxAndHandle(result, ctx)) {
+      ctx.status(201);
+    }
+  }
+
+  @OpenApi(
+      summary = "Create user",
+      operationId = "createUser",
+      path = Constants.USER_CREATION_PATH,
+      method = HttpMethod.POST,
+      tags = {"User"},
+      requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = RequestUserModel.class)}),
+      responses = {
+        @OpenApiResponse(status = "201"),
+        @OpenApiResponse(
+            status = "400",
+            content = {@OpenApiContent(from = Result.class)})
+      })
+  public void createUser(final Context ctx) {
+    final Result result = manager.addUser(ctx.bodyAsClass(RequestUserModel.class));
     if (this.resultIsIn2xxAndHandle(result, ctx)) {
       ctx.status(201);
     }
