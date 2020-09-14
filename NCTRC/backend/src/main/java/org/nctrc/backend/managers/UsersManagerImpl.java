@@ -15,8 +15,13 @@ public class UsersManagerImpl implements UsersManager {
   }
 
   @Override
-  public Result signinUser(final Context context) {
-    return new Result(200, "Success");
+  public Result signinUser(final User user) {
+    if (users.contains(user)) {
+      // set user to be signed in
+      return new Result(200, "Success");
+    } else {
+      return new Result(401, "User does not exist");
+    }
   }
 
   @Override
