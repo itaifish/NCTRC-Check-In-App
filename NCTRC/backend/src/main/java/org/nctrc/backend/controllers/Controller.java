@@ -1,7 +1,7 @@
 package org.nctrc.backend.controllers;
 
 import io.javalin.http.Context;
-import org.nctrc.backend.model.Result;
+import org.nctrc.backend.model.response.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

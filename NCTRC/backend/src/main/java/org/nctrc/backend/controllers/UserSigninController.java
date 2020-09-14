@@ -4,7 +4,7 @@ import io.javalin.http.Context;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.nctrc.backend.managers.UsersManagerImpl;
-import org.nctrc.backend.model.Result;
+import org.nctrc.backend.model.response.Result;
 
 @Singleton
 public class UserSigninController extends Controller {

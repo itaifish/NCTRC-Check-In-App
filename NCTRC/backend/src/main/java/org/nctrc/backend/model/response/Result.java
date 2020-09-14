@@ -1,4 +1,4 @@
-package org.nctrc.backend.model;
+package org.nctrc.backend.model.response;
 
 public class Result {
 
