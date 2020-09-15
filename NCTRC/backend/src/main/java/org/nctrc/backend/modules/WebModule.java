@@ -39,7 +39,7 @@ public class WebModule extends AbstractModule {
             javalinConfig -> {
               javalinConfig.enforceSsl = true;
               javalinConfig.defaultContentType = Constants.DEFAULT_CONFIG_TYPE;
-              javalinConfig.enableDevLogging();
+              // javalinConfig.enableDevLogging();
               javalinConfig.registerPlugin(getConfiguredOpenApiPlugin());
               javalinConfig.server(
                   () -> {

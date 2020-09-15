@@ -1,25 +1,25 @@
 package org.nctrc.backend.model.request;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
-import javax.annotation.Nonnull;
-import org.jetbrains.annotations.NotNull;
 
 public class RequestUserModel {
 
-  @Nonnull private final String name;
-  @Nonnull private final String email;
+  private final String name;
+  private final String email;
 
-  public RequestUserModel(@NotNull final String name, @NotNull final String email) {
+  @JsonCreator
+  public RequestUserModel(
+      @JsonProperty("name") final String name, @JsonProperty("email") final String email) {
     this.name = name;
     this.email = email;
   }
 
-  @NotNull
   public String getName() {
     return name;
   }
 
-  @NotNull
   public String getEmail() {
     return email;
   }
