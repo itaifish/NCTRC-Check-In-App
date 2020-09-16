@@ -32,6 +32,8 @@ public class WebEntrypoint implements AppEntrypoint {
                     path(
                         Constants.USER_CREATION_PATH,
                         () -> post(this.userSigninController::createUser));
+                    path(
+                        Constants.USER_SIGNOUT_PATH, () -> post(this.userSigninController::logout));
                   });
             })
         .start();

@@ -18,4 +18,9 @@ public class Result {
   public String getInformation() {
     return information;
   }
+
+  @Override
+  public String toString() {
+    return "Result{" + "statusCode=" + statusCode + ", information='" + information + '\'' + '}';
+  }
 }

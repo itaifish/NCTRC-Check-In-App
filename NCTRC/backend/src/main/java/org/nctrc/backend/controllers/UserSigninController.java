@@ -31,15 +31,41 @@ public class UserSigninController extends Controller {
       tags = {"User"},
       requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = RequestUserModel.class)}),
       responses = {
-        @OpenApiResponse(status = "201"),
+        @OpenApiResponse(status = "200"),
         @OpenApiResponse(
-            status = "400",
+            status = "404",
+            content = {@OpenApiContent(from = Result.class)}),
+        @OpenApiResponse(
+            status = "405",
             content = {@OpenApiContent(from = Result.class)})
       })
   public void login(final Context ctx) {
     final Result result = manager.signinUser(ctx.bodyAsClass(RequestUserModel.class));
     if (this.resultIsIn2xxAndHandle(result, ctx)) {
-      ctx.status(201);
+      ctx.status(200);
+    }
+  }
+
+  @OpenApi(
+      summary = "Log out existing user",
+      operationId = "logoutUser",
+      path = "/" + Constants.MAIN_PATH + Constants.USER_SIGNOUT_PATH,
+      method = HttpMethod.POST,
+      tags = {"User"},
+      requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = RequestUserModel.class)}),
+      responses = {
+        @OpenApiResponse(status = "200"),
+        @OpenApiResponse(
+            status = "404",
+            content = {@OpenApiContent(from = Result.class)}),
+        @OpenApiResponse(
+            status = "405",
+            content = {@OpenApiContent(from = Result.class)})
+      })
+  public void logout(final Context ctx) {
+    final Result result = manager.signoutUser(ctx.bodyAsClass(RequestUserModel.class));
+    if (this.resultIsIn2xxAndHandle(result, ctx)) {
+      ctx.status(200);
     }
   }
 
@@ -53,7 +79,7 @@ public class UserSigninController extends Controller {
       responses = {
         @OpenApiResponse(status = "201"),
         @OpenApiResponse(
-            status = "400",
+            status = "405",
             content = {@OpenApiContent(from = Result.class)})
       })
   public void createUser(final Context ctx) {
