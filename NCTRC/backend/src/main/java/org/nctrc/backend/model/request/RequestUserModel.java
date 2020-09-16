@@ -40,4 +40,9 @@ public class RequestUserModel {
   public int hashCode() {
     return Objects.hash(email);
   }
+
+  @Override
+  public String toString() {
+    return "User{" + "name='" + name + '\'' + ", email='" + email + '\'' + '}';
+  }
 }
