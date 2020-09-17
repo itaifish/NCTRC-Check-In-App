@@ -53,6 +53,7 @@ public class WebModule extends AbstractModule {
                       logger.warn("Error with setting up SSL server: " + e.getMessage());
                     } finally {
                       final ServerConnector httpConnector = new ServerConnector(server);
+                      httpConnector.setHost("0.0.0.0");
                       httpConnector.setPort(Constants.PORT);
                       server.addConnector(httpConnector);
                     }
