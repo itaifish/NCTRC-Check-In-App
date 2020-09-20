@@ -47,7 +47,7 @@ public class WebModule extends AbstractModule {
                     try {
                       final ServerConnector sslConnector =
                           new ServerConnector(server, getSslContextFactory());
-                      sslConnector.setPort(443);
+                      sslConnector.setPort(6700);
                       server.addConnector(sslConnector);
                     } catch (FileNotFoundException e) {
                       logger.warn("Error with setting up SSL server: " + e.getMessage());
