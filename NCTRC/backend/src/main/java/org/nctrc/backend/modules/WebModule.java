@@ -64,9 +64,9 @@ public class WebModule extends AbstractModule {
 
   private static SslContextFactory getSslContextFactory() throws FileNotFoundException {
     final SslContextFactory sslContextFactory = new SslContextFactory.Server();
-    final URL keystorePath = WebModule.class.getResource("/keystore/keystore.jks");
+    final URL keystorePath = WebModule.class.getClassLoader().getResource("/keystore/keystore.jks");
     if (keystorePath == null) {
-      throw new FileNotFoundException("Can't find keystore.jsk file");
+      throw new FileNotFoundException("Can't find keystore.jks file");
     }
     sslContextFactory.setKeyStorePath(keystorePath.toExternalForm());
     sslContextFactory.setKeyStorePassword("password");
