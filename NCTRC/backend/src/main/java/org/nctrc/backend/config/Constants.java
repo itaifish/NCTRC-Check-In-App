@@ -19,7 +19,11 @@ public final class Constants {
 
   public static final String DEFAULT_CONFIG_TYPE = "application/json";
 
+  public static final String HOST_IP = "0.0.0.0";
+
   public static final int PORT = 6600;
+
+  public static final int SSL_PORT = 6700;
 
   private Constants() {}
 }

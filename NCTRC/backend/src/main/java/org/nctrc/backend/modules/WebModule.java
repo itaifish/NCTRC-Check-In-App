@@ -39,7 +39,7 @@ public class WebModule extends AbstractModule {
             javalinConfig -> {
               javalinConfig.enforceSsl = false;
               javalinConfig.defaultContentType = Constants.DEFAULT_CONFIG_TYPE;
-              // javalinConfig.enableDevLogging();
+              javalinConfig.enableDevLogging();
               javalinConfig.registerPlugin(getConfiguredOpenApiPlugin());
               javalinConfig.server(
                   () -> {
@@ -47,14 +47,14 @@ public class WebModule extends AbstractModule {
                     try {
                       final ServerConnector sslConnector =
                           new ServerConnector(server, getSslContextFactory());
-                      sslConnector.setPort(6700);
-                      sslConnector.setHost("0.0.0.0");
+                      sslConnector.setHost(Constants.HOST_IP);
+                      sslConnector.setPort(Constants.SSL_PORT);
                       server.addConnector(sslConnector);
                     } catch (FileNotFoundException e) {
                       logger.warn("Error with setting up SSL server: " + e.getMessage());
                     } finally {
                       final ServerConnector httpConnector = new ServerConnector(server);
-                      httpConnector.setHost("0.0.0.0");
+                      httpConnector.setHost(Constants.HOST_IP);
                       httpConnector.setPort(Constants.PORT);
                       server.addConnector(httpConnector);
                     }
