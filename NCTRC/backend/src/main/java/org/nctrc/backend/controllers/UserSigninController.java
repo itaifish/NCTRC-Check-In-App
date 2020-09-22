@@ -33,6 +33,9 @@ public class UserSigninController extends Controller {
       responses = {
         @OpenApiResponse(status = "200"),
         @OpenApiResponse(
+            status = "400",
+            content = {@OpenApiContent(from = Result.class)}),
+        @OpenApiResponse(
             status = "404",
             content = {@OpenApiContent(from = Result.class)}),
         @OpenApiResponse(
@@ -40,7 +43,11 @@ public class UserSigninController extends Controller {
             content = {@OpenApiContent(from = Result.class)})
       })
   public void login(final Context ctx) {
-    final Result result = manager.signinUser(ctx.bodyAsClass(RequestUserModel.class));
+    final RequestUserModel userModel = validateBody(ctx, RequestUserModel.class);
+    if (userModel == null) {
+      return;
+    }
+    final Result result = manager.signinUser(userModel);
     if (this.resultIsIn2xxAndHandle(result, ctx)) {
       ctx.status(200);
     }
@@ -56,6 +63,9 @@ public class UserSigninController extends Controller {
       responses = {
         @OpenApiResponse(status = "200"),
         @OpenApiResponse(
+            status = "400",
+            content = {@OpenApiContent(from = Result.class)}),
+        @OpenApiResponse(
             status = "404",
             content = {@OpenApiContent(from = Result.class)}),
         @OpenApiResponse(
@@ -63,7 +73,11 @@ public class UserSigninController extends Controller {
             content = {@OpenApiContent(from = Result.class)})
       })
   public void logout(final Context ctx) {
-    final Result result = manager.signoutUser(ctx.bodyAsClass(RequestUserModel.class));
+    final RequestUserModel userModel = validateBody(ctx, RequestUserModel.class);
+    if (userModel == null) {
+      return;
+    }
+    final Result result = manager.signoutUser(userModel);
     if (this.resultIsIn2xxAndHandle(result, ctx)) {
       ctx.status(200);
     }
@@ -79,11 +93,18 @@ public class UserSigninController extends Controller {
       responses = {
         @OpenApiResponse(status = "201"),
         @OpenApiResponse(
+            status = "400",
+            content = {@OpenApiContent(from = Result.class)}),
+        @OpenApiResponse(
             status = "405",
             content = {@OpenApiContent(from = Result.class)})
       })
   public void createUser(final Context ctx) {
-    final Result result = manager.addUser(ctx.bodyAsClass(RequestUserModel.class));
+    final RequestUserModel userModel = validateBody(ctx, RequestUserModel.class);
+    if (userModel == null) {
+      return;
+    }
+    final Result result = manager.addUser(userModel);
     if (this.resultIsIn2xxAndHandle(result, ctx)) {
       ctx.status(201);
     }

@@ -26,4 +26,25 @@ public abstract class Controller {
       return false;
     }
   }
+
+  /**
+   * This function attempts to turn the request into the given object, and on failure sends a 400
+   * bad request
+   *
+   * @param context The context (aka request) object to validate
+   * @param type The class to validate it as
+   * @param <T> Generic holding the class to be validated as
+   * @return Returns the context's body as the given class, or null if it can not be parsed
+   */
+  <T> T validateBody(final Context context, final Class<T> type) {
+    try {
+      final T validatedBody = context.bodyAsClass(type);
+      return validatedBody;
+    } catch (Exception e) {
+      final Result failedResult = new Result(400, "Can't process body as " + type.getName());
+      context.status(failedResult.getStatusCode());
+      context.json(failedResult);
+      return null;
+    }
+  }
 }
