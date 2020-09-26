@@ -71,6 +71,7 @@ public class WebModule extends AbstractModule {
     }
     sslContextFactory.setKeyStorePath(keystorePath.toExternalForm());
     sslContextFactory.setKeyStorePassword("password");
+    logger.debug("is valid certs? " + sslContextFactory.isValidateCerts());
     return sslContextFactory;
   }
 
