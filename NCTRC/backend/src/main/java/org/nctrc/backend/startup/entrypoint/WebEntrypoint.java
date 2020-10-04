@@ -6,6 +6,7 @@ import static io.javalin.apibuilder.ApiBuilder.post;
 import com.google.inject.Inject;
 import io.javalin.Javalin;
 import org.nctrc.backend.config.Constants;
+import org.nctrc.backend.controllers.UserCreationController;
 import org.nctrc.backend.controllers.UserSigninController;
 
 public class WebEntrypoint implements AppEntrypoint {
@@ -14,10 +15,16 @@ public class WebEntrypoint implements AppEntrypoint {
 
   private final UserSigninController userSigninController;
 
+  private final UserCreationController userCreationController;
+
   @Inject
-  public WebEntrypoint(final Javalin javalin, final UserSigninController userSigninController) {
+  public WebEntrypoint(
+      final Javalin javalin,
+      final UserSigninController userSigninController,
+      final UserCreationController userCreationController) {
     this.javalin = javalin;
     this.userSigninController = userSigninController;
+    this.userCreationController = userCreationController;
   }
 
   @Override
@@ -31,7 +38,7 @@ public class WebEntrypoint implements AppEntrypoint {
                     path(Constants.USER_SIGNIN_PATH, () -> post(this.userSigninController::login));
                     path(
                         Constants.USER_CREATION_PATH,
-                        () -> post(this.userSigninController::createUser));
+                        () -> post(this.userCreationController::createUser));
                     path(
                         Constants.USER_SIGNOUT_PATH, () -> post(this.userSigninController::logout));
                   });

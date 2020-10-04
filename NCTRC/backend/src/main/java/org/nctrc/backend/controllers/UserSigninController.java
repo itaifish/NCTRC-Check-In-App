@@ -16,7 +16,7 @@ import org.nctrc.backend.model.response.Result;
 @Singleton
 public class UserSigninController extends Controller {
 
-  private UsersManagerImpl manager;
+  private final UsersManagerImpl manager;
 
   @Inject
   public UserSigninController(final UsersManagerImpl manager) {
@@ -80,33 +80,6 @@ public class UserSigninController extends Controller {
     final Result result = manager.signoutUser(userModel);
     if (this.resultIsIn2xxAndHandle(result, ctx)) {
       ctx.status(200);
-    }
-  }
-
-  @OpenApi(
-      summary = "Create user",
-      operationId = "createUser",
-      path = "/" + Constants.MAIN_PATH + Constants.USER_CREATION_PATH,
-      method = HttpMethod.POST,
-      tags = {"User"},
-      requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = RequestUserModel.class)}),
-      responses = {
-        @OpenApiResponse(status = "201"),
-        @OpenApiResponse(
-            status = "400",
-            content = {@OpenApiContent(from = Result.class)}),
-        @OpenApiResponse(
-            status = "405",
-            content = {@OpenApiContent(from = Result.class)})
-      })
-  public void createUser(final Context ctx) {
-    final RequestUserModel userModel = validateBody(ctx, RequestUserModel.class);
-    if (userModel == null) {
-      return;
-    }
-    final Result result = manager.addUser(userModel);
-    if (this.resultIsIn2xxAndHandle(result, ctx)) {
-      ctx.status(201);
     }
   }
 }
