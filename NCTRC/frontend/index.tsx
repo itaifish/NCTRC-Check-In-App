@@ -13,43 +13,42 @@ import RisksScreen from './screens/RisksScreen';
 import SignInLandingScreen, { SignInParams } from './screens/SignInLandingScreen';
 import SignInScreen from './screens/SignInScreen';
 
-
 import LoginScreen from './screens/LogInScreen';
 import SignupScreen, { SignupParams } from './screens/SignUpScreen';
 import CovidErrorScreen from './screens/COVIDErrorScreen';
 
 export enum AppScreens {
     Home = 'Home',
-    AdminPass = 'AdminPass', 
-    AdminPortal = 'AdminPortal', 
-    CheckOutLanding = 'CheckOutLanding', 
-    CheckOut = 'CheckOut', 
-    CovidError = 'CovidError', 
-    CovidInformation = 'CovidInformation', 
-    MaxCap = 'MaxCap', 
-    Reason = 'Reason', 
-    Risks = "Risks", 
-    SignInLanding = 'SignInLanding', 
-    SignIn = "SignIn", 
+    AdminPass = 'AdminPass',
+    AdminPortal = 'AdminPortal',
+    CheckOutLanding = 'CheckOutLanding',
+    CheckOut = 'CheckOut',
+    CovidError = 'CovidError',
+    CovidInformation = 'CovidInformation',
+    MaxCap = 'MaxCap',
+    Reason = 'Reason',
+    Risks = 'Risks',
+    SignInLanding = 'SignInLanding',
+    SignIn = 'SignIn',
     Login = 'Login',
-    Signup = 'Signup'
+    Signup = 'Signup',
 }
 
 export type AuthStackParamList = {
     Login: undefined;
     Signup: SignupParams;
     Home: undefined;
-    AdminPass: undefined, 
-    AdminPortal: AdminParams, 
-    CheckOutLanding: CheckOutParams, 
-    CheckOut: undefined, 
-    CovidError: undefined, 
-    CovidInformation: InfoParams, 
-    MaxCap: undefined, 
-    Reason: undefined, 
-    Risks: SignupParams, 
-    SignInLanding: SignInParams, 
-    SignIn: undefined,
+    AdminPass: undefined;
+    AdminPortal: AdminParams;
+    CheckOutLanding: CheckOutParams;
+    CheckOut: undefined;
+    CovidError: undefined;
+    CovidInformation: InfoParams;
+    MaxCap: undefined;
+    Reason: undefined;
+    Risks: SignupParams;
+    SignInLanding: SignInParams;
+    SignIn: undefined;
 };
 
 const AuthStack = createStackNavigator<AuthStackParamList>();

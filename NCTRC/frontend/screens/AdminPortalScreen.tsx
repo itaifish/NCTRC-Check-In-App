@@ -5,24 +5,21 @@ import { AuthStackParamList, AppScreens } from '../index';
 type AdminPortalScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.AdminPortal>;
 export type AdminParams = {
     name: string;
-    email: string; 
+    email: string;
 };
 
 interface AdminPortalScreenProps {
     navigation: AdminPortalScreenNavigationProps;
 }
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});
 const AdminPortalScreen: React.FunctionComponent<AdminPortalScreenProps> = (props) => {
     const { navigation } = props;
-return (
+    return (
         <SafeAreaView>
             <View>
-                <Image source={require('./../assets/NCTRClogo.png')} style={{width: 400, height: 400}}></Image>
+                <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 400, height: 400 }}></Image>
                 <Text>admin portal screen</Text>
-                <Button color='#884633' title="Home" onPress={() => navigation.navigate(AppScreens.Home)} />
-
+                <Button color="#884633" title="Home" onPress={() => navigation.navigate(AppScreens.Home)} />
             </View>
         </SafeAreaView>
     );
