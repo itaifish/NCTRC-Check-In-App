@@ -15,7 +15,7 @@ import SignInScreen from './screens/SignInScreen';
 
 
 import LoginScreen from './screens/LogInScreen';
-import SignupScreen, { SignupParams } from './screens/SignupScreen';
+import SignupScreen, { SignupParams } from './screens/SignUpScreen';
 import CovidErrorScreen from './screens/COVIDErrorScreen';
 
 export enum AppScreens {

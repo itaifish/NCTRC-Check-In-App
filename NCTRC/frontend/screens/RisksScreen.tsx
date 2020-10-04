@@ -6,18 +6,15 @@ type RisksScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScr
 interface RisksScreenProps {
     navigation: RisksScreenNavigationProps;
 }
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});
 const RisksScreen: React.FunctionComponent<RisksScreenProps> = (props) => {
     const { navigation } = props;
-return (
+    return (
         <SafeAreaView>
             <View>
-                <Image source={require('./../assets/NCTRClogo.png')} style={{width: 400, height: 400}}></Image>
+                <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 400, height: 400 }}></Image>
                 <Text>risks screen</Text>
-                <Button color='#884633' title="Home" onPress={() => navigation.navigate(AppScreens.Home)} />
-
+                <Button color="#884633" title="Home" onPress={() => navigation.navigate(AppScreens.Home)} />
             </View>
         </SafeAreaView>
     );

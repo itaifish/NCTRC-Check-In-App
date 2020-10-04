@@ -8,13 +8,13 @@ interface LoginScreenProps {
 }
 const styles = StyleSheet.create({
     btnSignupContainer: {
-        alignItems: 'center'
+        alignItems: 'center',
     },
     container: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-between',
-        margin: 10
+        margin: 10,
     },
     textInput: {
         borderRadius: 5,
@@ -22,19 +22,19 @@ const styles = StyleSheet.create({
         borderColor: 'grey',
         marginTop: 4,
         padding: 2,
-        width: '100%'
+        width: '100%',
     },
     textInputContainer: {
-        width: '100%'
+        width: '100%',
     },
     txtHello: {
-        fontSize: 30
-    }
+        fontSize: 30,
+    },
 });
 const LoginScreen: React.FunctionComponent<LoginScreenProps> = (props) => {
     const { navigation } = props;
     const [username, setUsername] = useState<string>('');
-return (
+    return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.txtHello}>Hello</Text>
             <View style={styles.textInputContainer}>

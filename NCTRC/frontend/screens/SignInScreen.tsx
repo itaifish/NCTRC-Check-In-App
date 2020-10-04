@@ -6,18 +6,15 @@ type SingInScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppSc
 interface SignInScreenProps {
     navigation: SingInScreenNavigationProps;
 }
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});
 const SignInScreen: React.FunctionComponent<SignInScreenProps> = (props) => {
     const { navigation } = props;
-return (
+    return (
         <SafeAreaView>
             <View>
-                <Image source={require('./../assets/NCTRClogo.png')} style={{width: 400, height: 400}}></Image>
+                <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 400, height: 400 }}></Image>
                 <Text>SignInScreen</Text>
-                <Button color='#884633' title="Home" onPress={() => navigation.navigate(AppScreens.Home)} />
-
+                <Button color="#884633" title="Home" onPress={() => navigation.navigate(AppScreens.Home)} />
             </View>
         </SafeAreaView>
     );

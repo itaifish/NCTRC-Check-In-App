@@ -6,18 +6,15 @@ type ReasonScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppSc
 interface ReasonScreenProps {
     navigation: ReasonScreenNavigationProps;
 }
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});
 const ReasonScreen: React.FunctionComponent<ReasonScreenProps> = (props) => {
     const { navigation } = props;
-return (
+    return (
         <SafeAreaView>
             <View>
-                <Image source={require('./../assets/NCTRClogo.png')} style={{width: 400, height: 400}}></Image>
+                <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 400, height: 400 }}></Image>
                 <Text>reason screen</Text>
-                <Button color='#884633' title="Home" onPress={() => navigation.navigate(AppScreens.Home)} />
-
+                <Button color="#884633" title="Home" onPress={() => navigation.navigate(AppScreens.Home)} />
             </View>
         </SafeAreaView>
     );
