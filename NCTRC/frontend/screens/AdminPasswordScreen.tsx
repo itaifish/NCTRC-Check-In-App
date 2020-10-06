@@ -6,17 +6,15 @@ type AdminPasswordScreenNavigationProps = StackNavigationProp<AuthStackParamList
 interface AdminPasswordScreenProps {
     navigation: AdminPasswordScreenNavigationProps;
 }
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});
 const AdminPassScreen: React.FunctionComponent<AdminPasswordScreenProps> = (props) => {
     const { navigation } = props;
-return (
+    return (
         <SafeAreaView>
             <View>
-                <Image source={require('./../assets/NCTRClogo.png')} style={{width: 400, height: 400}}></Image>
+                <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 400, height: 400 }}></Image>
                 <Text>admin pass screen</Text>
-                <Button color='#884633' title="Home" onPress={() => navigation.navigate(AppScreens.Home)} />
+                <Button color="#884633" title="Home" onPress={() => navigation.navigate(AppScreens.Home)} />
             </View>
         </SafeAreaView>
     );

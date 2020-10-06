@@ -12,32 +12,32 @@ interface SignupScreenProps {
 }
 const styles = StyleSheet.create({
     btnLoginContainer: {
-        alignSelf: 'center'
+        alignSelf: 'center',
     },
     container: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-between',
-        margin: 10
+        margin: 10,
     },
     txtSignupScreen: {
-        fontSize: 30
+        fontSize: 30,
     },
     txtSignupScreenContainer: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     txtUsername: {
         fontSize: 25,
-        color: 'grey'
-    }
+        color: 'grey',
+    },
 });
 const SignupScreen: React.FunctionComponent<SignupScreenProps> = (props) => {
     const { navigation, route } = props;
     const { params } = route;
     const { username } = params;
-return (
+    return (
         <SafeAreaView style={styles.container}>
             <View style={styles.txtSignupScreenContainer}>
                 <Text style={styles.txtSignupScreen}>SignupScreen</Text>
