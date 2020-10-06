@@ -22,7 +22,6 @@ return (
                 <Image source={require('./../assets/NCTRClogo.png')} style={{width: 400, height: 400}}></Image>
                 <Text>CovidInformation</Text>
                 <Button color='#884633' title="Home" onPress={() => navigation.navigate(AppScreens.Home)} />
-
             </View>
         </SafeAreaView>
     );

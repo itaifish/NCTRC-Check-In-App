@@ -5,7 +5,7 @@ import AdminPasswordScreen from './screens/AdminPasswordScreen';
 import AdminPortalScreen, { AdminParams } from './screens/AdminPortalScreen';
 import CheckOutLandingScreen, { CheckOutParams } from './screens/CheckOutLandingScreen';
 import CheckOutScreen from './screens/CheckOutScreen';
-import COVIDErrorScreen from './screens/COVIDErrorScreen';
+import CovidErrorScreen from './screens/COVIDErrorScreen';
 import CovidInformationScreen, { InfoParams } from './screens/CovidInformationScreen';
 import MaxCapScreen from './screens/MaxCapScreen';
 import ReasonsScreen from './screens/ReasonScreen';
@@ -13,10 +13,8 @@ import RisksScreen from './screens/RisksScreen';
 import SignInLandingScreen, { SignInParams } from './screens/SignInLandingScreen';
 import SignInScreen from './screens/SignInScreen';
 
-
 import LoginScreen from './screens/LogInScreen';
 import SignupScreen, { SignupParams } from './screens/SignupScreen';
-import CovidErrorScreen from './screens/COVIDErrorScreen';
 
 export enum AppScreens {
     Home = 'Home',

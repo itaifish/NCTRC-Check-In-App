@@ -31,7 +31,7 @@ return (
         <SafeAreaView style={styles.container}>
             <View style={styles.homeContainer}>
                 <Image source={require('./../assets/NCTRClogo.png')} style={{width: 400, height: 400}}></Image>
-                <Button color='#884633' title="Check In" onPress={() => navigation.navigate(AppScreens.Login)} />
+                <Button color='#884633' title="Check In" onPress={() => navigation.navigate(AppScreens.Reason)} />
                 <Button color='#884633' title="Check Out" onPress={() => navigation.navigate(AppScreens.CovidError)} />
                 <Button color='#884633' title="Admin" onPress={() => navigation.navigate(AppScreens.AdminPass)} />
                 <Button color='#884633' title="Home" onPress={() => navigation.navigate(AppScreens.Home)} />
