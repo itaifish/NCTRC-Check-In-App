@@ -1,11 +1,14 @@
 package org.nctrc.backend.controllers;
 
 import io.javalin.http.Context;
+import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.model.response.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class Controller {
+
+  static final String ROOT_PATH = Constants.MAIN_PATH;
 
   /**
    * This function checks if a result is a 200-level result: -If yes, return true and do nothing -If

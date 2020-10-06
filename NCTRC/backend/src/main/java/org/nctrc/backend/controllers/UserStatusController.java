@@ -12,41 +12,40 @@ import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.managers.UsersManager;
 import org.nctrc.backend.model.request.RequestUserModel;
 import org.nctrc.backend.model.response.Result;
+import org.nctrc.backend.model.response.UserExistsResult;
 
 @Singleton
-public class UserCreationController extends UserController {
+public class UserStatusController extends UserController {
 
   private final UsersManager manager;
 
   @Inject
-  public UserCreationController(final UsersManager manager) {
+  public UserStatusController(final UsersManager manager) {
     this.manager = manager;
   }
 
   @OpenApi(
-      summary = "Create user",
-      operationId = "createUser",
-      path = "/" + ROOT_PATH + Constants.USER_CREATION_PATH,
+      summary = "Check if user exists",
+      operationId = "doesUserExist",
+      path = "/" + ROOT_PATH + Constants.USER_EXISTS_PATH,
       method = HttpMethod.POST,
       tags = {"User"},
       requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = RequestUserModel.class)}),
       responses = {
-        @OpenApiResponse(status = "201"),
+        @OpenApiResponse(
+            status = "200",
+            content = {@OpenApiContent(from = UserExistsResult.class)}),
         @OpenApiResponse(
             status = "400",
-            content = {@OpenApiContent(from = Result.class)}),
-        @OpenApiResponse(
-            status = "405",
             content = {@OpenApiContent(from = Result.class)})
       })
-  public void createUser(final Context ctx) {
+  public void doesUserExist(final Context ctx) {
     final RequestUserModel userModel = validateBody(ctx, RequestUserModel.class);
     if (userModel == null) {
       return;
     }
-    final Result result = manager.addUser(userModel);
-    if (this.resultIsIn2xxAndHandle(result, ctx)) {
-      ctx.status(201);
-    }
+    final Result result = manager.userExists(userModel);
+    ctx.status(result.getStatusCode());
+    ctx.json(result);
   }
 }

@@ -9,24 +9,24 @@ import io.javalin.plugin.openapi.annotations.OpenApiResponse;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.nctrc.backend.config.Constants;
-import org.nctrc.backend.managers.UsersManagerImpl;
+import org.nctrc.backend.managers.UsersManager;
 import org.nctrc.backend.model.request.RequestUserModel;
 import org.nctrc.backend.model.response.Result;
 
 @Singleton
-public class UserSigninController extends Controller {
+public class UserSigninController extends UserController {
 
-  private final UsersManagerImpl manager;
+  private final UsersManager manager;
 
   @Inject
-  public UserSigninController(final UsersManagerImpl manager) {
+  public UserSigninController(final UsersManager manager) {
     this.manager = manager;
   }
 
   @OpenApi(
       summary = "Login existing user",
       operationId = "loginUser",
-      path = "/" + Constants.MAIN_PATH + Constants.USER_SIGNIN_PATH,
+      path = "/" + ROOT_PATH + Constants.USER_SIGNIN_PATH,
       method = HttpMethod.POST,
       tags = {"User"},
       requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = RequestUserModel.class)}),
@@ -56,7 +56,7 @@ public class UserSigninController extends Controller {
   @OpenApi(
       summary = "Log out existing user",
       operationId = "logoutUser",
-      path = "/" + Constants.MAIN_PATH + Constants.USER_SIGNOUT_PATH,
+      path = "/" + ROOT_PATH + Constants.USER_SIGNOUT_PATH,
       method = HttpMethod.POST,
       tags = {"User"},
       requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = RequestUserModel.class)}),

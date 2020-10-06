@@ -8,6 +8,7 @@ import io.javalin.Javalin;
 import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.controllers.UserCreationController;
 import org.nctrc.backend.controllers.UserSigninController;
+import org.nctrc.backend.controllers.UserStatusController;
 
 public class WebEntrypoint implements AppEntrypoint {
 
@@ -17,14 +18,18 @@ public class WebEntrypoint implements AppEntrypoint {
 
   private final UserCreationController userCreationController;
 
+  private final UserStatusController userStatusController;
+
   @Inject
   public WebEntrypoint(
       final Javalin javalin,
       final UserSigninController userSigninController,
-      final UserCreationController userCreationController) {
+      final UserCreationController userCreationController,
+      final UserStatusController userStatusController) {
     this.javalin = javalin;
     this.userSigninController = userSigninController;
     this.userCreationController = userCreationController;
+    this.userStatusController = userStatusController;
   }
 
   @Override
@@ -35,12 +40,22 @@ public class WebEntrypoint implements AppEntrypoint {
               path(
                   Constants.MAIN_PATH,
                   () -> {
-                    path(Constants.USER_SIGNIN_PATH, () -> post(this.userSigninController::login));
                     path(
-                        Constants.USER_CREATION_PATH,
-                        () -> post(this.userCreationController::createUser));
-                    path(
-                        Constants.USER_SIGNOUT_PATH, () -> post(this.userSigninController::logout));
+                        Constants.USER_PATH,
+                        () -> {
+                          path(
+                              Constants.USER_SIGNIN_PATH,
+                              () -> post(this.userSigninController::login));
+                          path(
+                              Constants.USER_CREATION_PATH,
+                              () -> post(this.userCreationController::createUser));
+                          path(
+                              Constants.USER_SIGNOUT_PATH,
+                              () -> post(this.userSigninController::logout));
+                          path(
+                              Constants.USER_EXISTS_PATH,
+                              () -> post(this.userStatusController::doesUserExist));
+                        });
                   });
             })
         .start();
