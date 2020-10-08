@@ -3,11 +3,13 @@ package org.nctrc.backend.managers;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.inject.Singleton;
 import org.nctrc.backend.model.internal.DayTimeline;
 import org.nctrc.backend.model.request.RequestUserModel;
 import org.nctrc.backend.model.response.Result;
 import org.nctrc.backend.model.response.UserExistsResult;
 
+@Singleton
 public class UsersManager {
 
   private final Set<RequestUserModel> users;

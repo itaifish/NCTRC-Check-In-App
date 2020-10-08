@@ -10,7 +10,7 @@ public class NCTRCModule extends AbstractModule {
 
   @Override
   protected void configure() {
-    bind(UsersManager.class).toInstance(new UsersManager());
+    bind(UsersManager.class);
     bind(UserSigninController.class);
     bind(UserCreationController.class);
     bind(UserStatusController.class);
