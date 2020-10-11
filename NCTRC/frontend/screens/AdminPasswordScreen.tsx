@@ -1,7 +1,8 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View, Button, Image } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Button, Image, TextInput } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList, AppScreens } from '../index';
+import AdminPortalScreen from './AdminPortalScreen';
 type AdminPasswordScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.AdminPass>;
 interface AdminPasswordScreenProps {
     navigation: AdminPasswordScreenNavigationProps;
@@ -13,8 +14,11 @@ const AdminPassScreen: React.FunctionComponent<AdminPasswordScreenProps> = (prop
         <SafeAreaView>
             <View>
                 <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 400, height: 400 }}></Image>
-                <Text>admin pass screen</Text>
-                <Button color="#884633" title="Home" onPress={() => navigation.navigate(AppScreens.Home)} />
+                <Text>Exter admin password</Text>
+                <TextInput />
+                <Button color="#884633" title="Enter" onPress={() => navigation.navigate(AppScreens.AdminPortal)} />
+                <Button color="#884633" title="Back" onPress={() => navigation.pop()} />
+                <Button color="#884633" title="Home" onPress={() => navigation.popToTop()} />
             </View>
         </SafeAreaView>
     );

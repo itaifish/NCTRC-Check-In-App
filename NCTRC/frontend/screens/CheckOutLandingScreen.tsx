@@ -6,20 +6,23 @@ type CheckOutLandingScreenNavigationProps = StackNavigationProp<AuthStackParamLi
 export type CheckOutParams = {
     name: string;
     email: string;
-    time: string;
 };
 interface CheckOutLandingScreenProps {
     navigation: CheckOutLandingScreenNavigationProps;
+    route: { params: CheckOutParams };
 }
 const styles = StyleSheet.create({});
 const CheckOutLandingScreen: React.FunctionComponent<CheckOutLandingScreenProps> = (props) => {
-    const { navigation } = props;
+    const { navigation, route } = props;
+    const { params } = route;
+    const { name, email } = params;
+
     return (
         <SafeAreaView>
             <View>
                 <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 400, height: 400 }}></Image>
-                <Text>CheckOutLandingScreen</Text>
-                <Button color="#884633" title="Home" onPress={() => navigation.navigate(AppScreens.Home)} />
+                <Text>Thanks for visiting!</Text>
+                <Button color="#884633" title="Home" onPress={() => navigation.popToTop()} />
             </View>
         </SafeAreaView>
     );

@@ -13,8 +13,8 @@ const MaxCapScreen: React.FunctionComponent<MaxCapScreenProps> = (props) => {
         <SafeAreaView>
             <View>
                 <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 400, height: 400 }}></Image>
-                <Text>Max cap</Text>
-                <Button color="#884633" title="Home" onPress={() => navigation.navigate(AppScreens.Home)} />
+                <Text>Sorry, we are currently at max capacity. Please wait until someone checks out.</Text>
+                <Button color="#884633" title="Home" onPress={() => navigation.popToTop()} />
             </View>
         </SafeAreaView>
     );

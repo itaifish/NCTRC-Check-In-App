@@ -12,19 +12,16 @@ const ReasonScreen: React.FunctionComponent<ReasonScreenProps> = (props) => {
     return (
         <SafeAreaView>
             <View>
-<<<<<<< HEAD
-                <Image source={require('./../assets/NCTRClogo.png')} style={{width: 400, height: 400}}></Image>
+                <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 200, height: 200 }}></Image>
                 <Text>What is the reason for your visit?</Text>
-                <Button color='#884633' title="Employee" onPress={() => navigation.navigate(AppScreens.SignIn)} />
-                <Button color='#884633' title="Client" onPress={() => navigation.navigate(AppScreens.SignIn)} />
-                <Button color='#884633' title="Volunteer" onPress={() => navigation.navigate(AppScreens.SignIn)} />
-                <Button color='#884633' title="Guest" onPress={() => navigation.navigate(AppScreens.SignIn)} />
-                <Button color='#884633' title="Graston" onPress={() => navigation.navigate(AppScreens.SignIn)} />
-=======
-                <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 400, height: 400 }}></Image>
-                <Text>reason screen</Text>
-                <Button color="#884633" title="Home" onPress={() => navigation.navigate(AppScreens.Home)} />
->>>>>>> 1509b0b4fe258ef4794c650b616003b9e42a13d5
+                <Button color="#884633" title="Employee" onPress={() => navigation.navigate(AppScreens.SignIn)} />
+                <Button color="#884633" title="Client" onPress={() => navigation.navigate(AppScreens.SignIn)} />
+                <Button color="#884633" title="Volunteer" onPress={() => navigation.navigate(AppScreens.SignIn)} />
+                <Button color="#884633" title="Guest" onPress={() => navigation.navigate(AppScreens.SignIn)} />
+                <Button color="#884633" title="Professional" onPress={() => navigation.navigate(AppScreens.SignIn)} />
+                <Button color="#884633" title="Grason" onPress={() => navigation.navigate(AppScreens.SignIn)} />
+                <Button color="#884633" title="Back" onPress={() => navigation.pop()} />
+                <Button color="#884633" title="Home" onPress={() => navigation.popToTop()} />
             </View>
         </SafeAreaView>
     );

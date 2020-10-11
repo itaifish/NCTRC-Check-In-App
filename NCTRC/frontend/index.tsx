@@ -2,24 +2,18 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './screens/HomeScreen';
 import AdminPasswordScreen from './screens/AdminPasswordScreen';
-import AdminPortalScreen, { AdminParams } from './screens/AdminPortalScreen';
+import AdminPortalScreen from './screens/AdminPortalScreen';
 import CheckOutLandingScreen, { CheckOutParams } from './screens/CheckOutLandingScreen';
 import CheckOutScreen from './screens/CheckOutScreen';
-import CovidErrorScreen from './screens/COVIDErrorScreen';
+import CovidErrorScreen, { ErrorParams } from './screens/COVIDErrorScreen';
 import CovidInformationScreen, { InfoParams } from './screens/CovidInformationScreen';
 import MaxCapScreen from './screens/MaxCapScreen';
 import ReasonsScreen from './screens/ReasonScreen';
-import RisksScreen from './screens/RisksScreen';
+import RisksScreen, { RisksParams } from './screens/RisksScreen';
 import SignInLandingScreen, { SignInParams } from './screens/SignInLandingScreen';
 import SignInScreen from './screens/SignInScreen';
-
 import LoginScreen from './screens/LogInScreen';
-<<<<<<< HEAD
-import SignupScreen, { SignupParams } from './screens/SignupScreen';
-=======
 import SignupScreen, { SignupParams } from './screens/SignUpScreen';
-import CovidErrorScreen from './screens/COVIDErrorScreen';
->>>>>>> 1509b0b4fe258ef4794c650b616003b9e42a13d5
 
 export enum AppScreens {
     Home = 'Home',
@@ -43,14 +37,14 @@ export type AuthStackParamList = {
     Signup: SignupParams;
     Home: undefined;
     AdminPass: undefined;
-    AdminPortal: AdminParams;
+    AdminPortal: undefined;
     CheckOutLanding: CheckOutParams;
     CheckOut: undefined;
-    CovidError: undefined;
+    CovidError: ErrorParams;
     CovidInformation: InfoParams;
     MaxCap: undefined;
     Reason: undefined;
-    Risks: SignupParams;
+    Risks: RisksParams;
     SignInLanding: SignInParams;
     SignIn: undefined;
 };
