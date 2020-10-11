@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Button, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import SignatureScreen from 'react-native-signature-canvas';
 import { AuthStackParamList, AppScreens } from '../index';
 type RisksScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.Risks>;
 
@@ -25,7 +24,6 @@ const RisksScreen: React.FunctionComponent<RisksScreenProps> = (props) => {
                 <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 400, height: 400 }}></Image>
                 <Text>Do you agree to the risks?</Text>
                 <Text>NCTRC COVID Risk Document</Text>
-                <SignatureScreen />
                 <Button
                     color="#884633"
                     title="Submit"
