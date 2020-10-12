@@ -6,15 +6,32 @@ type SingInScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppSc
 interface SignInScreenProps {
     navigation: SingInScreenNavigationProps;
 }
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        margin: 10,
+    },
+    home: {
+        fontSize: 30,
+    },
+    homeContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+        width: '100%',
+    },
+});
 
 const SignInScreen: React.FunctionComponent<SignInScreenProps> = (props) => {
     const { navigation } = props;
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     return (
-        <SafeAreaView>
-            <View>
+        <SafeAreaView style={styles.container}>
+            <View style={styles.homeContainer}>
                 <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 200, height: 200 }}></Image>
                 <TextInput value={name} onChangeText={(text) => setName(text)} placeholder="Name" />
                 <TextInput value={email} onChangeText={(text) => setEmail(text)} placeholder="Email Address" />
@@ -23,7 +40,7 @@ const SignInScreen: React.FunctionComponent<SignInScreenProps> = (props) => {
                     title="Sign In"
                     onPress={() => {
                         if (name != '' && email != '') {
-                            navigation.navigate(AppScreens.Risks, { name: name, email: email });
+                            navigation.navigate(AppScreens.CovidInformation, { name: name, email: email });
                         }
                     }}
                 />

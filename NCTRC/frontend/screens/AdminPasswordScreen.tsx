@@ -14,7 +14,7 @@ const AdminPassScreen: React.FunctionComponent<AdminPasswordScreenProps> = (prop
         <SafeAreaView>
             <View>
                 <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 400, height: 400 }}></Image>
-                <Text>Exter admin password</Text>
+                <Text>Enter admin password</Text>
                 <TextInput />
                 <Button color="#884633" title="Enter" onPress={() => navigation.navigate(AppScreens.AdminPortal)} />
                 <Button color="#884633" title="Back" onPress={() => navigation.pop()} />

@@ -32,6 +32,7 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
     var [contactLabel, setContactLabel] = useState('');
     var [gatheringsLabel, setGatheringsLabel] = useState('');
     var [isolateLabel, setIsolateLabel] = useState('');
+    var [tempurature, setTempurature] = useState('');
 
     return (
         <ScrollView>
@@ -42,42 +43,40 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                 <Text>Email</Text>
                 <TextInput placeholder={email} editable={false} />
                 <Text>
-                    Within the past 14 days, have you had contact with anyone that you know had COVID-19 or COVID-like
-                    symptoms?
+                    Within the past 24 hours have you or anyone in your household experienced any of the following
+                    symptoms: fever (over 100.4 F), sore or dry throat, shortness of breath, chest congestion, cough,
+                    loss of taste or sense of smell, sneezing, and/or rash?
                 </Text>
-                <Picker
-                    selectedValue={contactLabel}
-                    onValueChange={(itemValue, itemLabel) => {
-                        setContact(itemValue);
-                        if (itemValue) {
-                            setContactLabel('Yes');
-                            console.log('yes');
-                        } else {
-                            setContactLabel('No');
-                        }
-                    }}
-                >
-                    <Picker.Item label="Yes" value={true} />
-                    <Picker.Item label="No" value={false} />
-                </Picker>
-                <Text>Have you traveled outside the country in the past 30 Days?</Text>
-                <Picker selectedValue={''} onValueChange={(itemValue) => setTraveled(itemValue)}>
+                <Picker onValueChange={(itemValue) => setContact(itemValue)}>
                     <Picker.Item value="" label="" />
                     <Picker.Item label="Yes" value={true} />
                     <Picker.Item label="No" value={false} />
                 </Picker>
-                <Text>Have you attended gatherings with more than 10 people in the last 30 days?</Text>
+                <Text>Have you traveled out of the country or out of the state within the past 14 days?</Text>
+                <Picker onValueChange={(itemValue) => setTraveled(itemValue)}>
+                    <Picker.Item value="" label="" />
+                    <Picker.Item label="Yes" value={true} />
+                    <Picker.Item label="No" value={false} />
+                </Picker>
+                <Text>
+                    Have you attended an event or gathering of more than 25 people at any point in the last 14 days?
+                </Text>
                 <Picker onValueChange={(itemValue) => setGatherings(itemValue)}>
                     <Picker.Item value="" label="" />
                     <Picker.Item label="Yes" value={true} />
                     <Picker.Item label="No" value={false} />
                 </Picker>
-                <Text>Have you been told to self-isolate in the past 14 days?</Text>
+                <Text>
+                    Within the past 14 days, have you received a positive test result for COVID-19 or are you awaiting
+                    test results for COVID-19?
+                </Text>
                 <Picker onValueChange={(itemValue) => setIsolate(itemValue)}>
                     <Picker.Item value="" label="" />
                     <Picker.Item label="Yes" value={true} />
                     <Picker.Item label="No" value={false} />
                 </Picker>
+                <Text>Tempurature</Text>
+                <TextInput onChangeText={(text) => setTempurature(text)} />
                 <Text>Is there anything else you would like to share? Questions, concerns, etc.</Text>
                 <TextInput onChangeText={(text) => setConcerns(text)} />
                 <Button
