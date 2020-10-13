@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Objects;
 
-public class RequestUserModel {
+public class UserRequestModel {
 
   private final String name;
   private final String email;
 
   @JsonCreator
-  public RequestUserModel(
+  public UserRequestModel(
       @JsonProperty("name") final String name, @JsonProperty("email") final String email) {
     this.name = name;
     this.email = email;
@@ -32,7 +32,7 @@ public class RequestUserModel {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    RequestUserModel user = (RequestUserModel) o;
+    UserRequestModel user = (UserRequestModel) o;
     return email.equals(user.email);
   }
 

@@ -29,5 +29,9 @@ public final class Constants {
 
   public static final int SSL_PORT = 6700;
 
+  public static final int NUM_MINS_FOR_REJECTED_SIGNIN = 5;
+
+  public static final double FEVER_TEMPERATURE = 100.4;
+
   private Constants() {}
 }

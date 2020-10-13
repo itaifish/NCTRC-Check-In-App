@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.managers.UsersManager;
-import org.nctrc.backend.model.request.RequestUserModel;
+import org.nctrc.backend.model.request.UserRequestModel;
 import org.nctrc.backend.model.response.Result;
 import org.nctrc.backend.model.response.UserExistsResult;
 
@@ -30,7 +30,7 @@ public class UserStatusController extends UserController {
       path = "/" + ROOT_PATH + Constants.USER_EXISTS_PATH,
       method = HttpMethod.POST,
       tags = {"User"},
-      requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = RequestUserModel.class)}),
+      requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = UserRequestModel.class)}),
       responses = {
         @OpenApiResponse(
             status = "200",
@@ -40,7 +40,7 @@ public class UserStatusController extends UserController {
             content = {@OpenApiContent(from = Result.class)})
       })
   public void doesUserExist(final Context ctx) {
-    final RequestUserModel userModel = validateBody(ctx, RequestUserModel.class);
+    final UserRequestModel userModel = validateBody(ctx, UserRequestModel.class);
     if (userModel == null) {
       return;
     }

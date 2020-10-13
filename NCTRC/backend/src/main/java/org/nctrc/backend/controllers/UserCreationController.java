@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.managers.UsersManager;
-import org.nctrc.backend.model.request.RequestUserModel;
+import org.nctrc.backend.model.request.NewUserRequestModel;
 import org.nctrc.backend.model.response.Result;
 
 @Singleton
@@ -29,7 +29,8 @@ public class UserCreationController extends UserController {
       path = "/" + ROOT_PATH + Constants.USER_CREATION_PATH,
       method = HttpMethod.POST,
       tags = {"User"},
-      requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = RequestUserModel.class)}),
+      requestBody =
+          @OpenApiRequestBody(content = {@OpenApiContent(from = NewUserRequestModel.class)}),
       responses = {
         @OpenApiResponse(status = "201"),
         @OpenApiResponse(
@@ -40,7 +41,7 @@ public class UserCreationController extends UserController {
             content = {@OpenApiContent(from = Result.class)})
       })
   public void createUser(final Context ctx) {
-    final RequestUserModel userModel = validateBody(ctx, RequestUserModel.class);
+    final NewUserRequestModel userModel = validateBody(ctx, NewUserRequestModel.class);
     if (userModel == null) {
       return;
     }

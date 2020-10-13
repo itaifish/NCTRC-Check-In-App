@@ -10,7 +10,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.managers.UsersManager;
-import org.nctrc.backend.model.request.RequestUserModel;
+import org.nctrc.backend.model.request.SigninRequestModel;
+import org.nctrc.backend.model.request.UserRequestModel;
 import org.nctrc.backend.model.response.Result;
 
 @Singleton
@@ -29,7 +30,8 @@ public class UserSigninController extends UserController {
       path = "/" + ROOT_PATH + Constants.USER_SIGNIN_PATH,
       method = HttpMethod.POST,
       tags = {"User"},
-      requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = RequestUserModel.class)}),
+      requestBody =
+          @OpenApiRequestBody(content = {@OpenApiContent(from = SigninRequestModel.class)}),
       responses = {
         @OpenApiResponse(status = "200"),
         @OpenApiResponse(
@@ -40,10 +42,16 @@ public class UserSigninController extends UserController {
             content = {@OpenApiContent(from = Result.class)}),
         @OpenApiResponse(
             status = "405",
-            content = {@OpenApiContent(from = Result.class)})
+            content = {@OpenApiContent(from = Result.class)}),
+        @OpenApiResponse(
+            status = "409",
+            content = {@OpenApiContent(from = Result.class)}),
+        @OpenApiResponse(
+            status = "412",
+            content = {@OpenApiContent(from = Result.class)}),
       })
   public void login(final Context ctx) {
-    final RequestUserModel userModel = validateBody(ctx, RequestUserModel.class);
+    final SigninRequestModel userModel = validateBody(ctx, SigninRequestModel.class);
     if (userModel == null) {
       return;
     }
@@ -59,7 +67,7 @@ public class UserSigninController extends UserController {
       path = "/" + ROOT_PATH + Constants.USER_SIGNOUT_PATH,
       method = HttpMethod.POST,
       tags = {"User"},
-      requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = RequestUserModel.class)}),
+      requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = UserRequestModel.class)}),
       responses = {
         @OpenApiResponse(status = "200"),
         @OpenApiResponse(
@@ -73,7 +81,7 @@ public class UserSigninController extends UserController {
             content = {@OpenApiContent(from = Result.class)})
       })
   public void logout(final Context ctx) {
-    final RequestUserModel userModel = validateBody(ctx, RequestUserModel.class);
+    final UserRequestModel userModel = validateBody(ctx, UserRequestModel.class);
     if (userModel == null) {
       return;
     }

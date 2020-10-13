@@ -4,21 +4,21 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import org.nctrc.backend.model.request.RequestUserModel;
+import org.nctrc.backend.model.request.UserRequestModel;
 
 /** This class represents the timeline of a single day with people signin into the clinic */
 public class DayTimeline {
 
   private Date day;
 
-  private Map<RequestUserModel, SigninStatus> usersStatus;
+  private Map<UserRequestModel, SigninStatus> usersStatus;
 
   public DayTimeline(final Date day) {
     this.day = day;
     usersStatus = new HashMap<>();
   }
 
-  public void addUser(final RequestUserModel userModel) {
+  public void addUser(final UserRequestModel userModel) {
     if (userExists(userModel)) {
       throw new IllegalArgumentException("User " + userModel + " already exists");
     } else {
@@ -26,7 +26,7 @@ public class DayTimeline {
     }
   }
 
-  public boolean isUserSignedIn(final RequestUserModel userModel) {
+  public boolean isUserSignedIn(final UserRequestModel userModel) {
     if (userExists(userModel)) {
       return usersStatus.get(userModel).isSignedIn();
     } else {
@@ -34,7 +34,7 @@ public class DayTimeline {
     }
   }
 
-  public void signUserIn(final RequestUserModel userModel) {
+  public void signUserIn(final UserRequestModel userModel) {
     if (userExists(userModel)) {
       usersStatus.get(userModel).setSignedIn();
     } else {
@@ -42,7 +42,7 @@ public class DayTimeline {
     }
   }
 
-  public void signUserOut(final RequestUserModel userModel) {
+  public void signUserOut(final UserRequestModel userModel) {
     if (userExists(userModel)) {
       usersStatus.get(userModel).setSignedOut();
     } else {
@@ -50,11 +50,11 @@ public class DayTimeline {
     }
   }
 
-  public boolean userExists(final RequestUserModel userModel) {
+  public boolean userExists(final UserRequestModel userModel) {
     return usersStatus.containsKey(userModel);
   }
 
-  public Set<TimeRange> getSigninTimesForUser(final RequestUserModel userModel) {
+  public Set<TimeRange> getSigninTimesForUser(final UserRequestModel userModel) {
     if (userExists(userModel)) {
       return usersStatus.get(userModel).getTimeRanges();
     } else {
