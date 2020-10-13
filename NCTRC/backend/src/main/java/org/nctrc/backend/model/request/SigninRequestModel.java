@@ -1,5 +1,6 @@
 package org.nctrc.backend.model.request;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SigninRequestModel {
@@ -8,6 +9,7 @@ public class SigninRequestModel {
 
   private final UserRequestModel user;
 
+  @JsonCreator
   public SigninRequestModel(
       @JsonProperty("signinData") final SigninDataRequestModel signinData,
       @JsonProperty("user") final UserRequestModel user) {

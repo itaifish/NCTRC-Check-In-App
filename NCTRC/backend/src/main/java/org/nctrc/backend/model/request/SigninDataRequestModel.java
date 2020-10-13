@@ -1,5 +1,6 @@
 package org.nctrc.backend.model.request;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SigninDataRequestModel {
@@ -8,8 +9,10 @@ public class SigninDataRequestModel {
 
   private final double temperature;
 
+  @JsonCreator
   public SigninDataRequestModel(
-      @JsonProperty() final String yesQuestion, @JsonProperty() final double temperature) {
+      @JsonProperty("yesQuestion") final String yesQuestion,
+      @JsonProperty("temperature") final double temperature) {
     this.yesQuestion = yesQuestion;
     this.temperature = temperature;
   }

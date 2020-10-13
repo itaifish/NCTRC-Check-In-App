@@ -37,15 +37,24 @@ public class UserCreationController extends UserController {
             status = "400",
             content = {@OpenApiContent(from = Result.class)}),
         @OpenApiResponse(
+            status = "404",
+            content = {@OpenApiContent(from = Result.class)}),
+        @OpenApiResponse(
             status = "405",
-            content = {@OpenApiContent(from = Result.class)})
+            content = {@OpenApiContent(from = Result.class)}),
+        @OpenApiResponse(
+            status = "409",
+            content = {@OpenApiContent(from = Result.class)}),
+        @OpenApiResponse(
+            status = "412",
+            content = {@OpenApiContent(from = Result.class)}),
       })
   public void createUser(final Context ctx) {
     final NewUserRequestModel userModel = validateBody(ctx, NewUserRequestModel.class);
     if (userModel == null) {
       return;
     }
-    final Result result = manager.addUser(userModel);
+    final Result result = manager.createAndSigninUser(userModel);
     if (this.resultIsIn2xxAndHandle(result, ctx)) {
       ctx.status(201);
     }

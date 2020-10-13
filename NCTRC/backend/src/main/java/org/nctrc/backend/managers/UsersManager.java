@@ -82,7 +82,7 @@ public class UsersManager {
     }
   }
 
-  public Result addUser(final NewUserRequestModel newUserRequestModel) {
+  public Result createAndSigninUser(final NewUserRequestModel newUserRequestModel) {
     final UserRequestModel user = newUserRequestModel.getUser();
     if (users.contains(user)) {
       return new Result(405, "Email " + user.getEmail() + " already exists!");
@@ -90,7 +90,11 @@ public class UsersManager {
       signinTimeLine.addUser(user);
       users.add(user);
       databaseManager.addUser(newUserRequestModel);
-      return new Result(200, "Success");
+      // Sign user in after creating them
+      final SigninRequestModel signinRequestModel =
+          new SigninRequestModel(
+              newUserRequestModel.getSigninData(), newUserRequestModel.getUser());
+      return this.signinUser(signinRequestModel);
     }
   }
 
