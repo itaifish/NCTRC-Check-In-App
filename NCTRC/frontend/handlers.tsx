@@ -21,9 +21,75 @@ export const checkUserExists = async (name: string, email: string) => {
   }
 };
 
-// sign in user
+// create and sign in new user
+export const createAndSigninUser = async (
+  name: string,
+  email: string,
+  signature: string,
+  temperature: number,
+  yesQuestion: string
+) => {
+  try {
+    await fetch(config.base_url + "/api/user/create", {
+      method: "POST",
+      body: JSON.stringify({
+        user: {
+          name: name,
+          email: email,
+        },
+        signature: signature,
+        signatureDate: new Date(),
+        signinData: {
+          yesQuestion: yesQuestion,
+          temperature: temperature,
+        },
+      }),
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-// post signature
+// sign in returning user
+export const signinUser = async (
+  name: string,
+  email: string,
+  temperature: number,
+  yesQuestion?: string
+) => {
+  try {
+    await fetch(config.base_url + " /api/user/signin", {
+      method: "POST",
+      body: JSON.stringify({
+        signinData: {
+          yesQuestion: yesQuestion,
+          temperature: temperature,
+        },
+        user: {
+          name: name,
+          email: email,
+        },
+      }),
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// sign out user
+export const signoutUser = async (name: string, email: string) => {
+  try {
+    await fetch(config.base_url + "/api/user/signout", {
+      method: "POST",
+      body: JSON.stringify({
+        name: name,
+        email: email,
+      }),
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // post to user check-in data collection
 
