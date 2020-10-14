@@ -4,7 +4,7 @@ import * as config from "../../config/config.json";
 // FUNCTIONS TO HANDLE COMMUNICATION WITH THE BACKEND
 
 // check if user exists
-const checkUserExists = async (name: string, email: string) => {
+export const checkUserExists = async (name: string, email: string) => {
   try {
     let response = await fetch(config.base_url + "/api/user/exists", {
       method: "POST",
