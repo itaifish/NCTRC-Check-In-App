@@ -24,11 +24,11 @@ public class AdminController extends Controller {
   }
 
   @OpenApi(
-      summary = "Create user",
-      operationId = "createUser",
+      summary = "Set Max Capacity",
+      operationId = "setCapacity",
       path = "/" + ROOT_PATH + Constants.ADMIN_PATH + Constants.ADMIN_UPDATE_CAPACITY_PATH,
       method = HttpMethod.POST,
-      tags = {"User"},
+      tags = {"Admin"},
       requestBody =
           @OpenApiRequestBody(
               content = {@OpenApiContent(from = UpdateMaxCapacityRequestModel.class)}),
