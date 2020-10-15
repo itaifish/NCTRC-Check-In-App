@@ -1,5 +1,7 @@
 package org.nctrc.backend.config;
 
+import com.amazonaws.regions.Regions;
+
 public final class Constants {
 
   public static final String MAIN_PATH = "api/";
@@ -32,6 +34,8 @@ public final class Constants {
   public static final int NUM_MINS_FOR_REJECTED_SIGNIN = 5;
 
   public static final double FEVER_TEMPERATURE = 100.4;
+
+  public static final Regions REGION = Regions.US_EAST_1;
 
   private Constants() {}
 }

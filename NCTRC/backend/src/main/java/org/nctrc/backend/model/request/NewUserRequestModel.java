@@ -18,7 +18,7 @@ public class NewUserRequestModel {
   public NewUserRequestModel(
       @JsonProperty("user") final UserRequestModel user,
       @JsonProperty("signature") final String signature,
-      @JsonProperty("signatureData") final Date signatureDate,
+      @JsonProperty("signatureDate") final Date signatureDate,
       @JsonProperty("signinData") final SigninDataRequestModel signinData) {
     this.user = user;
     this.signature = signature;
