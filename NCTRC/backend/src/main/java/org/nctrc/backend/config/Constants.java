@@ -1,6 +1,8 @@
 package org.nctrc.backend.config;
 
 import com.amazonaws.regions.Regions;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 public final class Constants {
 
@@ -36,6 +38,10 @@ public final class Constants {
   public static final double FEVER_TEMPERATURE = 100.4;
 
   public static final Regions REGION = Regions.US_EAST_1;
+
+  public static final SimpleDateFormat ISO_8601 = new SimpleDateFormat("yyyy-MM-dd");
+
+  public static final TimeZone TIME_ZONE = TimeZone.getTimeZone("EST");
 
   private Constants() {}
 }

@@ -21,14 +21,14 @@ public class UsersManager {
 
   private final DayTimeline signinTimeLine;
 
-  private final DatabaseManager databaseManager;
+  private final DatabaseManagerInterface databaseManager;
 
   private int maxCapacity;
 
   private int currentCapacity;
 
   @Inject
-  public UsersManager(final DatabaseManager databaseManager) {
+  public UsersManager(final DatabaseManagerInterface databaseManager) {
     users = new HashSet<>();
     signinTimeLine = new DayTimeline(new Date());
     this.databaseManager = databaseManager;

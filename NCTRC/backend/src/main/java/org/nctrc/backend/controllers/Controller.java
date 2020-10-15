@@ -44,7 +44,8 @@ public abstract class Controller {
       final T validatedBody = context.bodyAsClass(type);
       return validatedBody;
     } catch (Exception e) {
-      final Result failedResult = new Result(400, "Can't process body as " + type.getName());
+      final Result failedResult =
+          new Result(400, "Can't process body as " + type.getName() + ":\n" + e.toString());
       context.status(failedResult.getStatusCode());
       context.json(failedResult);
       return null;

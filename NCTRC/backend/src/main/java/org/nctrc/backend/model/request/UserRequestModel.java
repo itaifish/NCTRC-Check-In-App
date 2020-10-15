@@ -6,18 +6,26 @@ import java.util.Objects;
 
 public class UserRequestModel {
 
-  private final String name;
+  private final String firstName;
+  private final String lastName;
   private final String email;
 
   @JsonCreator
   public UserRequestModel(
-      @JsonProperty("name") final String name, @JsonProperty("email") final String email) {
-    this.name = name;
+      @JsonProperty("firstName") final String firstName,
+      @JsonProperty("lastName") final String lastName,
+      @JsonProperty("email") final String email) {
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.email = email;
   }
 
-  public String getName() {
-    return name;
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
   }
 
   public String getEmail() {
@@ -43,6 +51,16 @@ public class UserRequestModel {
 
   @Override
   public String toString() {
-    return "User{" + "name='" + name + '\'' + ", email='" + email + '\'' + '}';
+    return "UserRequestModel{"
+        + "firstName='"
+        + firstName
+        + '\''
+        + ", lastName='"
+        + lastName
+        + '\''
+        + ", email='"
+        + email
+        + '\''
+        + '}';
   }
 }
