@@ -8,22 +8,20 @@ import com.amazonaws.services.dynamodbv2.document.ItemCollection;
 import com.amazonaws.services.dynamodbv2.document.PutItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
-import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
-import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
-import com.amazonaws.services.dynamodbv2.model.KeyType;
-import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
+import com.amazonaws.services.dynamodbv2.document.spec.GetItemSpec;
 import com.amazonaws.services.dynamodbv2.model.ResourceInUseException;
-import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.nctrc.backend.config.Constants;
+import org.nctrc.backend.config.DatabaseConfigInformation;
+import org.nctrc.backend.config.DatabaseConstants;
 import org.nctrc.backend.model.request.NewUserRequestModel;
 import org.nctrc.backend.model.request.SigninRequestModel;
 import org.nctrc.backend.model.request.UserRequestModel;
@@ -36,9 +34,14 @@ public class DatabaseManager implements DatabaseManagerInterface {
   private static final Logger logger = LoggerFactory.getLogger(DatabaseManager.class);
 
   private final AmazonDynamoDB client;
+
   private final DynamoDB database;
 
-  public DatabaseManager() {
+  private final DatabaseConstants databaseConstants;
+
+  @Inject
+  public DatabaseManager(final DatabaseConstants databaseConstants) {
+    this.databaseConstants = databaseConstants;
     try (InputStream input =
         Objects.requireNonNull(
                 DatabaseManager.class
@@ -57,25 +60,8 @@ public class DatabaseManager implements DatabaseManagerInterface {
   }
 
   public void addUser(final NewUserRequestModel userRequestModel) {
-    try {
-      final Table usersTable =
-          this.database.createTable(
-              "users",
-              Arrays.asList(
-                  new KeySchemaElement("email", KeyType.HASH),
-                  new KeySchemaElement("createDate", KeyType.RANGE)),
-              Arrays.asList(
-                  new AttributeDefinition("email", ScalarAttributeType.S),
-                  new AttributeDefinition("createDate", ScalarAttributeType.S)),
-              new ProvisionedThroughput(10L, 10L));
-      usersTable.waitForActive();
-      logger.debug("Create new table for users");
-    } catch (ResourceInUseException e) {
-      logger.debug("Not Creating new table for users - it already exists");
-    } catch (InterruptedException e) {
-      logger.error("Unable to create table: " + e.toString());
-    }
-    final Table usersTable = this.database.getTable("users");
+    this.createTableIfNotExist(this.databaseConstants.USERS_TABLE);
+    final Table usersTable = this.database.getTable(this.databaseConstants.USERS_TABLE);
     final Item newUserItem = new Item();
     newUserItem.withPrimaryKey("email", userRequestModel.getUser().getEmail());
     Constants.ISO_8601.setTimeZone(Constants.TIME_ZONE);
@@ -96,8 +82,11 @@ public class DatabaseManager implements DatabaseManagerInterface {
   }
 
   public int loadMaxCapacity() {
-    // TODO: Allow getting and setting capacity
-    return 10;
+    createTableIfNotExist(this.databaseConstants.CONFIG_TABLE);
+    final Table configTable = this.database.getTable(this.databaseConstants.CONFIG_TABLE);
+    final Item maxCapacityItem =
+        configTable.getItem(new GetItemSpec().withPrimaryKey("name", "maxCapacity"));
+    return maxCapacityItem.getInt("value");
   }
 
   @Override
@@ -115,5 +104,34 @@ public class DatabaseManager implements DatabaseManagerInterface {
                   item.get("email").toString()));
         });
     return users;
+  }
+
+  private void createTableIfNotExist(final String tableName) {
+    final DatabaseConfigInformation configInformation =
+        databaseConstants.TABLE_CONFIG.get(tableName);
+    if (configInformation == null) {
+      logger.error("Can't resolve table name: " + tableName);
+      return;
+    }
+    try {
+      final Table table =
+          this.database.createTable(
+              configInformation.getTableName(),
+              configInformation.getKeySchemaElements(),
+              configInformation.getAttributeDefinitions(),
+              databaseConstants.PROVISIONED_THROUGHPUT);
+      table.waitForActive();
+      if (tableName.equals(databaseConstants.CONFIG_TABLE)) {
+        table.putItem(
+            new Item()
+                .withPrimaryKey("name", "maxCapacity")
+                .with("value", databaseConstants.DEFAULT_MAX_CAPACITY));
+      }
+      logger.debug("Create new table " + tableName);
+    } catch (ResourceInUseException e) {
+      logger.debug("Not Creating new table " + tableName + " - it already exists");
+    } catch (InterruptedException e) {
+      logger.error("Unable to create table " + tableName + ": " + e.toString());
+    }
   }
 }
