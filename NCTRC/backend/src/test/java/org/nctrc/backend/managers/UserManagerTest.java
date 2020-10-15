@@ -29,6 +29,11 @@ public class UserManagerTest {
         public int loadMaxCapacity() {
           return 10;
         }
+
+        @Override
+        public List<UserRequestModel> getAllUsers() throws InterruptedException {
+          return new ArrayList<>();
+        }
       };
 
   @Test

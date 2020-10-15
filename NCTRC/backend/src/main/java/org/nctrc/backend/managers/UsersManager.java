@@ -13,9 +13,13 @@ import org.nctrc.backend.model.request.SigninRequestModel;
 import org.nctrc.backend.model.request.UserRequestModel;
 import org.nctrc.backend.model.response.Result;
 import org.nctrc.backend.model.response.UserExistsResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Singleton
 public class UsersManager {
+
+  private static final Logger logger = LoggerFactory.getLogger(UsersManager.class);
 
   private final Set<UserRequestModel> users;
 
@@ -34,6 +38,11 @@ public class UsersManager {
     this.databaseManager = databaseManager;
     this.maxCapacity = databaseManager.loadMaxCapacity();
     this.currentCapacity = 0;
+    try {
+      users.addAll(databaseManager.getAllUsers());
+    } catch (InterruptedException e) {
+      logger.warn("Unable to load users from database: " + e.toString());
+    }
   }
 
   public Result signinUser(final SigninRequestModel signinRequestModel) {

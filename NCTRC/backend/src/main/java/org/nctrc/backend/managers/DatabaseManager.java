@@ -4,7 +4,9 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.ItemCollection;
 import com.amazonaws.services.dynamodbv2.document.PutItemOutcome;
+import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
 import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
@@ -14,14 +16,17 @@ import com.amazonaws.services.dynamodbv2.model.ResourceInUseException;
 import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 import javax.inject.Singleton;
 import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.model.request.NewUserRequestModel;
 import org.nctrc.backend.model.request.SigninRequestModel;
+import org.nctrc.backend.model.request.UserRequestModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,5 +98,22 @@ public class DatabaseManager implements DatabaseManagerInterface {
   public int loadMaxCapacity() {
     // TODO: Allow getting and setting capacity
     return 10;
+  }
+
+  @Override
+  public List<UserRequestModel> getAllUsers() throws InterruptedException {
+    final List<UserRequestModel> users = new ArrayList<>();
+    final Table usersTable = Objects.requireNonNull(this.database.getTable("users"));
+    usersTable.waitForActive();
+    final ItemCollection<ScanOutcome> outcomeItemCollection = usersTable.scan();
+    outcomeItemCollection.forEach(
+        item -> {
+          users.add(
+              new UserRequestModel(
+                  item.get("firstName").toString(),
+                  item.get("lastName").toString(),
+                  item.get("email").toString()));
+        });
+    return users;
   }
 }
