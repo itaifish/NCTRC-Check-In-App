@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.nctrc.backend.config.Constants;
+import org.nctrc.backend.config.DatabaseConstants;
 import org.nctrc.backend.model.request.NewUserRequestModel;
 import org.nctrc.backend.model.request.SigninDataRequestModel;
 import org.nctrc.backend.model.request.SigninRequestModel;
@@ -34,13 +35,16 @@ public class UserManagerTest {
         public List<UserRequestModel> getAllUsers() throws InterruptedException {
           return new ArrayList<>();
         }
+
+        @Override
+        public void setMaxCapacity(int newMaxCapacity) throws InterruptedException {}
       };
+
+  static final UsersManager usersManager =
+      new UsersManager(databaseManager, new DatabaseConstants());
 
   @Test
   void testUserManager() {
-    // dummy database manager to not call database for tests
-
-    final UsersManager usersManager = new UsersManager(databaseManager);
     final UserRequestModel usera = new UserRequestModel("itai", "fish", "itai@fish");
     final UserRequestModel userb = new UserRequestModel("itai", "fish", "jimmy@fish");
     final SigninDataRequestModel signinDataRequestModel = new SigninDataRequestModel(null, 100.1);
@@ -65,8 +69,7 @@ public class UserManagerTest {
   }
 
   @Test
-  void testCapacity() {
-    final UsersManager usersManager = new UsersManager(databaseManager);
+  void testCapacity() throws InterruptedException {
     final List<UserRequestModel> users = new ArrayList<>();
     for (int i = 0; i <= databaseManager.loadMaxCapacity(); i++) {
       users.add(new UserRequestModel("itai", "fish" + i, "itai@fish" + i));
@@ -89,7 +92,6 @@ public class UserManagerTest {
 
   @Test
   void testSigninData() {
-    final UsersManager usersManager = new UsersManager(databaseManager);
     final UserRequestModel userTooHot = new UserRequestModel("..", "iam", "toohot@gmail.com");
     final SigninDataRequestModel tooHotData =
         new SigninDataRequestModel(null, Constants.FEVER_TEMPERATURE + 0.5);

@@ -2,6 +2,7 @@ package org.nctrc.backend.managers;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.dynamodbv2.document.AttributeUpdate;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
@@ -9,14 +10,17 @@ import com.amazonaws.services.dynamodbv2.document.PutItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.spec.GetItemSpec;
+import com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec;
 import com.amazonaws.services.dynamodbv2.model.ResourceInUseException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.nctrc.backend.config.Constants;
@@ -33,15 +37,16 @@ public class DatabaseManager implements DatabaseManagerInterface {
 
   private static final Logger logger = LoggerFactory.getLogger(DatabaseManager.class);
 
-  private final AmazonDynamoDB client;
-
   private final DynamoDB database;
 
   private final DatabaseConstants databaseConstants;
 
+  private final Set<String> tablesThatExist;
+
   @Inject
   public DatabaseManager(final DatabaseConstants databaseConstants) {
     this.databaseConstants = databaseConstants;
+    this.tablesThatExist = new HashSet<>();
     try (InputStream input =
         Objects.requireNonNull(
                 DatabaseManager.class
@@ -55,13 +60,15 @@ public class DatabaseManager implements DatabaseManagerInterface {
     } catch (IOException | NullPointerException ex) {
       ex.printStackTrace();
     }
-    this.client = AmazonDynamoDBClientBuilder.standard().withRegion(Constants.REGION).build();
-    this.database = new DynamoDB(this.client);
+    final AmazonDynamoDB client =
+        AmazonDynamoDBClientBuilder.standard().withRegion(Constants.REGION).build();
+    this.database = new DynamoDB(client);
   }
 
-  public void addUser(final NewUserRequestModel userRequestModel) {
+  public void addUser(final NewUserRequestModel userRequestModel) throws InterruptedException {
     this.createTableIfNotExist(this.databaseConstants.USERS_TABLE);
     final Table usersTable = this.database.getTable(this.databaseConstants.USERS_TABLE);
+    usersTable.waitForActive();
     final Item newUserItem = new Item();
     newUserItem.withPrimaryKey("email", userRequestModel.getUser().getEmail());
     Constants.ISO_8601.setTimeZone(Constants.TIME_ZONE);
@@ -81,18 +88,37 @@ public class DatabaseManager implements DatabaseManagerInterface {
     // TODO: Implement
   }
 
-  public int loadMaxCapacity() {
+  public int loadMaxCapacity() throws InterruptedException {
     createTableIfNotExist(this.databaseConstants.CONFIG_TABLE);
     final Table configTable = this.database.getTable(this.databaseConstants.CONFIG_TABLE);
+    configTable.waitForActive();
     final Item maxCapacityItem =
-        configTable.getItem(new GetItemSpec().withPrimaryKey("name", "maxCapacity"));
-    return maxCapacityItem.getInt("value");
+        configTable.getItem(
+            new GetItemSpec()
+                .withPrimaryKey(
+                    this.databaseConstants.CONFIG_PRIMARY_KEY,
+                    this.databaseConstants.CONFIG_MAX_CAPACITY));
+    return maxCapacityItem.getInt(this.databaseConstants.CONFIG_VALUE);
+  }
+
+  public void setMaxCapacity(final int newMaxCapacity) throws InterruptedException {
+    createTableIfNotExist(this.databaseConstants.CONFIG_TABLE);
+    final Table configTable = this.database.getTable(this.databaseConstants.CONFIG_TABLE);
+    configTable.waitForActive();
+    configTable.updateItem(
+        new UpdateItemSpec()
+            .withPrimaryKey(
+                this.databaseConstants.CONFIG_PRIMARY_KEY,
+                this.databaseConstants.CONFIG_MAX_CAPACITY)
+            .withAttributeUpdate(
+                new AttributeUpdate(this.databaseConstants.CONFIG_VALUE).put(newMaxCapacity)));
   }
 
   @Override
   public List<UserRequestModel> getAllUsers() throws InterruptedException {
     final List<UserRequestModel> users = new ArrayList<>();
-    final Table usersTable = Objects.requireNonNull(this.database.getTable("users"));
+    createTableIfNotExist(this.databaseConstants.USERS_TABLE);
+    final Table usersTable = this.database.getTable(this.databaseConstants.USERS_TABLE);
     usersTable.waitForActive();
     final ItemCollection<ScanOutcome> outcomeItemCollection = usersTable.scan();
     outcomeItemCollection.forEach(
@@ -107,6 +133,9 @@ public class DatabaseManager implements DatabaseManagerInterface {
   }
 
   private void createTableIfNotExist(final String tableName) {
+    if (this.tablesThatExist.contains(tableName)) {
+      return;
+    }
     final DatabaseConfigInformation configInformation =
         databaseConstants.TABLE_CONFIG.get(tableName);
     if (configInformation == null) {
@@ -124,11 +153,15 @@ public class DatabaseManager implements DatabaseManagerInterface {
       if (tableName.equals(databaseConstants.CONFIG_TABLE)) {
         table.putItem(
             new Item()
-                .withPrimaryKey("name", "maxCapacity")
-                .with("value", databaseConstants.DEFAULT_MAX_CAPACITY));
+                .withPrimaryKey(
+                    this.databaseConstants.CONFIG_PRIMARY_KEY,
+                    this.databaseConstants.CONFIG_MAX_CAPACITY)
+                .with(this.databaseConstants.CONFIG_VALUE, databaseConstants.DEFAULT_MAX_CAPACITY));
       }
+      this.tablesThatExist.add(tableName);
       logger.debug("Create new table " + tableName);
     } catch (ResourceInUseException e) {
+      this.tablesThatExist.add(tableName);
       logger.debug("Not Creating new table " + tableName + " - it already exists");
     } catch (InterruptedException e) {
       logger.error("Unable to create table " + tableName + ": " + e.toString());

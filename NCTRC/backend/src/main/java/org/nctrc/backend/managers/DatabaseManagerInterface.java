@@ -6,11 +6,13 @@ import org.nctrc.backend.model.request.SigninRequestModel;
 import org.nctrc.backend.model.request.UserRequestModel;
 
 public interface DatabaseManagerInterface {
-  public void addUser(final NewUserRequestModel userRequestModel);
+  public void addUser(final NewUserRequestModel userRequestModel) throws InterruptedException;
 
   public void signinUser(final SigninRequestModel signinRequestModel);
 
-  public int loadMaxCapacity();
+  public int loadMaxCapacity() throws InterruptedException;
 
   public List<UserRequestModel> getAllUsers() throws InterruptedException;
+
+  public void setMaxCapacity(final int newMaxCapacity) throws InterruptedException;
 }

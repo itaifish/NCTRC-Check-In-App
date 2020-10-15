@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.nctrc.backend.config.Constants;
+import org.nctrc.backend.config.DatabaseConstants;
 import org.nctrc.backend.model.internal.DayTimeline;
 import org.nctrc.backend.model.request.NewUserRequestModel;
 import org.nctrc.backend.model.request.SigninDataRequestModel;
@@ -32,11 +33,16 @@ public class UsersManager {
   private int currentCapacity;
 
   @Inject
-  public UsersManager(final DatabaseManagerInterface databaseManager) {
+  public UsersManager(
+      final DatabaseManagerInterface databaseManager, final DatabaseConstants databaseConstants) {
     users = new HashSet<>();
     signinTimeLine = new DayTimeline(new Date());
     this.databaseManager = databaseManager;
-    this.maxCapacity = databaseManager.loadMaxCapacity();
+    try {
+      this.maxCapacity = databaseManager.loadMaxCapacity();
+    } catch (InterruptedException e) {
+      this.maxCapacity = databaseConstants.DEFAULT_MAX_CAPACITY;
+    }
     this.currentCapacity = 0;
     try {
       users.addAll(databaseManager.getAllUsers());
@@ -98,7 +104,13 @@ public class UsersManager {
     } else {
       signinTimeLine.addUser(user);
       users.add(user);
-      databaseManager.addUser(newUserRequestModel);
+      try {
+        databaseManager.addUser(newUserRequestModel);
+      } catch (InterruptedException e) {
+        final String errorMessage = "Unable to write new user to database: " + e.toString();
+        logger.warn(errorMessage);
+        return new Result(500, errorMessage);
+      }
       // Sign user in after creating them
       final SigninRequestModel signinRequestModel =
           new SigninRequestModel(
