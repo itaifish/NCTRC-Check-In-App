@@ -14,6 +14,7 @@ import org.nctrc.backend.model.request.SigninRequestModel;
 import org.nctrc.backend.model.request.UserRequestModel;
 import org.nctrc.backend.model.response.Result;
 import org.nctrc.backend.model.response.UserExistsResult;
+import org.nctrc.backend.utility.Utility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,6 +55,7 @@ public class UsersManager {
 
   public Result signinUser(final SigninRequestModel signinRequestModel) {
     final UserRequestModel user = signinRequestModel.getUser();
+    final Result result;
     if (users.contains(user)) {
       // TODO: Validate signin to make sure @ capacity and questions are valid
       if (!signinTimeLine.isUserSignedIn(user)) {
@@ -66,27 +68,35 @@ public class UsersManager {
               final String uuid = databaseManager.signinUser(signinRequestModel);
               signinTimeLine.signUserIn(user, uuid);
               this.currentCapacity++;
+              return new Result(200, "Success");
             } catch (InterruptedException e) {
-              return new Result(500, "Unable to write to database");
+              result = new Result(500, "Unable to write to database");
             }
           } else {
             final String information =
                 signinData.getYesQuestion() == null
                     ? "Your temperature is too high: " + signinData.getTemperature()
                     : "You answered yes to \"" + signinData.getYesQuestion() + "\"";
-            return new Result(412, information);
+            result = new Result(412, information);
           }
         } else {
-          return new Result(409, "At Capacity - Try again later");
+          result = new Result(409, "At Capacity - Try again later");
         }
-
-        return new Result(200, "Success");
       } else {
-        return new Result(405, "User is already signed in");
+        result = new Result(405, "User is already signed in");
       }
     } else {
-      return new Result(404, "User does not exist");
+      result = new Result(404, "User does not exist");
     }
+    // those code runs if a user tries to signin but there is an error
+    try {
+      // Sign user in and then out
+      final String uuid = databaseManager.signinUser(signinRequestModel);
+      databaseManager.signOutUser(uuid, Utility.failedSignedoutTimeToFullIso8601String());
+    } catch (Exception e) {
+      // do nothing, already returning due to result
+    }
+    return result;
   }
 
   public Result signoutUser(final UserRequestModel user) {

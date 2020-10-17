@@ -3,7 +3,6 @@ package org.nctrc.backend.model.internal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import org.nctrc.backend.model.request.UserRequestModel;
 
 /** This class represents the timeline of a single day with people signin into the clinic */
@@ -56,13 +55,5 @@ public class DayTimeline {
 
   public String getUserSigninId(final UserRequestModel userModel) {
     return usersStatus.get(userModel).getUuid();
-  }
-
-  public Set<TimeRange> getSigninTimesForUser(final UserRequestModel userModel) {
-    if (userExists(userModel)) {
-      return usersStatus.get(userModel).getTimeRanges();
-    } else {
-      throw new IllegalArgumentException("User " + userModel + " does not exist");
-    }
   }
 }

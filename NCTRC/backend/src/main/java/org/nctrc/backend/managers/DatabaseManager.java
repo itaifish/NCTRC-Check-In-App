@@ -106,6 +106,10 @@ public class DatabaseManager implements DatabaseManagerInterface {
     newTimelineItem.with("lastName", signinRequestModel.getUser().getLastName());
     newTimelineItem.with("signinTime", Utility.nowToFullIso8601String());
     newTimelineItem.with("temperature", signinRequestModel.getSigninData().getTemperature());
+    if (signinRequestModel.getSigninData().getYesQuestion() != null) {
+      newTimelineItem.withPrimaryKey(
+          "yesQuestion", signinRequestModel.getSigninData().getYesQuestion());
+    }
     try {
       final PutItemOutcome outcome = timelineTable.putItem(newTimelineItem);
       logger.debug("New User inserted into database:\n" + outcome.getPutItemResult());
