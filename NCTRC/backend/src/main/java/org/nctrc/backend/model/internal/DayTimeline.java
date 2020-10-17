@@ -34,9 +34,9 @@ public class DayTimeline {
     }
   }
 
-  public void signUserIn(final UserRequestModel userModel) {
+  public void signUserIn(final UserRequestModel userModel, final String uuid) {
     if (userExists(userModel)) {
-      usersStatus.get(userModel).setSignedIn();
+      usersStatus.get(userModel).setSignedIn(uuid);
     } else {
       throw new IllegalArgumentException("User " + userModel + " does not exist");
     }
@@ -52,6 +52,10 @@ public class DayTimeline {
 
   public boolean userExists(final UserRequestModel userModel) {
     return usersStatus.containsKey(userModel);
+  }
+
+  public String getUserSigninId(final UserRequestModel userModel) {
+    return usersStatus.get(userModel).getUuid();
   }
 
   public Set<TimeRange> getSigninTimesForUser(final UserRequestModel userModel) {

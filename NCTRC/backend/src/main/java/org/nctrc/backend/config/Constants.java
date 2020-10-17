@@ -45,7 +45,10 @@ public final class Constants {
 
   public static final SimpleDateFormat ISO_8601 = new SimpleDateFormat("yyyy-MM-dd");
 
-  public static final TimeZone TIME_ZONE = TimeZone.getTimeZone("EST");
+  public static final SimpleDateFormat ISO_8601_FULL =
+      new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+  public static final TimeZone TIME_ZONE = TimeZone.getTimeZone("America/New_York");
 
   private Constants() {}
 }

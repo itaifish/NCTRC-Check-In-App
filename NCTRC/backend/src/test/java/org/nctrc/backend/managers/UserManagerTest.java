@@ -24,7 +24,15 @@ public class UserManagerTest {
         public void addUser(NewUserRequestModel userRequestModel) {}
 
         @Override
-        public void signinUser(SigninRequestModel signinRequestModel) {}
+        public String signinUser(SigninRequestModel signinRequestModel) {
+          return "";
+        }
+
+        @Override
+        public void signOutUser(String uuid) throws InterruptedException {}
+
+        @Override
+        public void signOutUser(String uuid, String signoutTime) throws InterruptedException {}
 
         @Override
         public int loadMaxCapacity() {

@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
+import java.util.UUID;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.nctrc.backend.config.Constants;
@@ -29,6 +30,7 @@ import org.nctrc.backend.config.DatabaseConstants;
 import org.nctrc.backend.model.request.NewUserRequestModel;
 import org.nctrc.backend.model.request.SigninRequestModel;
 import org.nctrc.backend.model.request.UserRequestModel;
+import org.nctrc.backend.utility.Utility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,8 +86,47 @@ public class DatabaseManager implements DatabaseManagerInterface {
     }
   }
 
-  public void signinUser(final SigninRequestModel signinRequestModel) {
-    // TODO: Implement
+  /**
+   * This function signs in a user and returns the uuid of the signin/signout datapoint
+   *
+   * @param signinRequestModel Model of request to sign a user in
+   * @return String of uuid for signin/signout to be found later
+   * @throws InterruptedException
+   */
+  public String signinUser(final SigninRequestModel signinRequestModel)
+      throws InterruptedException {
+    this.createTableIfNotExist(this.databaseConstants.TIMELINE_TABLE);
+    final Table timelineTable = this.database.getTable(this.databaseConstants.TIMELINE_TABLE);
+    timelineTable.waitForActive();
+    final Item newTimelineItem = new Item();
+    final String id = UUID.randomUUID().toString();
+    newTimelineItem.withPrimaryKey("id", id);
+    newTimelineItem.with("userEmail", signinRequestModel.getUser().getEmail());
+    newTimelineItem.with("firstName", signinRequestModel.getUser().getFirstName());
+    newTimelineItem.with("lastName", signinRequestModel.getUser().getLastName());
+    newTimelineItem.with("signinTime", Utility.nowToFullIso8601String());
+    newTimelineItem.with("temperature", signinRequestModel.getSigninData().getTemperature());
+    try {
+      final PutItemOutcome outcome = timelineTable.putItem(newTimelineItem);
+      logger.debug("New User inserted into database:\n" + outcome.getPutItemResult());
+    } catch (Exception e) {
+      logger.error("Unable to add new user with error: " + e.toString());
+      throw new InterruptedException("Unable to add new user with error: " + e.toString());
+    }
+    return id;
+  }
+
+  public void signOutUser(final String uuid) throws InterruptedException {
+    signOutUser(uuid, Utility.nowToFullIso8601String());
+  }
+
+  public void signOutUser(final String uuid, final String signoutTime) throws InterruptedException {
+    final Table timelineTable = this.database.getTable(this.databaseConstants.TIMELINE_TABLE);
+    timelineTable.waitForActive();
+    timelineTable.updateItem(
+        new UpdateItemSpec()
+            .withPrimaryKey("id", uuid)
+            .withAttributeUpdate(new AttributeUpdate("signoutTime").put(signoutTime)));
   }
 
   public int loadMaxCapacity() throws InterruptedException {

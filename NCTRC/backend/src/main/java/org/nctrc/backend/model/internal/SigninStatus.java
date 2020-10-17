@@ -9,9 +9,15 @@ public class SigninStatus {
 
   private boolean isSignedIn;
 
+  /*
+  This String tracks the uuid of the most recent signin request to sign out of
+   */
+  private String uuid;
+
   public SigninStatus() {
     this.isSignedIn = false;
     this.timeRanges = new ConcurrentSkipListSet<>();
+    this.uuid = null;
   }
 
   public ConcurrentSkipListSet<TimeRange> getTimeRanges() {
@@ -22,10 +28,15 @@ public class SigninStatus {
     return isSignedIn;
   }
 
-  public void setSignedIn() {
+  public String getUuid() {
+    return uuid;
+  }
+
+  public void setSignedIn(final String uuid) {
     if (this.isSignedIn()) {
       throw new IllegalStateException("Can't sign in when already signed in");
     }
+    this.uuid = uuid;
     if (!timeRanges.isEmpty()) {
       final TimeRange newestTime = timeRanges.last();
       if (newestTime.getEndTime() == null) {
@@ -45,6 +56,7 @@ public class SigninStatus {
     if (!this.isSignedIn) {
       throw new IllegalStateException("Can't sign out when already signed out");
     }
+    this.uuid = null;
     if (!timeRanges.isEmpty()) {
       final TimeRange newestTime = timeRanges.last();
       if (newestTime.getEndTime() != null) {

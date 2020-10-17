@@ -18,6 +18,8 @@ public class DatabaseConstants {
 
   public final String CONFIG_TABLE = "config";
 
+  public final String TIMELINE_TABLE = "timeline";
+
   public final String CONFIG_PRIMARY_KEY = "name";
 
   public final String CONFIG_MAX_CAPACITY = "maxCapacity";
@@ -48,5 +50,11 @@ public class DatabaseConstants {
             this.CONFIG_TABLE,
             Collections.singletonList(new KeySchemaElement("name", KeyType.HASH)),
             Collections.singletonList(new AttributeDefinition("name", ScalarAttributeType.S))));
+    TABLE_CONFIG.put(
+        this.TIMELINE_TABLE,
+        new DatabaseConfigInformation(
+            this.TIMELINE_TABLE,
+            Collections.singletonList(new KeySchemaElement("id", KeyType.HASH)),
+            Collections.singletonList(new AttributeDefinition("id", ScalarAttributeType.S))));
   }
 }

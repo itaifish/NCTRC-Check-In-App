@@ -46,6 +46,7 @@ public class UsersManager {
     this.currentCapacity = 0;
     try {
       users.addAll(databaseManager.getAllUsers());
+      users.forEach(signinTimeLine::addUser);
     } catch (InterruptedException e) {
       logger.warn("Unable to load users from database: " + e.toString());
     }
@@ -60,9 +61,14 @@ public class UsersManager {
           final SigninDataRequestModel signinData = signinRequestModel.getSigninData();
           if (signinData.getTemperature() <= Constants.FEVER_TEMPERATURE
               && signinData.getYesQuestion() == null) {
-            signinTimeLine.signUserIn(user);
-            databaseManager.signinUser(signinRequestModel);
-            this.currentCapacity++;
+
+            try {
+              final String uuid = databaseManager.signinUser(signinRequestModel);
+              signinTimeLine.signUserIn(user, uuid);
+              this.currentCapacity++;
+            } catch (InterruptedException e) {
+              return new Result(500, "Unable to write to database");
+            }
           } else {
             final String information =
                 signinData.getYesQuestion() == null
@@ -86,9 +92,15 @@ public class UsersManager {
   public Result signoutUser(final UserRequestModel user) {
     if (users.contains(user)) {
       if (signinTimeLine.isUserSignedIn(user)) {
-        signinTimeLine.signUserOut(user);
-        this.currentCapacity--;
-        return new Result(200, "Success");
+        try {
+          final String signInId = signinTimeLine.getUserSigninId(user);
+          this.databaseManager.signOutUser(signInId);
+          signinTimeLine.signUserOut(user);
+          this.currentCapacity--;
+          return new Result(200, "Success");
+        } catch (InterruptedException e) {
+          return new Result(500, "Unable to write to database to sign user out");
+        }
       } else {
         return new Result(405, "User is not signed in to be signed out");
       }

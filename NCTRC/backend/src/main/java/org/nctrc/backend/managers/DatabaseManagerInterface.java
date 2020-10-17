@@ -8,7 +8,11 @@ import org.nctrc.backend.model.request.UserRequestModel;
 public interface DatabaseManagerInterface {
   public void addUser(final NewUserRequestModel userRequestModel) throws InterruptedException;
 
-  public void signinUser(final SigninRequestModel signinRequestModel);
+  public String signinUser(final SigninRequestModel signinRequestModel) throws InterruptedException;
+
+  public void signOutUser(final String uuid) throws InterruptedException;
+
+  public void signOutUser(final String uuid, final String signoutTime) throws InterruptedException;
 
   public int loadMaxCapacity() throws InterruptedException;
 
