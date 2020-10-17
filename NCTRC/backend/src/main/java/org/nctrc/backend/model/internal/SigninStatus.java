@@ -1,6 +1,5 @@
 package org.nctrc.backend.model.internal;
 
-
 public class SigninStatus {
 
   private boolean isSignedIn;
@@ -28,12 +27,14 @@ public class SigninStatus {
       throw new IllegalStateException("Can't sign in when already signed in");
     }
     this.uuid = uuid;
+    this.isSignedIn = true;
   }
 
   public void setSignedOut() {
     if (!this.isSignedIn) {
       throw new IllegalStateException("Can't sign out when already signed out");
     }
+    this.isSignedIn = false;
     this.uuid = null;
   }
 }

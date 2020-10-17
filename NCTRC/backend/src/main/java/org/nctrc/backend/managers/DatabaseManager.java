@@ -177,6 +177,15 @@ public class DatabaseManager implements DatabaseManagerInterface {
     return users;
   }
 
+  //  public List<UserRequestModel> getAllUsersWhoAreSignedInDatabase() throws InterruptedException
+  // {
+  //    createTableIfNotExist(this.databaseConstants.TIMELINE_TABLE);
+  //    final Table timelineTable = this.database.getTable(this.databaseConstants.TIMELINE_TABLE);
+  //    timelineTable.waitForActive();
+  //    final ItemCollection<ScanOutcome> outcomeItemCollection = timelineTable.scan(new
+  // QuerySpec().withFilterExpression());
+  //  }
+
   private void createTableIfNotExist(final String tableName) {
     if (this.tablesThatExist.contains(tableName)) {
       return;
