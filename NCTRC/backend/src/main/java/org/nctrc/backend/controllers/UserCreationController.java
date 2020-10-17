@@ -50,7 +50,7 @@ public class UserCreationController extends UserController {
             content = {@OpenApiContent(from = Result.class)}),
       })
   public void createUser(final Context ctx) {
-    final NewUserRequestModel userModel = validateBody(ctx, NewUserRequestModel.class);
+    final NewUserRequestModel userModel = validateBodyAndAuth(ctx, NewUserRequestModel.class);
     if (userModel == null) {
       return;
     }

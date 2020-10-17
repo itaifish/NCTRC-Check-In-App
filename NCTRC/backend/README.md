@@ -17,9 +17,15 @@ Keystore Files:
 ====
 HTTPS: In order to get https/ssl connection working, which is required for HIPPA complicance, you need to put a keystore.jks file in the resources/keystore folder. The easiest way to generate this jks file is following this tutorial: https://community.letsencrypt.org/t/tutorial-java-keystores-jks-with-lets-encrypt/34754/7. 
 
-dynamodb: in keystore/database/ create a database.properties file with the following content:
+dynamodb: in resources/keystore/database/ create a database.properties file with the following content:
 ```
 accessKeyId=[access_key_id_text_here]
 secretAccessKey=[secret_access_key_text_here]
 ```
 replacing [access_key_id_text_here] and [secret_access_key_text_here] with the corresponding values for your dynamodb user account
+
+Authorization: In order to load the correct auth key, create a 'auth.properties' file in the resources/keystore folder
+```
+authKey=[Auth_key_here]
+```
+replacing [Auth_key_here] with whatever authorization key you have shared between your frontend and backend

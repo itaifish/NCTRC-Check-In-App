@@ -51,7 +51,7 @@ public class UserSigninController extends UserController {
             content = {@OpenApiContent(from = Result.class)}),
       })
   public void login(final Context ctx) {
-    final SigninRequestModel userModel = validateBody(ctx, SigninRequestModel.class);
+    final SigninRequestModel userModel = validateBodyAndAuth(ctx, SigninRequestModel.class);
     if (userModel == null) {
       return;
     }
@@ -81,7 +81,7 @@ public class UserSigninController extends UserController {
             content = {@OpenApiContent(from = Result.class)})
       })
   public void logout(final Context ctx) {
-    final UserRequestModel userModel = validateBody(ctx, UserRequestModel.class);
+    final UserRequestModel userModel = validateBodyAndAuth(ctx, UserRequestModel.class);
     if (userModel == null) {
       return;
     }

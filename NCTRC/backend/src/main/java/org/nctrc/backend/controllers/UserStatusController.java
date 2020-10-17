@@ -40,7 +40,7 @@ public class UserStatusController extends UserController {
             content = {@OpenApiContent(from = Result.class)})
       })
   public void doesUserExist(final Context ctx) {
-    final UserRequestModel userModel = validateBody(ctx, UserRequestModel.class);
+    final UserRequestModel userModel = validateBodyAndAuth(ctx, UserRequestModel.class);
     if (userModel == null) {
       return;
     }

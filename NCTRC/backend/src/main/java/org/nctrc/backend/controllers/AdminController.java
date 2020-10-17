@@ -44,7 +44,7 @@ public class AdminController extends Controller {
       })
   public void updateMaxCapacity(final Context ctx) {
     final UpdateMaxCapacityRequestModel updateMaxCapacityRequestModel =
-        validateBody(ctx, UpdateMaxCapacityRequestModel.class);
+        validateBodyAndAuth(ctx, UpdateMaxCapacityRequestModel.class);
     if (updateMaxCapacityRequestModel == null) {
       return;
     }

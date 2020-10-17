@@ -71,7 +71,6 @@ public class UsersManager {
     final UserRequestModel user = signinRequestModel.getUser();
     final Result result;
     if (users.contains(user)) {
-      // TODO: Validate signin to make sure @ capacity and questions are valid
       if (!signinTimeLine.isUserSignedIn(user)) {
         if (this.currentCapacity < this.maxCapacity) {
           final SigninDataRequestModel signinData = signinRequestModel.getSigninData();
