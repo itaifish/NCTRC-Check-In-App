@@ -16,17 +16,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.UUID;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import org.apache.commons.lang3.time.DateUtils;
+import org.joda.time.DateTime;
 import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.config.DatabaseConfigInformation;
 import org.nctrc.backend.config.DatabaseConstants;
+import org.nctrc.backend.model.internal.SigninTimeIdPair;
 import org.nctrc.backend.model.request.NewUserRequestModel;
 import org.nctrc.backend.model.request.SigninRequestModel;
 import org.nctrc.backend.model.request.UserRequestModel;
@@ -93,18 +98,19 @@ public class DatabaseManager implements DatabaseManagerInterface {
    * @return String of uuid for signin/signout to be found later
    * @throws InterruptedException
    */
-  public String signinUser(final SigninRequestModel signinRequestModel)
+  public SigninTimeIdPair signinUser(final SigninRequestModel signinRequestModel)
       throws InterruptedException {
     this.createTableIfNotExist(this.databaseConstants.TIMELINE_TABLE);
     final Table timelineTable = this.database.getTable(this.databaseConstants.TIMELINE_TABLE);
     timelineTable.waitForActive();
     final Item newTimelineItem = new Item();
     final String id = UUID.randomUUID().toString();
+    final String signinTime = Utility.nowToFullIso8601String();
     newTimelineItem.withPrimaryKey("id", id);
     newTimelineItem.with("userEmail", signinRequestModel.getUser().getEmail());
     newTimelineItem.with("firstName", signinRequestModel.getUser().getFirstName());
     newTimelineItem.with("lastName", signinRequestModel.getUser().getLastName());
-    newTimelineItem.with("signinTime", Utility.nowToFullIso8601String());
+    newTimelineItem.with("signinTime", signinTime);
     newTimelineItem.with("temperature", signinRequestModel.getSigninData().getTemperature());
     if (signinRequestModel.getSigninData().getYesQuestion() != null) {
       newTimelineItem.withPrimaryKey(
@@ -117,19 +123,21 @@ public class DatabaseManager implements DatabaseManagerInterface {
       logger.error("Unable to add new user with error: " + e.toString());
       throw new InterruptedException("Unable to add new user with error: " + e.toString());
     }
-    return id;
+    return new SigninTimeIdPair(id, signinTime);
   }
 
-  public void signOutUser(final String uuid) throws InterruptedException {
-    signOutUser(uuid, Utility.nowToFullIso8601String());
+  public void signOutUser(final SigninTimeIdPair signInTimeAndId) throws InterruptedException {
+    signOutUser(signInTimeAndId, Utility.nowToFullIso8601String());
   }
 
-  public void signOutUser(final String uuid, final String signoutTime) throws InterruptedException {
+  public void signOutUser(final SigninTimeIdPair signInTimeAndId, final String signoutTime)
+      throws InterruptedException {
     final Table timelineTable = this.database.getTable(this.databaseConstants.TIMELINE_TABLE);
     timelineTable.waitForActive();
     timelineTable.updateItem(
         new UpdateItemSpec()
-            .withPrimaryKey("id", uuid)
+            .withPrimaryKey(
+                "id", signInTimeAndId.getId(), "signinTime", signInTimeAndId.getSigninTime())
             .withAttributeUpdate(new AttributeUpdate("signoutTime").put(signoutTime)));
   }
 
@@ -177,14 +185,30 @@ public class DatabaseManager implements DatabaseManagerInterface {
     return users;
   }
 
-  //  public List<UserRequestModel> getAllUsersWhoAreSignedInDatabase() throws InterruptedException
-  // {
-  //    createTableIfNotExist(this.databaseConstants.TIMELINE_TABLE);
-  //    final Table timelineTable = this.database.getTable(this.databaseConstants.TIMELINE_TABLE);
-  //    timelineTable.waitForActive();
-  //    final ItemCollection<ScanOutcome> outcomeItemCollection = timelineTable.scan(new
-  // QuerySpec().withFilterExpression());
-  //  }
+  public Map<UserRequestModel, SigninTimeIdPair> getAllUsersWhoAreSignedInDatabase()
+      throws InterruptedException {
+    createTableIfNotExist(this.databaseConstants.TIMELINE_TABLE);
+    final Table timelineTable = this.database.getTable(this.databaseConstants.TIMELINE_TABLE);
+    timelineTable.waitForActive();
+    final ItemCollection<ScanOutcome> outcomeItemCollection = timelineTable.scan();
+    final Map<UserRequestModel, SigninTimeIdPair> usersStillSignedIn = new HashMap<>();
+    outcomeItemCollection.forEach(
+        item -> {
+          final DateTime signinTime = DateTime.parse(item.getString("signinTime"));
+          final long yesterday = DateUtils.addDays(new Date(), -1).getTime();
+          if (signinTime.isAfter(yesterday)) {
+            if (item.getString("signoutTime") == null) {
+              usersStillSignedIn.put(
+                  new UserRequestModel(
+                      item.getString("firstName"),
+                      item.getString("lastName"),
+                      item.getString("userEmail")),
+                  new SigninTimeIdPair(item.getString("id"), item.getString("signinTime")));
+            }
+          }
+        });
+    return usersStillSignedIn;
+  }
 
   private void createTableIfNotExist(final String tableName) {
     if (this.tablesThatExist.contains(tableName)) {

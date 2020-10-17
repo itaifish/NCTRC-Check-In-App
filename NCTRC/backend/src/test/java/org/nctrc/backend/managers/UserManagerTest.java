@@ -6,9 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.config.DatabaseConstants;
+import org.nctrc.backend.model.internal.SigninTimeIdPair;
 import org.nctrc.backend.model.request.NewUserRequestModel;
 import org.nctrc.backend.model.request.SigninDataRequestModel;
 import org.nctrc.backend.model.request.SigninRequestModel;
@@ -24,15 +26,17 @@ public class UserManagerTest {
         public void addUser(NewUserRequestModel userRequestModel) {}
 
         @Override
-        public String signinUser(SigninRequestModel signinRequestModel) {
-          return "";
+        public SigninTimeIdPair signinUser(SigninRequestModel signinRequestModel)
+            throws InterruptedException {
+          return null;
         }
 
         @Override
-        public void signOutUser(String uuid) throws InterruptedException {}
+        public void signOutUser(SigninTimeIdPair signInTimeAndId) throws InterruptedException {}
 
         @Override
-        public void signOutUser(String uuid, String signoutTime) throws InterruptedException {}
+        public void signOutUser(SigninTimeIdPair signInTimeAndId, String signoutTime)
+            throws InterruptedException {}
 
         @Override
         public int loadMaxCapacity() {
@@ -42,6 +46,12 @@ public class UserManagerTest {
         @Override
         public List<UserRequestModel> getAllUsers() throws InterruptedException {
           return new ArrayList<>();
+        }
+
+        @Override
+        public Map<UserRequestModel, SigninTimeIdPair> getAllUsersWhoAreSignedInDatabase()
+            throws InterruptedException {
+          return null;
         }
 
         @Override

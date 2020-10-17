@@ -54,7 +54,11 @@ public class DatabaseConstants {
         this.TIMELINE_TABLE,
         new DatabaseConfigInformation(
             this.TIMELINE_TABLE,
-            Collections.singletonList(new KeySchemaElement("id", KeyType.HASH)),
-            Collections.singletonList(new AttributeDefinition("id", ScalarAttributeType.S))));
+            Arrays.asList(
+                new KeySchemaElement("id", KeyType.HASH),
+                new KeySchemaElement("signinTime", KeyType.RANGE)),
+            Arrays.asList(
+                new AttributeDefinition("id", ScalarAttributeType.S),
+                new AttributeDefinition("signinTime", ScalarAttributeType.S))));
   }
 }

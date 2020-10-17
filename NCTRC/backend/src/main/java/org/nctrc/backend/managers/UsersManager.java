@@ -2,12 +2,14 @@ package org.nctrc.backend.managers;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.config.DatabaseConstants;
 import org.nctrc.backend.model.internal.DayTimeline;
+import org.nctrc.backend.model.internal.SigninTimeIdPair;
 import org.nctrc.backend.model.request.NewUserRequestModel;
 import org.nctrc.backend.model.request.SigninDataRequestModel;
 import org.nctrc.backend.model.request.SigninRequestModel;
@@ -51,6 +53,18 @@ public class UsersManager {
     } catch (InterruptedException e) {
       logger.warn("Unable to load users from database: " + e.toString());
     }
+    try {
+      final Map<UserRequestModel, SigninTimeIdPair> usersSignedIn =
+          databaseManager.getAllUsersWhoAreSignedInDatabase();
+      usersSignedIn
+          .keySet()
+          .forEach(
+              userRequestModel -> {
+                signinTimeLine.signUserIn(userRequestModel, usersSignedIn.get(userRequestModel));
+              });
+    } catch (InterruptedException e) {
+      logger.warn("Unable to load signed in users from database: " + e.toString());
+    }
   }
 
   public Result signinUser(final SigninRequestModel signinRequestModel) {
@@ -65,8 +79,9 @@ public class UsersManager {
               && signinData.getYesQuestion() == null) {
 
             try {
-              final String uuid = databaseManager.signinUser(signinRequestModel);
-              signinTimeLine.signUserIn(user, uuid);
+              final SigninTimeIdPair signInTimeAndId =
+                  databaseManager.signinUser(signinRequestModel);
+              signinTimeLine.signUserIn(user, signInTimeAndId);
               this.currentCapacity++;
               return new Result(200, "Success");
             } catch (InterruptedException e) {
@@ -91,8 +106,9 @@ public class UsersManager {
     // those code runs if a user tries to signin but there is an error
     try {
       // Sign user in and then out
-      final String uuid = databaseManager.signinUser(signinRequestModel);
-      databaseManager.signOutUser(uuid, Utility.failedSignedoutTimeToFullIso8601String());
+      final SigninTimeIdPair signInTimeAndId = databaseManager.signinUser(signinRequestModel);
+      databaseManager.signOutUser(
+          signInTimeAndId, Utility.failedSignedoutTimeToFullIso8601String());
     } catch (Exception e) {
       logger.warn("Error signing user in/out: " + e.toString());
       // do nothing, already returning due to result
@@ -104,7 +120,7 @@ public class UsersManager {
     if (users.contains(user)) {
       if (signinTimeLine.isUserSignedIn(user)) {
         try {
-          final String signInId = signinTimeLine.getUserSigninId(user);
+          final SigninTimeIdPair signInId = signinTimeLine.getUserSigninTimeAndId(user);
           this.databaseManager.signOutUser(signInId);
           signinTimeLine.signUserOut(user);
           this.currentCapacity--;
