@@ -94,6 +94,7 @@ public class UsersManager {
       final String uuid = databaseManager.signinUser(signinRequestModel);
       databaseManager.signOutUser(uuid, Utility.failedSignedoutTimeToFullIso8601String());
     } catch (Exception e) {
+      logger.warn("Error signing user in/out: " + e.toString());
       // do nothing, already returning due to result
     }
     return result;
@@ -143,5 +144,9 @@ public class UsersManager {
 
   public Result userExists(final UserRequestModel user) {
     return new UserExistsResult(200, "", users.contains(user));
+  }
+
+  public void setMaxCapacity(final int newMax) {
+    this.maxCapacity = newMax;
   }
 }

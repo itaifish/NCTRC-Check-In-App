@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.managers.DatabaseManager;
+import org.nctrc.backend.managers.UsersManager;
 import org.nctrc.backend.model.request.UpdateMaxCapacityRequestModel;
 import org.nctrc.backend.model.response.Result;
 
@@ -18,9 +19,12 @@ public class AdminController extends Controller {
 
   private final DatabaseManager databaseManager;
 
+  private final UsersManager usersManager;
+
   @Inject
-  public AdminController(final DatabaseManager databaseManager) {
+  public AdminController(final DatabaseManager databaseManager, final UsersManager usersManager) {
     this.databaseManager = databaseManager;
+    this.usersManager = usersManager;
   }
 
   @OpenApi(
@@ -50,6 +54,7 @@ public class AdminController extends Controller {
     }
     try {
       databaseManager.setMaxCapacity(updateMaxCapacityRequestModel.getMaxCapacity());
+      usersManager.setMaxCapacity(updateMaxCapacityRequestModel.getMaxCapacity());
     } catch (java.lang.InterruptedException e) {
       ctx.status(500);
       ctx.json(new Result(500, "Was unable to write to database"));
