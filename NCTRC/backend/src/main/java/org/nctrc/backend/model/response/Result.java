@@ -6,7 +6,7 @@ public class Result {
 
   private final String information;
 
-  public Result(int statusCode, String information) {
+  public Result(final int statusCode, final String information) {
     this.statusCode = statusCode;
     this.information = information;
   }

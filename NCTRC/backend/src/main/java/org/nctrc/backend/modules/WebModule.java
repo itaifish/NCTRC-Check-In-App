@@ -71,6 +71,7 @@ public class WebModule extends AbstractModule {
     }
     sslContextFactory.setKeyStorePath(keystorePath.toExternalForm());
     sslContextFactory.setKeyStorePassword("password");
+    logger.debug("is valid certs? " + sslContextFactory.isValidateCerts());
     return sslContextFactory;
   }
 
@@ -96,6 +97,8 @@ public class WebModule extends AbstractModule {
             .reDoc(new ReDocOptions("/redoc")) // endpoint for redoc
             .defaultDocumentation(
                 doc -> {
+                  doc.json("400", Result.class);
+                  doc.json("401", Result.class);
                   doc.json("500", Result.class);
                   doc.json("503", Result.class);
                 });

@@ -10,30 +10,30 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.managers.UsersManager;
-import org.nctrc.backend.model.request.SigninRequestModel;
+import org.nctrc.backend.model.request.NewUserRequestModel;
 import org.nctrc.backend.model.request.UserRequestModel;
 import org.nctrc.backend.model.response.Result;
 
 @Singleton
-public class UserSigninController extends UserController {
+public class UserCreationController extends UserController {
 
   private final UsersManager manager;
 
   @Inject
-  public UserSigninController(final UsersManager manager) {
+  public UserCreationController(final UsersManager manager) {
     this.manager = manager;
   }
 
   @OpenApi(
-      summary = "Login existing user",
-      operationId = "loginUser",
-      path = "/" + ROOT_PATH + Constants.USER_SIGNIN_PATH,
+      summary = "Create user",
+      operationId = "createUser",
+      path = "/" + ROOT_PATH + Constants.USER_CREATION_PATH,
       method = HttpMethod.POST,
       tags = {"User"},
       requestBody =
-          @OpenApiRequestBody(content = {@OpenApiContent(from = SigninRequestModel.class)}),
+          @OpenApiRequestBody(content = {@OpenApiContent(from = NewUserRequestModel.class)}),
       responses = {
-        @OpenApiResponse(status = "200"),
+        @OpenApiResponse(status = "201"),
         @OpenApiResponse(
             status = "400",
             content = {@OpenApiContent(from = Result.class)}),
@@ -50,42 +50,36 @@ public class UserSigninController extends UserController {
             status = "412",
             content = {@OpenApiContent(from = Result.class)}),
       })
-  public void login(final Context ctx) {
-    final SigninRequestModel userModel = validateBodyAndAuth(ctx, SigninRequestModel.class);
+  public void createUser(final Context ctx) {
+    final NewUserRequestModel userModel = validateBodyAndAuth(ctx, NewUserRequestModel.class);
     if (userModel == null) {
       return;
     }
-    final Result result = manager.signinUser(userModel);
+    final Result result = manager.createAndSigninUser(userModel);
     if (this.resultIsIn2xxAndHandle(result, ctx)) {
-      ctx.status(200);
+      ctx.status(201);
     }
   }
 
   @OpenApi(
-      summary = "Log out existing user",
-      operationId = "logoutUser",
-      path = "/" + ROOT_PATH + Constants.USER_SIGNOUT_PATH,
-      method = HttpMethod.POST,
+      summary = "Delete user",
+      operationId = "deleteUser",
+      path = "/" + ROOT_PATH + Constants.USER_DELETION_PATH,
+      method = HttpMethod.DELETE,
       tags = {"User"},
       requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = UserRequestModel.class)}),
       responses = {
         @OpenApiResponse(status = "200"),
         @OpenApiResponse(
-            status = "400",
-            content = {@OpenApiContent(from = Result.class)}),
-        @OpenApiResponse(
-            status = "404",
-            content = {@OpenApiContent(from = Result.class)}),
-        @OpenApiResponse(
             status = "405",
-            content = {@OpenApiContent(from = Result.class)})
+            content = {@OpenApiContent(from = Result.class)}),
       })
-  public void logout(final Context ctx) {
+  public void deleteUser(final Context ctx) {
     final UserRequestModel userModel = validateBodyAndAuth(ctx, UserRequestModel.class);
     if (userModel == null) {
       return;
     }
-    final Result result = manager.signoutUser(userModel);
+    final Result result = manager.deleteUser(userModel);
     if (this.resultIsIn2xxAndHandle(result, ctx)) {
       ctx.status(200);
     }
