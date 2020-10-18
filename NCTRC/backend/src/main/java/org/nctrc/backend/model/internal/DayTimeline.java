@@ -56,4 +56,8 @@ public class DayTimeline {
   public SigninTimeIdPair getUserSigninTimeAndId(final UserRequestModel userModel) {
     return usersStatus.get(userModel).getSignInTimeAndId();
   }
+
+  public void removeUser(final UserRequestModel userModel) {
+    usersStatus.remove(userModel);
+  }
 }

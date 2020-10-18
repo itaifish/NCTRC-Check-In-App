@@ -38,12 +38,8 @@ public class DatabaseConstants {
         this.USERS_TABLE,
         new DatabaseConfigInformation(
             this.USERS_TABLE,
-            Arrays.asList(
-                new KeySchemaElement("email", KeyType.HASH),
-                new KeySchemaElement("createDate", KeyType.RANGE)),
-            Arrays.asList(
-                new AttributeDefinition("email", ScalarAttributeType.S),
-                new AttributeDefinition("createDate", ScalarAttributeType.S))));
+            Arrays.asList(new KeySchemaElement("email", KeyType.HASH)),
+            Arrays.asList(new AttributeDefinition("email", ScalarAttributeType.S))));
     TABLE_CONFIG.put(
         this.CONFIG_TABLE,
         new DatabaseConfigInformation(

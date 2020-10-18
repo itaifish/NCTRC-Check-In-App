@@ -157,6 +157,23 @@ public class UsersManager {
     }
   }
 
+  public Result deleteUser(final UserRequestModel userModel) {
+    if (!users.contains(userModel)) {
+      return new Result(405, "Email " + userModel.getEmail() + " does not exist");
+    } else {
+      try {
+        databaseManager.removeUser(userModel);
+        signinTimeLine.removeUser(userModel);
+        users.remove(userModel);
+        return new Result(200, "Success");
+      } catch (InterruptedException e) {
+        final String errorMessage = "Unable to write new user to database: " + e.toString();
+        logger.warn(errorMessage);
+        return new Result(500, errorMessage);
+      }
+    }
+  }
+
   public Result userExists(final UserRequestModel user) {
     return new UserExistsResult(200, "", users.contains(user));
   }

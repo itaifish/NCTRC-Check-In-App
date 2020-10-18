@@ -1,5 +1,6 @@
 package org.nctrc.backend.startup.entrypoint;
 
+import static io.javalin.apibuilder.ApiBuilder.delete;
 import static io.javalin.apibuilder.ApiBuilder.path;
 import static io.javalin.apibuilder.ApiBuilder.post;
 
@@ -54,6 +55,9 @@ public class WebEntrypoint implements AppEntrypoint {
                           path(
                               Constants.USER_CREATION_PATH,
                               () -> post(this.userCreationController::createUser));
+                          path(
+                              Constants.USER_DELETION_PATH,
+                              () -> delete(this.userCreationController::deleteUser));
                           path(
                               Constants.USER_SIGNOUT_PATH,
                               () -> post(this.userSigninController::logout));

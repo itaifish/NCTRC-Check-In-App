@@ -6,6 +6,7 @@ import com.amazonaws.services.dynamodbv2.document.AttributeUpdate;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
+import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
 import com.amazonaws.services.dynamodbv2.document.PutItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
@@ -89,6 +90,33 @@ public class DatabaseManager implements DatabaseManagerInterface {
     } catch (Exception e) {
       logger.error("Unable to add new user with error: " + e.toString());
     }
+  }
+
+  public void removeUser(final UserRequestModel userRequestModel) throws InterruptedException {
+    this.createTableIfNotExist(this.databaseConstants.USERS_TABLE);
+    final Table usersTable = this.database.getTable(this.databaseConstants.USERS_TABLE);
+    usersTable.waitForActive();
+    usersTable.deleteItem(new PrimaryKey("email", userRequestModel.getEmail()));
+    this.createTableIfNotExist(this.databaseConstants.TIMELINE_TABLE);
+    final Table timelineTable = this.database.getTable(this.databaseConstants.TIMELINE_TABLE);
+    timelineTable.waitForActive();
+    final ItemCollection<ScanOutcome> outcomeItemCollection = timelineTable.scan();
+    final List<Item> timelinesWithUserToDelete = new ArrayList<>();
+    outcomeItemCollection.forEach(
+        item -> {
+          if (userRequestModel.getEmail().equals(item.getString("userEmail"))) {
+            timelinesWithUserToDelete.add(item);
+          }
+        });
+    timelinesWithUserToDelete.forEach(
+        timeLineToDelete -> {
+          timelineTable.deleteItem(
+              new PrimaryKey(
+                  "id",
+                  timeLineToDelete.getString("id"),
+                  "signinTime",
+                  timeLineToDelete.getString("signinTime")));
+        });
   }
 
   /**

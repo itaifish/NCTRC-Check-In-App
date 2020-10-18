@@ -26,4 +26,6 @@ public interface DatabaseManagerInterface {
       throws InterruptedException;
 
   public void setMaxCapacity(final int newMaxCapacity) throws InterruptedException;
+
+  public void removeUser(UserRequestModel userModel) throws InterruptedException;
 }

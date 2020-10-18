@@ -56,6 +56,9 @@ public class UserManagerTest {
 
         @Override
         public void setMaxCapacity(int newMaxCapacity) throws InterruptedException {}
+
+        @Override
+        public void removeUser(UserRequestModel userModel) throws InterruptedException {}
       };
 
   static final UsersManager usersManager =

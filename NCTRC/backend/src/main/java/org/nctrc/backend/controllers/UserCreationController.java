@@ -11,6 +11,7 @@ import javax.inject.Singleton;
 import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.managers.UsersManager;
 import org.nctrc.backend.model.request.NewUserRequestModel;
+import org.nctrc.backend.model.request.UserRequestModel;
 import org.nctrc.backend.model.response.Result;
 
 @Singleton
@@ -57,6 +58,30 @@ public class UserCreationController extends UserController {
     final Result result = manager.createAndSigninUser(userModel);
     if (this.resultIsIn2xxAndHandle(result, ctx)) {
       ctx.status(201);
+    }
+  }
+
+  @OpenApi(
+      summary = "Delete user",
+      operationId = "deleteUser",
+      path = "/" + ROOT_PATH + Constants.USER_DELETION_PATH,
+      method = HttpMethod.DELETE,
+      tags = {"User"},
+      requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = UserRequestModel.class)}),
+      responses = {
+        @OpenApiResponse(status = "200"),
+        @OpenApiResponse(
+            status = "405",
+            content = {@OpenApiContent(from = Result.class)}),
+      })
+  public void deleteUser(final Context ctx) {
+    final UserRequestModel userModel = validateBodyAndAuth(ctx, UserRequestModel.class);
+    if (userModel == null) {
+      return;
+    }
+    final Result result = manager.deleteUser(userModel);
+    if (this.resultIsIn2xxAndHandle(result, ctx)) {
+      ctx.status(200);
     }
   }
 }
