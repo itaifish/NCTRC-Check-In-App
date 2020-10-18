@@ -5,8 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.config.DatabaseConstants;
@@ -17,6 +19,7 @@ import org.nctrc.backend.model.request.SigninRequestModel;
 import org.nctrc.backend.model.request.UserRequestModel;
 import org.nctrc.backend.model.response.Result;
 import org.nctrc.backend.model.response.UserExistsResult;
+import org.nctrc.backend.utility.Utility;
 
 public class UserManagerTest {
 
@@ -28,7 +31,8 @@ public class UserManagerTest {
         @Override
         public SigninTimeIdPair signinUser(SigninRequestModel signinRequestModel)
             throws InterruptedException {
-          return null;
+          return new SigninTimeIdPair(
+              UUID.randomUUID().toString(), Utility.nowToFullIso8601String());
         }
 
         @Override
@@ -51,7 +55,7 @@ public class UserManagerTest {
         @Override
         public Map<UserRequestModel, SigninTimeIdPair> getAllUsersWhoAreSignedInDatabase()
             throws InterruptedException {
-          return null;
+          return new HashMap<>();
         }
 
         @Override
