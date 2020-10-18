@@ -11,18 +11,17 @@ export interface components {
       signinData?: components["schemas"]["SigninDataRequestModel"];
       user?: components["schemas"]["UserRequestModel"];
     };
-    UserRequestModel: { name?: string; email?: string };
+    UserRequestModel: { firstName?: string; lastName?: string; email?: string };
     NewUserRequestModel: {
       user?: components["schemas"]["UserRequestModel"];
       signature?: string;
-      signatureData?: string;
       signinData?: components["schemas"]["SigninDataRequestModel"];
-      signatureDate?: string;
     };
     UserExistsResult: {
       statusCode?: number;
       information?: string;
       userExists?: boolean;
     };
+    UpdateMaxCapacityRequestModel: { maxCapacity?: number };
   };
 }
