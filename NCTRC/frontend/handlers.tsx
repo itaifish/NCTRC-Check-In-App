@@ -1,6 +1,8 @@
 import { useColorScheme } from "react-native";
+import * as auth from "./config/auth.json";
 import * as config from "./config/config.json";
 import { components } from "./domain/domain";
+const fetch = require("node-fetch");
 
 // FUNCTIONS TO HANDLE COMMUNICATION WITH THE BACKEND
 
@@ -10,11 +12,8 @@ export const checkUserExists = async (
 ): Promise<any> => {
   const response = await fetch(`${config.base_url}/api/user/exists`, {
     method: "POST",
-    body: JSON.stringify({
-      firstName: userRequestModel["firstName"],
-      lastName: userRequestModel["lastName"],
-      email: userRequestModel["email"],
-    }),
+    headers: { auth: auth.auth_key },
+    body: JSON.stringify(userRequestModel),
   });
   if (!response.ok) {
     throw new Error(response.statusText);
@@ -33,15 +32,9 @@ export const createAndSigninUser = async (
 ): Promise<number> => {
   const response = await fetch(`${config.base_url}/api/user/create`, {
     method: "POST",
-    body: JSON.stringify({
-      user: newUserRequestModel["user"],
-      signinData: newUserRequestModel["signinData"],
-      signature: newUserRequestModel["signature"],
-    }),
+    headers: { auth: auth.auth_key },
+    body: JSON.stringify(newUserRequestModel),
   });
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
   return response.status;
 };
 
@@ -51,14 +44,9 @@ export const signinUser = async (
 ): Promise<number> => {
   const response = await fetch(`${config.base_url}/api/user/signin`, {
     method: "POST",
-    body: JSON.stringify({
-      user: signinRequestModel["user"],
-      signinData: signinRequestModel["signinData"],
-    }),
+    headers: { auth: auth.auth_key },
+    body: JSON.stringify(signinRequestModel),
   });
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
   return response.status;
 };
 
@@ -68,20 +56,31 @@ export const signoutUser = async (
 ): Promise<number> => {
   const response = await fetch(`${config.base_url}/api/user/signout`, {
     method: "POST",
-    body: JSON.stringify({
-      firstName: userRequestModel["firstName"],
-      lastName: userRequestModel["lastName"],
-      email: userRequestModel["email"],
-    }),
+    headers: { auth: auth.auth_key },
+    body: JSON.stringify(userRequestModel),
   });
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
   return response.status;
 };
 
-// post to user check-in data collection
+// delete user
+export const deleteUser = async (
+  userRequestModel: components["schemas"]["UserRequestModel"]
+): Promise<number> => {
+  const response = await fetch(`${config.base_url}/api/user/delete`, {
+    method: "DELETE",
+    headers: { auth: auth.auth_key },
+    body: JSON.stringify(userRequestModel),
+  });
+  return response.status;
+};
 
-// update user check-in data object with checkout time
-
-// update farm max capactiy
+export const updateMaxCapacity = async (
+  updateMaxCapacityRequestModel: components["schemas"]["UpdateMaxCapacityRequestModel"]
+): Promise<number> => {
+  const response = await fetch(`${config.base_url}/api/admin/capacity`, {
+    method: "POST",
+    headers: { auth: auth.auth_key },
+    body: JSON.stringify(updateMaxCapacityRequestModel),
+  });
+  return response.status;
+};
