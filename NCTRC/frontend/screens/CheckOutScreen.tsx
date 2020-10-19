@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Button, Image, TextInput } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList, AppScreens } from '../index';
+import { AuthStackParamList, AppScreens } from '../Index';
 type CheckOutScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.CheckOut>;
 interface CheckOutScreenProps {
     navigation: CheckOutScreenNavigationProps;
 }
 const styles = StyleSheet.create({});
-var userCheckedIn = true;
+const userCheckedIn = true;
 
 const CheckOutScreen: React.FunctionComponent<CheckOutScreenProps> = (props) => {
     const { navigation } = props;

@@ -1,8 +1,9 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Button, Image, TextInput } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList, AppScreens } from '../index';
+import { AuthStackParamList, AppScreens } from '../Index';
 import AdminPortalScreen from './AdminPortalScreen';
+import { useNavigation } from '@react-navigation/native';
 type AdminPasswordScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.AdminPass>;
 interface AdminPasswordScreenProps {
     navigation: AdminPasswordScreenNavigationProps;

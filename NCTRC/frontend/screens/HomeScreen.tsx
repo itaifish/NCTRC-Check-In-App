@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Button, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList, AppScreens } from '../index';
+import { AuthStackParamList, AppScreens } from '../Index';
 type HomeScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.Home>;
 interface HomeScreenProps {
     navigation: HomeScreenNavigationProps;
@@ -23,7 +23,11 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
     },
+    checkinButton: {
+        backgroundColor: '#884633',
+    },
 });
+
 const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
     const { navigation } = props;
     return (

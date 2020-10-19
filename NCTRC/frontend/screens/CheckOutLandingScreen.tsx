@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Button, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList, AppScreens } from '../index';
+import { AuthStackParamList, AppScreens } from '../Index';
 type CheckOutLandingScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.CheckOutLanding>;
 export type CheckOutParams = {
     name: string;

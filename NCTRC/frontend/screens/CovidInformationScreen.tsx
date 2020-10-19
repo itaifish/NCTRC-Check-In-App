@@ -1,7 +1,7 @@
 import React, { useState, SetStateAction } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Button, Image, TextInput, Picker } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList, AppScreens } from '../index';
+import { AuthStackParamList, AppScreens } from '../Index';
 import { ScrollView } from 'react-native-gesture-handler';
 import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 type CovidInformationScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.CovidInformation>;
@@ -17,22 +17,22 @@ interface CovidInformationScreenProps {
 
 const styles = StyleSheet.create({});
 const maxCap = 10;
-var currentCap = 8;
+const currentCap = 10;
 
 const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProps> = (props) => {
     const { navigation, route } = props;
     const { params } = route;
     const { name, email } = params;
-    var [traveled, setTraveled] = React.useState(false);
-    var [concerns, setConcerns] = useState('');
-    var [contact, setContact] = React.useState(false);
-    var [gatherings, setGatherings] = React.useState(false);
-    var [isolate, setIsolate] = React.useState(false);
-    var [travelLabel, setravelLabel] = useState('');
-    var [contactLabel, setContactLabel] = useState('');
-    var [gatheringsLabel, setGatheringsLabel] = useState('');
-    var [isolateLabel, setIsolateLabel] = useState('');
-    var [tempurature, setTempurature] = useState('');
+    const [traveled, setTraveled] = React.useState(false);
+    const [concerns, setConcerns] = useState('');
+    const [contact, setContact] = React.useState(false);
+    const [gatherings, setGatherings] = React.useState(false);
+    const [isolate, setIsolate] = React.useState(false);
+    const [travelLabel, setravelLabel] = useState('');
+    const [contactLabel, setContactLabel] = useState('');
+    const [gatheringsLabel, setGatheringsLabel] = useState('');
+    const [isolateLabel, setIsolateLabel] = useState('');
+    const [tempurature, setTempurature] = useState('');
 
     return (
         <ScrollView>

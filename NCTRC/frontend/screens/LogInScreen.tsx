@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TextInput, Button, View } from 'react-native';
-import { AppScreens, AuthStackParamList } from './../index';
+import { AppScreens, AuthStackParamList } from '../Index';
 import { StackNavigationProp } from '@react-navigation/stack';
 type LoginScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.Login>;
 interface LoginScreenProps {
