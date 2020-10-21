@@ -1,7 +1,7 @@
 import React, { useState, SetStateAction } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Button, Image, TextInput, Picker } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList, AppScreens } from '../index';
+import { AuthStackParamList, AppScreens } from './../index';
 import { ScrollView } from 'react-native-gesture-handler';
 import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 type CovidInformationScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.CovidInformation>;
