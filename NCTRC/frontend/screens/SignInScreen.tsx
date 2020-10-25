@@ -27,21 +27,21 @@ const styles = StyleSheet.create({
 
 const SignInScreen: React.FunctionComponent<SignInScreenProps> = (props) => {
     const { navigation } = props;
-    const [name, setName] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.homeContainer}>
                 <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 200, height: 200 }}></Image>
-                <TextInput value={name} onChangeText={(text) => setName(text)} placeholder="Name" />
+                <TextInput value={firstName} onChangeText={(text) => setFirstName(text)} placeholder="First Name" />
+                <TextInput value={lastName} onChangeText={(text) => setLastName(text)} placeholder="Last Name" />
                 <TextInput value={email} onChangeText={(text) => setEmail(text)} placeholder="Email Address" />
                 <Button
                     color="#884633"
                     title="Sign In"
                     onPress={() => {
-                        if (name != '' && email != '') {
-                            navigation.navigate(AppScreens.CovidInformation, { name: name, email: email });
-                        }
+                            navigation.navigate(AppScreens.CovidInformation, { firstName: firstName, lastName: lastName, email: email });
                     }}
                 />
                 <Button color="#884633" title="Back" onPress={() => navigation.pop()} />

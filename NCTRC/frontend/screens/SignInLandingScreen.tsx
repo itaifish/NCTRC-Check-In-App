@@ -5,13 +5,15 @@ import { AuthStackParamList, AppScreens } from '../Index';
 type SingInLandingScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.SignInLanding>;
 
 export type SignInParams = {
-    name: string;
+    firstName: string;
+    lastName: string; 
     email: string;
-    traveled: boolean;
-    contact: boolean;
+    traveled: string;
+    contact: string;
     concerns: string;
-    gatherings: boolean;
-    isolate: boolean;
+    gatherings: string;
+    isolate: string;
+    tempurature: string; 
 };
 
 interface SignInLandingScreenProps {
@@ -23,7 +25,7 @@ const styles = StyleSheet.create({});
 const SignInLandingScreen: React.FunctionComponent<SignInLandingScreenProps> = (props) => {
     const { navigation, route } = props;
     const { params } = route;
-    const { name, email, traveled, contact, concerns, gatherings, isolate } = params;
+    const { firstName, lastName, email, traveled, contact, concerns, gatherings, isolate } = params;
     return (
         <SafeAreaView>
             <View>

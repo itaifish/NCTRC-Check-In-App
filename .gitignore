@@ -17,5 +17,6 @@ target/
 
 #HTTPS/SSL key
 keystore/
-node_modules
-node_modules
+
+# authorization to backend config
+**/auth.json
