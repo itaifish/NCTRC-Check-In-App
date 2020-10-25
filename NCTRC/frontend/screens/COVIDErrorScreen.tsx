@@ -9,22 +9,19 @@ interface CovidErrorScreenProps {
 }
 
 export type ErrorParams = {
-    name: string;
-    email: string;
     reason: string;
-    concerns: string;
 };
 
 const styles = StyleSheet.create({});
 const CovidErrorScreen: React.FunctionComponent<CovidErrorScreenProps> = (props) => {
     const { navigation, route } = props;
     const { params } = route;
-    const { name, email, reason, concerns } = params;
+    const { reason } = params;
     return (
         <SafeAreaView>
             <View>
                 <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 400, height: 400 }}></Image>
-                <Text>Sorry, we are not able to let you in the farm because you indicated {reason}</Text>
+                <Text>Sorry, we are not able to let you in the farm because {reason}</Text>
                 <Button color="#884633" title="Back" onPress={() => navigation.pop()} />
                 <Button color="#884633" title="Home" onPress={() => navigation.popToTop()} />
             </View>

@@ -10,9 +10,8 @@ import CovidInformationScreen, { InfoParams } from './screens/CovidInformationSc
 import MaxCapScreen from './screens/MaxCapScreen';
 import ReasonsScreen from './screens/ReasonScreen';
 import RisksScreen, { RisksParams } from './screens/RisksScreen';
-import SignInLandingScreen, { SignInParams } from './screens/SignInLandingScreen';
+import SignInLandingScreen from './screens/SignInLandingScreen';
 import SignInScreen from './screens/SignInScreen';
-import LoginScreen from './screens/LogInScreen';
 import SignupScreen, { SignupParams } from './screens/SignUpScreen';
 
 export enum AppScreens {
@@ -28,7 +27,6 @@ export enum AppScreens {
     Risks = 'Risks',
     SignInLanding = 'SignInLanding',
     SignIn = 'SignIn',
-    Login = 'Login',
     Signup = 'Signup',
 }
 
@@ -45,7 +43,7 @@ export type AuthStackParamList = {
     MaxCap: undefined;
     Reason: undefined;
     Risks: RisksParams;
-    SignInLanding: SignInParams;
+    SignInLanding: undefined;
     SignIn: undefined;
 };
 
@@ -65,7 +63,6 @@ const AuthFlowNavigator: React.FunctionComponent = () => {
             <AuthStack.Screen name={AppScreens.Risks} component={RisksScreen} />
             <AuthStack.Screen name={AppScreens.SignInLanding} component={SignInLandingScreen} />
             <AuthStack.Screen name={AppScreens.SignIn} component={SignInScreen} />
-            <AuthStack.Screen name={AppScreens.Login} component={LoginScreen} />
             <AuthStack.Screen name={AppScreens.Signup} component={SignupScreen} />
         </AuthStack.Navigator>
     );
