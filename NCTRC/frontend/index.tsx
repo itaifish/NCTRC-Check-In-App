@@ -3,16 +3,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './screens/HomeScreen';
 import AdminPasswordScreen from './screens/AdminPasswordScreen';
 import AdminPortalScreen from './screens/AdminPortalScreen';
-import CheckOutLandingScreen, { CheckOutParams } from './screens/CheckOutLandingScreen';
+import CheckOutLandingScreen from './screens/CheckOutLandingScreen';
 import CheckOutScreen from './screens/CheckOutScreen';
 import CovidErrorScreen, { ErrorParams } from './screens/COVIDErrorScreen';
 import CovidInformationScreen, { InfoParams } from './screens/CovidInformationScreen';
-import MaxCapScreen from './screens/MaxCapScreen';
 import ReasonsScreen from './screens/ReasonScreen';
 import RisksScreen, { RisksParams } from './screens/RisksScreen';
 import SignInLandingScreen from './screens/SignInLandingScreen';
 import SignInScreen from './screens/SignInScreen';
-import SignupScreen, { SignupParams } from './screens/SignUpScreen';
 
 export enum AppScreens {
     Home = 'Home',
@@ -22,25 +20,21 @@ export enum AppScreens {
     CheckOut = 'CheckOut',
     CovidError = 'CovidError',
     CovidInformation = 'CovidInformation',
-    MaxCap = 'MaxCap',
     Reason = 'Reason',
     Risks = 'Risks',
     SignInLanding = 'SignInLanding',
     SignIn = 'SignIn',
-    Signup = 'Signup',
 }
 
 export type AuthStackParamList = {
     Login: undefined;
-    Signup: SignupParams;
     Home: undefined;
     AdminPass: undefined;
     AdminPortal: undefined;
-    CheckOutLanding: CheckOutParams;
+    CheckOutLanding: undefined;
     CheckOut: undefined;
     CovidError: ErrorParams;
     CovidInformation: InfoParams;
-    MaxCap: undefined;
     Reason: undefined;
     Risks: RisksParams;
     SignInLanding: undefined;
@@ -58,12 +52,10 @@ const AuthFlowNavigator: React.FunctionComponent = () => {
             <AuthStack.Screen name={AppScreens.CheckOut} component={CheckOutScreen} />
             <AuthStack.Screen name={AppScreens.CovidError} component={CovidErrorScreen} />
             <AuthStack.Screen name={AppScreens.CovidInformation} component={CovidInformationScreen} />
-            <AuthStack.Screen name={AppScreens.MaxCap} component={MaxCapScreen} />
             <AuthStack.Screen name={AppScreens.Reason} component={ReasonsScreen} />
             <AuthStack.Screen name={AppScreens.Risks} component={RisksScreen} />
             <AuthStack.Screen name={AppScreens.SignInLanding} component={SignInLandingScreen} />
             <AuthStack.Screen name={AppScreens.SignIn} component={SignInScreen} />
-            <AuthStack.Screen name={AppScreens.Signup} component={SignupScreen} />
         </AuthStack.Navigator>
     );
 };

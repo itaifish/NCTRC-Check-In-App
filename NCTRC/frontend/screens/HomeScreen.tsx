@@ -1,42 +1,29 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View, Button, Image } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Image, Button, TouchableOpacity } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList, AppScreens } from '../Index';
 type HomeScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.Home>;
+import { styles } from './Styles';
 interface HomeScreenProps {
     navigation: HomeScreenNavigationProps;
 }
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        margin: 10,
-    },
-    home: {
-        fontSize: 30,
-    },
-    homeContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1,
-        width: '100%',
-    },
-    checkinButton: {
-        backgroundColor: '#884633',
-    },
-});
 
 const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
-    const { navigation } = props;
+    let { navigation } = props;
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.homeContainer}>
-                <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 400, height: 400 }}></Image>
-                <Button color="#884633" title="Check In" onPress={() => navigation.navigate(AppScreens.Reason)} />
-                <Button color="#884633" title="Check Out" onPress={() => navigation.navigate(AppScreens.CheckOut)} />
-                <Button color="#884633" title="Admin" onPress={() => navigation.navigate(AppScreens.AdminPass)} />
+                <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 300, height: 300 }}></Image>
+                <TouchableOpacity style={styles.solidButton}onPress={() => navigation.navigate(AppScreens.Reason)}><Text style={styles.buttonText}>
+                Check In
+                 </Text>  
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.solidButton}onPress={() => navigation.navigate(AppScreens.CheckOut)}><Text style={styles.buttonText}>
+                Check Out
+                 </Text>  
+                </TouchableOpacity>
+                <View style={styles.homeDiv}></View>
+                <Button color='#884633'title="Sign in as Admin"onPress={() => navigation.navigate(AppScreens.AdminPass)} />
             </View>
         </SafeAreaView>
     );

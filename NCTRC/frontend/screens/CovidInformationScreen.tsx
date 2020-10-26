@@ -1,12 +1,12 @@
-import React, { useState, SetStateAction } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View, Button, Image, TextInput, Picker } from 'react-native';
+import React, { useState } from 'react';
+import { ScrollView, Text, View, Button, Image, TextInput, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList, AppScreens } from '../Index';
 import { RadioButton } from 'react-native-paper';
-import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 import { checkUserExists, signinUser } from '../handlers';
 import { components } from '../domain/domain';
-import { NavigationEvents } from 'react-navigation';
+import { styles } from './Styles';
+
 type CovidInformationScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.CovidInformation>;
 export type InfoParams = {
     firstName: string;
@@ -19,7 +19,6 @@ interface CovidInformationScreenProps {
     navigation: CovidInformationScreenNavigationProps;
 }
 
-const styles = StyleSheet.create({});
 
 const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProps> = (props) => {
     let { navigation, route } = props;
@@ -35,8 +34,13 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
 
     return (
         <ScrollView>
-            <View>
-                <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 10, height: 10 }}></Image>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.pop()}>
+                 <Image source={require('./../assets/backbutton.png')} style={{ width: 75, height: 75 }}></Image>
+            </TouchableOpacity> 
+            <TouchableOpacity style={styles.logo} onPress={() => navigation.popToTop()}>
+                 <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 150, height: 150 }}></Image>
+            </TouchableOpacity> 
+        <View style={styles.homeContainer}>
                 <Text>First Name</Text>
                 <TextInput placeholder={firstName} editable={false} />
                 <Text>Last Name</Text>
@@ -126,8 +130,19 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                                             user: userToCreate,
                                             signinData: { temperature: tempurature },
                                           }
-                                          signinUser(returningUser)
-                                          navigation.navigate(AppScreens.SignInLanding);
+                                          signinUser(returningUser).then(
+                                              (response) => {
+                                                  console.log(response); 
+                                                  if(response ==200) {
+                                                    navigation.navigate(AppScreens.SignInLanding);
+                                                  } else if (response == 409) {
+                                                    navigation.navigate(AppScreens.CovidError, {reason: "the center is currently at maximum capacity."});                   
+                                                  } else {
+                                                    navigation.navigate(AppScreens.CovidError, {reason: "we are unable to check you in at this time."});
+                                                  }
+                                              }
+                                          )
+                                          
                                     } else {
                                         navigation.navigate(AppScreens.Risks, {firstName:firstName, lastName:lastName, email: email, tempurature:tempurature})
                                     }
@@ -138,8 +153,6 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                     }
                     }
                 />
-                <Button color="#884633" title="Back" onPress={() => navigation.pop()} />
-                <Button color="#884633" title="Home" onPress={() => navigation.popToTop()} />
             </View>
             </ScrollView>
     );

@@ -1,22 +1,34 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View, Button, Image } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList, AppScreens } from '../Index';
+import { styles } from './Styles';
+
 type SingInLandingScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.SignInLanding>;
 
 interface SignInLandingScreenProps {
     navigation: SingInLandingScreenNavigationProps;
 }
 
-const styles = StyleSheet.create({});
 const SignInLandingScreen: React.FunctionComponent<SignInLandingScreenProps> = (props) => {
-    const { navigation } = props;
+    let { navigation } = props;
     return (
-        <SafeAreaView>
-            <View>
-                <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 400, height: 400 }}></Image>
-                <Text>Enjoy your visit!</Text>
-                <Button color="#884633" title="Home" onPress={() => navigation.popToTop()} />
+        <SafeAreaView style={styles.container}>
+             <TouchableOpacity style={styles.backButton} onPress={() => navigation.pop()}>
+                     <Image source={require('./../assets/backbutton.png')} style={{ width: 75, height: 75 }}></Image>
+                </TouchableOpacity> 
+                <TouchableOpacity style={styles.logo} onPress={() => navigation.popToTop()}>
+                     <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 150, height: 150 }}></Image>
+                </TouchableOpacity> 
+            <View style={styles.homeContainer}>
+            <View style={styles.landingScreenBoxes}>
+                <Text style={styles.landingScreenBoxText}>Welcome to NCTRC!</Text>
+                <TouchableOpacity style={styles.smallButton}onPress={() => navigation.popToTop()}>
+                <Text style={styles.buttonText}>
+                Home
+                 </Text>  
+                </TouchableOpacity>
+                </View>
             </View>
         </SafeAreaView>
     );

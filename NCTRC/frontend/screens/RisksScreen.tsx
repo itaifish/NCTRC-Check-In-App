@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View, Button, Image } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList, AppScreens } from '../Index';
 import { components } from '../domain/domain';
 import { createAndSigninUser } from '../handlers';
+import { styles } from './Styles';
+
 type RisksScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.Risks>;
 
 interface RisksScreenProps {
@@ -17,13 +19,20 @@ export type RisksParams = {
     tempurature: number;
 };
 
-const styles = StyleSheet.create({});
 const RisksScreen: React.FunctionComponent<RisksScreenProps> = (props) => {
     let { navigation, route } = props;
     let { params } = route;
     let { firstName, lastName, email, tempurature } = params;
+    
     return (
-        <ScrollView>
+        <ScrollView style={styles.container}>
+             <TouchableOpacity style={styles.backButton} onPress={() => navigation.pop()}>
+                     <Image source={require('./../assets/backbutton.png')} style={{ width: 75, height: 75 }}></Image>
+                </TouchableOpacity> 
+                <TouchableOpacity style={styles.logo} onPress={() => navigation.popToTop()}>
+                     <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 150, height: 150 }}></Image>
+                </TouchableOpacity> 
+            <View style={styles.homeContainer}></View>
             <View>
                 <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 400, height: 400 }}></Image>
                 <Text>COVID-19 Acknowledgement of Risk and Acceptance of Services</Text>
@@ -49,8 +58,17 @@ BY SIGNING BELOW, I CONFIRM THAT I HAVE READ AND UNDERSTAND THIS DOCUMENT.
                             signinData: { temperature: tempurature },
                             signature: "signature",
                           };
-                        createAndSigninUser(newUser); 
-                        navigation.navigate(AppScreens.SignInLanding)
+                        createAndSigninUser(newUser).then(
+                            (response) => {
+                                console.log(response); 
+                                if(response ==200) {
+                                  navigation.navigate(AppScreens.SignInLanding);
+                                } else if (response == 409) {
+                                    navigation.navigate(AppScreens.CovidError, {reason: "the center is currently at maximum capacity."});                   
+                                } else {
+                                  navigation.navigate(AppScreens.CovidError, {reason: "we are unable to check you in at this time."});
+                                }
+                            }); 
                     }}
                 />
                 <Button color="#884633" title="Back" onPress={() => navigation.pop()} />

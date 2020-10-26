@@ -1,44 +1,50 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View, Button, Image } from 'react-native';
+import { SafeAreaView, Text, View, Button, Image, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList, AppScreens } from '../Index';
+import { styles } from './Styles';
+
 type ReasonScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.Reason>;
 interface ReasonScreenProps {
     navigation: ReasonScreenNavigationProps;
 }
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        margin: 10,
-    },
-    home: {
-        fontSize: 30,
-    },
-    homeContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1,
-        width: '100%',
-    },
-});
+   
 const ReasonScreen: React.FunctionComponent<ReasonScreenProps> = (props) => {
-    const { navigation } = props;
+    let { navigation } = props;
     return (
         <SafeAreaView style={styles.container}>
+             <TouchableOpacity style={styles.backButton} onPress={() => navigation.pop()}>
+                     <Image source={require('./../assets/backbutton.png')} style={{ width: 75, height: 75 }}></Image>
+                </TouchableOpacity> 
+                <TouchableOpacity style={styles.logo} onPress={() => navigation.popToTop()}>
+                     <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 150, height: 150 }}></Image>
+                </TouchableOpacity> 
             <View style={styles.homeContainer}>
-                <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 200, height: 200 }}></Image>
-                <Text>What is the reason for your visit?</Text>
-                <Button color="#884633" title="Employee" onPress={() => navigation.navigate(AppScreens.SignIn)} />
-                <Button color="#884633" title="Client" onPress={() => navigation.navigate(AppScreens.SignIn)} />
-                <Button color="#884633" title="Volunteer" onPress={() => navigation.navigate(AppScreens.SignIn)} />
-                <Button color="#884633" title="Guest" onPress={() => navigation.navigate(AppScreens.SignIn)} />
-                <Button color="#884633" title="Professional" onPress={() => navigation.navigate(AppScreens.SignIn)} />
-                <Button color="#884633" title="Grason" onPress={() => navigation.navigate(AppScreens.SignIn)} />
-                <Button color="#884633" title="Back" onPress={() => navigation.pop()} />
-                <Button color="#884633" title="Home" onPress={() => navigation.popToTop()} />
+                <Text style={styles.question}>What is the reason for your visit?</Text>
+                <TouchableOpacity style={styles.reasonButton}onPress={() => navigation.navigate(AppScreens.SignIn)}><Text style={styles.buttonText}>
+                Employee
+                 </Text>  
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.reasonButton}onPress={() => navigation.navigate(AppScreens.SignIn)}><Text style={styles.buttonText}>
+                Client
+                 </Text>  
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.reasonButton}onPress={() => navigation.navigate(AppScreens.SignIn)}><Text style={styles.buttonText}>
+                Volunteer
+                 </Text>  
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.reasonButton}onPress={() => navigation.navigate(AppScreens.SignIn)}><Text style={styles.buttonText}>
+                Guest
+                 </Text>  
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.reasonButton}onPress={() => navigation.navigate(AppScreens.SignIn)}><Text style={styles.buttonText}>
+                Professional
+                 </Text>  
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.reasonButton}onPress={() => navigation.navigate(AppScreens.SignIn)}><Text style={styles.buttonText}>
+                Grason
+                 </Text>  
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     );

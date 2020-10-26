@@ -1,28 +1,27 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View, Button, Image, FlatList } from 'react-native';
-
+import { SafeAreaView, Text, View, Button, Image, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList, AppScreens } from '../Index';
+import { styles } from './Styles';
 import { DataTable } from 'react-native-paper';
+
 type AdminPortalScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.AdminPortal>;
 
 interface AdminPortalScreenProps {
     navigation: AdminPortalScreenNavigationProps;
 }
-const styles = StyleSheet.create({});
+
 const AdminPortalScreen: React.FunctionComponent<AdminPortalScreenProps> = (props) => {
     const { navigation } = props;
-    const grid = [
-        [
-            { value: 1, hint: 'Valid' },
-            { value: 3, hint: 'Not valid' },
-        ],
-        [{ value: 2 }, { value: 4 }],
-    ];
     return (
-        <SafeAreaView>
-            <View>
-                <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 100, height: 100 }}></Image>
+        <SafeAreaView style={styles.container}>
+            <TouchableOpacity style={styles.backButton} onPress={() => navigation.pop()}>
+                     <Image source={require('./../assets/backbutton.png')} style={{ width: 75, height: 75 }}></Image>
+                </TouchableOpacity> 
+                <TouchableOpacity style={styles.logo} onPress={() => navigation.popToTop()}>
+                     <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 150, height: 150 }}></Image>
+                </TouchableOpacity> 
+            <View style={styles.homeContainer}>
                 <DataTable>
                     <DataTable.Header>
                         <DataTable.Title>Name</DataTable.Title>
@@ -58,8 +57,6 @@ const AdminPortalScreen: React.FunctionComponent<AdminPortalScreenProps> = (prop
                         <DataTable.Cell>No concerns</DataTable.Cell>
                     </DataTable.Row>
                 </DataTable>
-                <Button color="#884633" title="Back" onPress={() => navigation.pop()} />
-                <Button color="#884633" title="Home" onPress={() => navigation.popToTop()} />
             </View>
         </SafeAreaView>
     );
