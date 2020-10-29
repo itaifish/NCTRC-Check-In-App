@@ -134,15 +134,13 @@ public class DatabaseManager implements DatabaseManagerInterface {
     final Item newTimelineItem = new Item();
     final String id = UUID.randomUUID().toString();
     final String signinTime = Utility.nowToFullIso8601String();
-    newTimelineItem.withPrimaryKey("id", id);
+    newTimelineItem.withPrimaryKey("id", id, "signinTime", signinTime);
     newTimelineItem.with("userEmail", signinRequestModel.getUser().getEmail());
     newTimelineItem.with("firstName", signinRequestModel.getUser().getFirstName());
     newTimelineItem.with("lastName", signinRequestModel.getUser().getLastName());
-    newTimelineItem.with("signinTime", signinTime);
     newTimelineItem.with("temperature", signinRequestModel.getSigninData().getTemperature());
     if (signinRequestModel.getSigninData().getYesQuestion() != null) {
-      newTimelineItem.withPrimaryKey(
-          "yesQuestion", signinRequestModel.getSigninData().getYesQuestion());
+      newTimelineItem.with("yesQuestion", signinRequestModel.getSigninData().getYesQuestion());
     }
     try {
       final PutItemOutcome outcome = timelineTable.putItem(newTimelineItem);

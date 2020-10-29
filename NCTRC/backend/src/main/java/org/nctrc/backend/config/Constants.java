@@ -14,6 +14,8 @@ public final class Constants {
 
   public static final String ADMIN_UPDATE_CAPACITY_PATH = "capacity";
 
+  public static final String ADMIN_LOGGED_IN_PATH = "loggedin";
+
   public static final String USER_SIGNIN_PATH = "signin";
 
   public static final String USER_SIGNOUT_PATH = "signout";

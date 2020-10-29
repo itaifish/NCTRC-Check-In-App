@@ -61,6 +61,7 @@ public class UsersManager {
           .forEach(
               userRequestModel -> {
                 signinTimeLine.signUserIn(userRequestModel, usersSignedIn.get(userRequestModel));
+                this.currentCapacity++;
               });
     } catch (InterruptedException e) {
       logger.warn("Unable to load signed in users from database: " + e.toString());

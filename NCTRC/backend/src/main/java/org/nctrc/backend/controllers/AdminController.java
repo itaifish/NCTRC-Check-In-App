@@ -60,4 +60,18 @@ public class AdminController extends Controller {
       ctx.json(new Result(500, "Was unable to write to database"));
     }
   }
+
+  @OpenApi(
+      summary = "Get Logged In Users",
+      operationId = "getLoggedIn",
+      path = "/" + ROOT_PATH + Constants.ADMIN_PATH + Constants.ADMIN_LOGGED_IN_PATH,
+      method = HttpMethod.POST,
+      tags = {"Admin"},
+      responses = {
+        @OpenApiResponse(status = "200"),
+        @OpenApiResponse(
+            status = "400",
+            content = {@OpenApiContent(from = Result.class)}),
+      })
+  public void getLoggedInUsers(final Context ctx) {}
 }
