@@ -6,9 +6,11 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "preprocess": "node ./preprocessing/LoadDomainTypes.js"
+    "preprocess": "node ./preprocessing/LoadDomainTypes.js",
+    "test": "jest"
   },
   "dependencies": {
+    "@types/node-fetch": "^2.5.7",
     "expo": "~39.0.2",
     "expo-status-bar": "~1.0.2",
     "node-fetch": "^2.6.1",

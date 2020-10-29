@@ -6,7 +6,7 @@ import {
   signoutUser,
   deleteUser,
   updateMaxCapacity,
-} from "../handlers";
+} from "../handler/handlers";
 
 // global variables to be used as parameters to fetch calls
 const newUserRequestModel: components["schemas"]["NewUserRequestModel"] = {
@@ -70,8 +70,8 @@ const rejectCovidsigninRequestModel: components["schemas"]["SigninRequestModel"]
 const updateMaxCapacityRequestModel1: components["schemas"]["UpdateMaxCapacityRequestModel"] = {
   maxCapacity: 1,
 };
-const updateMaxCapacityRequestModel11: components["schemas"]["UpdateMaxCapacityRequestModel"] = {
-  maxCapacity: 11,
+const updateMaxCapacityRequestModel111: components["schemas"]["UpdateMaxCapacityRequestModel"] = {
+  maxCapacity: 111,
 };
 const rejectUpdateMaxCapacityRequestModel: components["schemas"]["UpdateMaxCapacityRequestModel"] = {
   maxCapacity: -11,
@@ -83,7 +83,12 @@ test("Check for a nonexistent user", async () => {
 });
 
 test("Delete a nonexistent user", async () => {
-  expect(await deleteUser(userRequestModel)).toBe(405);
+  deleteUser(userRequestModel).then((result: any) => {
+    expect(result.statusCode).toBe(405);
+  }).catch((err: any) => {
+    console.error(err);
+    fail();
+  }); 
 });
 
 test("Create and sign in a user, check if they exist, and delete that user", async () => {
@@ -116,12 +121,22 @@ test("Sign in and sign out already existing user", async () => {
 });
 
 test("Create a user to be rejected via fever/COVID question", async () => {
-  await updateMaxCapacity(updateMaxCapacityRequestModel11);
-  expect(await createAndSigninUser(rejectTempNewUserRequestModel)).toBe(405);
+  await updateMaxCapacity(updateMaxCapacityRequestModel111);
+  createAndSigninUser(rejectTempNewUserRequestModel).then((result: any) => {
+    expect(result.statusCode).toBe(412);
+  }).catch((err: any) => {
+    console.error(err);
+    fail();
+  }); 
   expect(await checkUserExists(userRequestModel)).toBe(true);
   expect(await deleteUser(userRequestModel)).toBe(200);
   expect(await checkUserExists(userRequestModel)).toBe(false);
-  expect(await createAndSigninUser(rejectCovidNewUserRequestModel)).toBe(405);
+  createAndSigninUser(rejectTempNewUserRequestModel).then((result: any) => {
+    expect(result.statusCode).toBe(412);
+  }).catch((err: any) => {
+    console.error(err);
+    fail();
+  }); 
   expect(await checkUserExists(userRequestModel)).toBe(true);
   expect(await deleteUser(userRequestModel)).toBe(200);
   expect(await checkUserExists(userRequestModel)).toBe(false);
@@ -129,8 +144,11 @@ test("Create a user to be rejected via fever/COVID question", async () => {
 
 test("Update max capacity to valid number and invalid numbers", async () => {
   expect(await updateMaxCapacity(updateMaxCapacityRequestModel1)).toBe(200);
-  expect(await updateMaxCapacity(rejectUpdateMaxCapacityRequestModel)).toBe(
-    400
-  );
-  expect(await updateMaxCapacity(updateMaxCapacityRequestModel11)).toBe(200);
+  updateMaxCapacity(rejectUpdateMaxCapacityRequestModel).then((result: any) => {
+    expect(result.statusCode).toBe(400);
+  }).catch((err: any) => {
+    console.error(err);
+    fail();
+  }); 
+  expect(await updateMaxCapacity(updateMaxCapacityRequestModel111)).toBe(200);
 });
