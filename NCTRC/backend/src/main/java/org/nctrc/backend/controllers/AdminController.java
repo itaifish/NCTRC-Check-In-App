@@ -51,6 +51,7 @@ public class AdminController extends Controller {
     if (updateMaxCapacityRequestModel.getMaxCapacity() < 1) {
       ctx.status(400);
       ctx.json(new Result(400, "Max capacity must be at least 1"));
+      return;
     }
     try {
       databaseManager.setMaxCapacity(updateMaxCapacityRequestModel.getMaxCapacity());
