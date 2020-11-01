@@ -65,8 +65,7 @@ public class UserManagerTest {
         public void removeUser(UserRequestModel userModel) throws InterruptedException {}
       };
 
-  static final UsersManager usersManager =
-      new UsersManager(databaseManager, new DatabaseConstants());
+  final UsersManager usersManager = new UsersManager(databaseManager, new DatabaseConstants());
 
   @Test
   void testUserManager() {
@@ -83,6 +82,8 @@ public class UserManagerTest {
     assertFalse(((UserExistsResult) result).isUserExists());
     result = usersManager.signoutUser(usera);
     assertTrue(isOkay(result));
+    result = usersManager.signoutUser(usera);
+    assertFalse(isOkay(result));
     result = usersManager.signinUser(userfoo);
     assertTrue(isOkay(result));
     result = usersManager.signinUser(userfoo);
@@ -131,6 +132,65 @@ public class UserManagerTest {
     final Result result2 = usersManager.createAndSigninUser(newUserYes);
     assertFalse(isOkay(result2));
     assertEquals(412, result2.getStatusCode());
+  }
+
+  @Test
+  void testDeleteUser() {
+    final UserRequestModel user1 = new UserRequestModel("user1", "isme", "user1@gmail.com");
+    final SigninDataRequestModel validSigninModel = new SigninDataRequestModel(null, 99);
+    final NewUserRequestModel newUserRequestModel =
+        new NewUserRequestModel(user1, "", validSigninModel);
+    Result result = usersManager.createAndSigninUser(newUserRequestModel);
+    assertTrue(isOkay(result));
+    result = usersManager.deleteUser(user1);
+    assertTrue(isOkay(result));
+    result = usersManager.deleteUser(user1);
+    assertFalse(isOkay(result));
+  }
+
+  @Test
+  void loadAndSigningUsersFromDatabase() {
+    final DatabaseManagerInterface databaseManagerWithSignedInUsers =
+        new DatabaseManagerInterface() {
+          @Override
+          public void addUser(NewUserRequestModel userRequestModel) {}
+
+          @Override
+          public SigninTimeIdPair signinUser(SigninRequestModel signinRequestModel)
+              throws InterruptedException {
+            return new SigninTimeIdPair(
+                UUID.randomUUID().toString(), Utility.nowToFullIso8601String());
+          }
+
+          @Override
+          public void signOutUser(SigninTimeIdPair signInTimeAndId) throws InterruptedException {}
+
+          @Override
+          public void signOutUser(SigninTimeIdPair signInTimeAndId, String signoutTime)
+              throws InterruptedException {}
+
+          @Override
+          public int loadMaxCapacity() {
+            return 10;
+          }
+
+          @Override
+          public List<UserRequestModel> getAllUsers() throws InterruptedException {
+            return new ArrayList<>();
+          }
+
+          @Override
+          public Map<UserRequestModel, SigninTimeIdPair> getAllUsersWhoAreSignedInDatabase()
+              throws InterruptedException {
+            return new HashMap<>();
+          }
+
+          @Override
+          public void setMaxCapacity(int newMaxCapacity) throws InterruptedException {}
+
+          @Override
+          public void removeUser(UserRequestModel userModel) throws InterruptedException {}
+        };
   }
 
   private boolean isOkay(final Result result) {
