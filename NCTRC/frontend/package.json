@@ -6,7 +6,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "preprocess": "node ./preprocessing/LoadDomainTypes.js"
+    "preprocess": "node ./preprocessing/LoadDomainTypes.js",
+    "test": "jest"
   },
   "dependencies": {
     "@expo/vector-icons": "^10.2.1",
@@ -14,6 +15,7 @@
     "@react-navigation/native": "^5.8.0",
     "@react-navigation/stack": "^5.10.0",
     "bootstrap": "^4.5.3",
+    "@types/node-fetch": "^2.5.7",
     "expo": "~39.0.2",
     "expo-font": "^8.3.0",
     "expo-status-bar": "~1.0.2",
