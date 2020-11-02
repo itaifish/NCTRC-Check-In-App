@@ -9,7 +9,7 @@ import io.javalin.plugin.openapi.annotations.OpenApiResponse;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.nctrc.backend.config.Constants;
-import org.nctrc.backend.managers.DatabaseManager;
+import org.nctrc.backend.managers.DatabaseManagerInterface;
 import org.nctrc.backend.managers.UsersManager;
 import org.nctrc.backend.model.request.UpdateMaxCapacityRequestModel;
 import org.nctrc.backend.model.response.Result;
@@ -17,12 +17,13 @@ import org.nctrc.backend.model.response.Result;
 @Singleton
 public class AdminController extends Controller {
 
-  private final DatabaseManager databaseManager;
+  private final DatabaseManagerInterface databaseManager;
 
   private final UsersManager usersManager;
 
   @Inject
-  public AdminController(final DatabaseManager databaseManager, final UsersManager usersManager) {
+  public AdminController(
+      final DatabaseManagerInterface databaseManager, final UsersManager usersManager) {
     this.databaseManager = databaseManager;
     this.usersManager = usersManager;
   }

@@ -164,6 +164,10 @@ public class UsersManager {
     } else {
       try {
         databaseManager.removeUser(userModel);
+        if (signinTimeLine.isUserSignedIn(userModel)) {
+          signinTimeLine.signUserOut(userModel);
+          this.currentCapacity--;
+        }
         signinTimeLine.removeUser(userModel);
         users.remove(userModel);
         return new Result(200, "Success");
