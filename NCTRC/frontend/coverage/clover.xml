@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1604331429054" clover="3.2.0">
-  <project timestamp="1604331429054" name="All files">
+<coverage generated="1604335217707" clover="3.2.0">
+  <project timestamp="1604335217707" name="All files">
     <metrics statements="179" coveredstatements="90" conditionals="30" coveredconditionals="7" methods="72" coveredmethods="20" elements="281" coveredelements="117" complexity="0" loc="179" ncloc="179" packages="4" files="17" classes="17"/>
     <package name="frontend">
       <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-      <file name="App.tsx" path="/Users/sarahbost 1/Desktop/NCTRC-Check-In-App/NCTRC/frontend/App.tsx">
+      <file name="App.tsx" path="C:\Users\Itai\Desktop\Programming\NCTRC\NCTRC\frontend\App.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="7" count="1" type="stmt"/>
       </file>
-      <file name="Index.tsx" path="/Users/sarahbost 1/Desktop/NCTRC-Check-In-App/NCTRC/frontend/Index.tsx">
+      <file name="index.tsx" path="C:\Users\Itai\Desktop\Programming\NCTRC\NCTRC\frontend\index.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="44" count="8" type="stmt"/>
         <line num="45" count="8" type="stmt"/>
-        <line num="46" count="1" type="stmt"/>
+        <line num="46" count="2" type="stmt"/>
       </file>
     </package>
     <package name="frontend.assets">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="NCTRClogo.png" path="/Users/sarahbost 1/Desktop/NCTRC-Check-In-App/NCTRC/frontend/assets/NCTRClogo.png">
+      <file name="NCTRClogo.png" path="C:\Users\Itai\Desktop\Programming\NCTRC\NCTRC\frontend\assets\NCTRClogo.png">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="8" type="stmt"/>
       </file>
-      <file name="backbutton.png" path="/Users/sarahbost 1/Desktop/NCTRC-Check-In-App/NCTRC/frontend/assets/backbutton.png">
+      <file name="backbutton.png" path="C:\Users\Itai\Desktop\Programming\NCTRC\NCTRC\frontend\assets\backbutton.png">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="6" type="stmt"/>
       </file>
     </package>
     <package name="frontend.handler">
       <metrics statements="34" coveredstatements="31" conditionals="8" coveredconditionals="7" methods="7" coveredmethods="7"/>
-      <file name="handlers.tsx" path="/Users/sarahbost 1/Desktop/NCTRC-Check-In-App/NCTRC/frontend/handler/handlers.tsx">
+      <file name="handlers.tsx" path="C:\Users\Itai\Desktop\Programming\NCTRC\NCTRC\frontend\handler\handlers.tsx">
         <metrics statements="34" coveredstatements="31" conditionals="8" coveredconditionals="7" methods="7" coveredmethods="7"/>
         <line num="10" count="9" type="stmt"/>
-        <line num="13" count="10" type="stmt"/>
-        <line num="18" count="10" type="cond" truecount="1" falsecount="1"/>
+        <line num="13" count="13" type="stmt"/>
+        <line num="18" count="13" type="cond" truecount="1" falsecount="1"/>
         <line num="19" count="0" type="stmt"/>
-        <line num="21" count="10" type="stmt"/>
-        <line num="22" count="10" type="stmt"/>
-        <line num="23" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="13" type="stmt"/>
+        <line num="22" count="13" type="stmt"/>
+        <line num="23" count="13" type="cond" truecount="2" falsecount="0"/>
         <line num="25" count="0" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
         <line num="31" count="9" type="stmt"/>
-        <line num="34" count="4" type="stmt"/>
-        <line num="35" count="4" type="stmt"/>
-        <line num="36" count="4" type="stmt"/>
+        <line num="34" count="5" type="stmt"/>
+        <line num="35" count="5" type="stmt"/>
+        <line num="36" count="5" type="stmt"/>
         <line num="40" count="9" type="stmt"/>
         <line num="43" count="1" type="stmt"/>
         <line num="44" count="1" type="stmt"/>
@@ -52,23 +52,23 @@
         <line num="53" count="3" type="stmt"/>
         <line num="54" count="3" type="stmt"/>
         <line num="59" count="9" type="stmt"/>
-        <line num="62" count="7" type="stmt"/>
-        <line num="63" count="7" type="stmt"/>
-        <line num="64" count="7" type="stmt"/>
+        <line num="62" count="9" type="stmt"/>
+        <line num="63" count="9" type="stmt"/>
+        <line num="64" count="9" type="stmt"/>
         <line num="67" count="9" type="stmt"/>
         <line num="70" count="4" type="stmt"/>
         <line num="71" count="4" type="stmt"/>
         <line num="72" count="4" type="stmt"/>
         <line num="75" count="9" type="stmt"/>
-        <line num="76" count="19" type="stmt"/>
-        <line num="81" count="19" type="cond" truecount="4" falsecount="0"/>
-        <line num="82" count="14" type="stmt"/>
-        <line num="84" count="5" type="stmt"/>
+        <line num="76" count="22" type="stmt"/>
+        <line num="81" count="22" type="cond" truecount="4" falsecount="0"/>
+        <line num="82" count="15" type="stmt"/>
+        <line num="84" count="7" type="stmt"/>
       </file>
     </package>
     <package name="frontend.screens">
       <metrics statements="139" coveredstatements="53" conditionals="22" coveredconditionals="0" methods="63" coveredmethods="11"/>
-      <file name="AdminPasswordScreen.tsx" path="/Users/sarahbost 1/Desktop/NCTRC-Check-In-App/NCTRC/frontend/screens/AdminPasswordScreen.tsx">
+      <file name="AdminPasswordScreen.tsx" path="C:\Users\Itai\Desktop\Programming\NCTRC\NCTRC\frontend\screens\AdminPasswordScreen.tsx">
         <metrics statements="6" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="1"/>
         <line num="11" count="8" type="stmt"/>
         <line num="12" count="2" type="stmt"/>
@@ -77,7 +77,7 @@
         <line num="19" count="0" type="stmt"/>
         <line num="24" count="0" type="stmt"/>
       </file>
-      <file name="AdminPortalScreen.tsx" path="/Users/sarahbost 1/Desktop/NCTRC-Check-In-App/NCTRC/frontend/screens/AdminPortalScreen.tsx">
+      <file name="AdminPortalScreen.tsx" path="C:\Users\Itai\Desktop\Programming\NCTRC\NCTRC\frontend\screens\AdminPortalScreen.tsx">
         <metrics statements="5" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="1"/>
         <line num="14" count="8" type="stmt"/>
         <line num="15" count="2" type="stmt"/>
@@ -85,7 +85,7 @@
         <line num="18" count="0" type="stmt"/>
         <line num="21" count="0" type="stmt"/>
       </file>
-      <file name="COVIDErrorScreen.tsx" path="/Users/sarahbost 1/Desktop/NCTRC-Check-In-App/NCTRC/frontend/screens/COVIDErrorScreen.tsx">
+      <file name="COVIDErrorScreen.tsx" path="C:\Users\Itai\Desktop\Programming\NCTRC\NCTRC\frontend\screens\COVIDErrorScreen.tsx">
         <metrics statements="8" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="1"/>
         <line num="17" count="8" type="stmt"/>
         <line num="18" count="2" type="stmt"/>
@@ -96,7 +96,7 @@
         <line num="26" count="0" type="stmt"/>
         <line num="32" count="0" type="stmt"/>
       </file>
-      <file name="CheckOutLandingScreen.tsx" path="/Users/sarahbost 1/Desktop/NCTRC-Check-In-App/NCTRC/frontend/screens/CheckOutLandingScreen.tsx">
+      <file name="CheckOutLandingScreen.tsx" path="C:\Users\Itai\Desktop\Programming\NCTRC\NCTRC\frontend\screens\CheckOutLandingScreen.tsx">
         <metrics statements="6" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="1"/>
         <line num="13" count="8" type="stmt"/>
         <line num="14" count="2" type="stmt"/>
@@ -105,7 +105,7 @@
         <line num="21" count="0" type="stmt"/>
         <line num="27" count="0" type="stmt"/>
       </file>
-      <file name="CheckOutScreen.tsx" path="/Users/sarahbost 1/Desktop/NCTRC-Check-In-App/NCTRC/frontend/screens/CheckOutScreen.tsx">
+      <file name="CheckOutScreen.tsx" path="C:\Users\Itai\Desktop\Programming\NCTRC\NCTRC\frontend\screens\CheckOutScreen.tsx">
         <metrics statements="14" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="1"/>
         <line num="14" count="8" type="stmt"/>
         <line num="15" count="2" type="stmt"/>
@@ -122,7 +122,7 @@
         <line num="37" count="0" type="stmt"/>
         <line num="38" count="0" type="stmt"/>
       </file>
-      <file name="CovidInformationScreen.tsx" path="/Users/sarahbost 1/Desktop/NCTRC-Check-In-App/NCTRC/frontend/screens/CovidInformationScreen.tsx">
+      <file name="CovidInformationScreen.tsx" path="C:\Users\Itai\Desktop\Programming\NCTRC\NCTRC\frontend\screens\CovidInformationScreen.tsx">
         <metrics statements="49" coveredstatements="12" conditionals="18" coveredconditionals="0" methods="12" coveredmethods="1"/>
         <line num="23" count="8" type="stmt"/>
         <line num="24" count="2" type="stmt"/>
@@ -174,7 +174,7 @@
         <line num="150" count="0" type="stmt"/>
         <line num="156" count="0" type="stmt"/>
       </file>
-      <file name="HomeScreen.tsx" path="/Users/sarahbost 1/Desktop/NCTRC-Check-In-App/NCTRC/frontend/screens/HomeScreen.tsx">
+      <file name="HomeScreen.tsx" path="C:\Users\Itai\Desktop\Programming\NCTRC\NCTRC\frontend\screens\HomeScreen.tsx">
         <metrics statements="6" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="1"/>
         <line num="11" count="8" type="stmt"/>
         <line num="12" count="3" type="stmt"/>
@@ -183,7 +183,7 @@
         <line num="21" count="0" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
       </file>
-      <file name="ReasonScreen.tsx" path="/Users/sarahbost 1/Desktop/NCTRC-Check-In-App/NCTRC/frontend/screens/ReasonScreen.tsx">
+      <file name="ReasonScreen.tsx" path="C:\Users\Itai\Desktop\Programming\NCTRC\NCTRC\frontend\screens\ReasonScreen.tsx">
         <metrics statements="11" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="9" coveredmethods="1"/>
         <line num="12" count="8" type="stmt"/>
         <line num="13" count="2" type="stmt"/>
@@ -197,7 +197,7 @@
         <line num="40" count="0" type="stmt"/>
         <line num="44" count="0" type="stmt"/>
       </file>
-      <file name="RisksScreen.tsx" path="/Users/sarahbost 1/Desktop/NCTRC-Check-In-App/NCTRC/frontend/screens/RisksScreen.tsx">
+      <file name="RisksScreen.tsx" path="C:\Users\Itai\Desktop\Programming\NCTRC\NCTRC\frontend\screens\RisksScreen.tsx">
         <metrics statements="15" coveredstatements="5" conditionals="4" coveredconditionals="0" methods="5" coveredmethods="1"/>
         <line num="22" count="8" type="stmt"/>
         <line num="23" count="2" type="stmt"/>
@@ -215,7 +215,7 @@
         <line num="64" count="0" type="stmt"/>
         <line num="66" count="0" type="stmt"/>
       </file>
-      <file name="SignInLandingScreen.tsx" path="/Users/sarahbost 1/Desktop/NCTRC-Check-In-App/NCTRC/frontend/screens/SignInLandingScreen.tsx">
+      <file name="SignInLandingScreen.tsx" path="C:\Users\Itai\Desktop\Programming\NCTRC\NCTRC\frontend\screens\SignInLandingScreen.tsx">
         <metrics statements="6" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="1"/>
         <line num="13" count="8" type="stmt"/>
         <line num="14" count="2" type="stmt"/>
@@ -224,7 +224,7 @@
         <line num="20" count="0" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
       </file>
-      <file name="SignInScreen.tsx" path="/Users/sarahbost 1/Desktop/NCTRC-Check-In-App/NCTRC/frontend/screens/SignInScreen.tsx">
+      <file name="SignInScreen.tsx" path="C:\Users\Itai\Desktop\Programming\NCTRC\NCTRC\frontend\screens\SignInScreen.tsx">
         <metrics statements="12" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="1"/>
         <line num="13" count="8" type="stmt"/>
         <line num="14" count="2" type="stmt"/>
@@ -239,7 +239,7 @@
         <line num="29" count="0" type="stmt"/>
         <line num="30" count="0" type="stmt"/>
       </file>
-      <file name="Styles.tsx" path="/Users/sarahbost 1/Desktop/NCTRC-Check-In-App/NCTRC/frontend/screens/Styles.tsx">
+      <file name="Styles.tsx" path="C:\Users\Itai\Desktop\Programming\NCTRC\NCTRC\frontend\screens\Styles.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="4" count="8" type="stmt"/>
       </file>
