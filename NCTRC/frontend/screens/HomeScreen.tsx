@@ -25,7 +25,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
                 <View style={styles.homeDiv}></View>
                 <Button color='#884633'title="Sign in as Admin"onPress={() => navigation.navigate(AppScreens.AdminPass)} />
             </View>
-        </SafeAreaView>
+       </SafeAreaView>
     );
 };
 export default HomeScreen;

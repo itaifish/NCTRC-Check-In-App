@@ -3,7 +3,7 @@ import { ScrollView, Text, View, Button, Image, TextInput, TouchableOpacity } fr
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList, AppScreens } from '../Index';
 import { RadioButton } from 'react-native-paper';
-import { checkUserExists, signinUser } from '../handlers';
+import { checkUserExists, signinUser } from '../handler/handlers';
 import { components } from '../domain/domain';
 import { styles } from './Styles';
 

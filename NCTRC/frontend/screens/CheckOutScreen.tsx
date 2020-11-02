@@ -3,7 +3,7 @@ import { SafeAreaView, Text, View, Button, Image, TextInput, TouchableOpacity } 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList, AppScreens } from '../Index';
 import { components } from "../domain/domain";
-import { signoutUser } from '../handlers';
+import { signoutUser } from '../handler/handlers';
 import { styles } from './Styles';
 
 type CheckOutScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.CheckOut>;

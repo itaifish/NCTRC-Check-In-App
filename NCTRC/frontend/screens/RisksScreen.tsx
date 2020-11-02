@@ -3,7 +3,7 @@ import { SafeAreaView, ScrollView, StyleSheet, Text, View, Button, Image, Toucha
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList, AppScreens } from '../Index';
 import { components } from '../domain/domain';
-import { createAndSigninUser } from '../handlers';
+import { createAndSigninUser } from '../handler/handlers';
 import { styles } from './Styles';
 
 type RisksScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.Risks>;
