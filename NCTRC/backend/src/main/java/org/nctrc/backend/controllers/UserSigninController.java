@@ -9,27 +9,29 @@ import io.javalin.plugin.openapi.annotations.OpenApiResponse;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.nctrc.backend.config.Constants;
-import org.nctrc.backend.managers.UsersManagerImpl;
-import org.nctrc.backend.model.request.RequestUserModel;
+import org.nctrc.backend.managers.UsersManager;
+import org.nctrc.backend.model.request.SigninRequestModel;
+import org.nctrc.backend.model.request.UserRequestModel;
 import org.nctrc.backend.model.response.Result;
 
 @Singleton
-public class UserSigninController extends Controller {
+public class UserSigninController extends UserController {
 
-  private UsersManagerImpl manager;
+  private final UsersManager manager;
 
   @Inject
-  public UserSigninController(final UsersManagerImpl manager) {
+  public UserSigninController(final UsersManager manager) {
     this.manager = manager;
   }
 
   @OpenApi(
       summary = "Login existing user",
       operationId = "loginUser",
-      path = "/" + Constants.MAIN_PATH + Constants.USER_SIGNIN_PATH,
+      path = "/" + ROOT_PATH + Constants.USER_SIGNIN_PATH,
       method = HttpMethod.POST,
       tags = {"User"},
-      requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = RequestUserModel.class)}),
+      requestBody =
+          @OpenApiRequestBody(content = {@OpenApiContent(from = SigninRequestModel.class)}),
       responses = {
         @OpenApiResponse(status = "200"),
         @OpenApiResponse(
@@ -40,10 +42,16 @@ public class UserSigninController extends Controller {
             content = {@OpenApiContent(from = Result.class)}),
         @OpenApiResponse(
             status = "405",
-            content = {@OpenApiContent(from = Result.class)})
+            content = {@OpenApiContent(from = Result.class)}),
+        @OpenApiResponse(
+            status = "409",
+            content = {@OpenApiContent(from = Result.class)}),
+        @OpenApiResponse(
+            status = "412",
+            content = {@OpenApiContent(from = Result.class)}),
       })
   public void login(final Context ctx) {
-    final RequestUserModel userModel = validateBody(ctx, RequestUserModel.class);
+    final SigninRequestModel userModel = validateBodyAndAuth(ctx, SigninRequestModel.class);
     if (userModel == null) {
       return;
     }
@@ -56,10 +64,10 @@ public class UserSigninController extends Controller {
   @OpenApi(
       summary = "Log out existing user",
       operationId = "logoutUser",
-      path = "/" + Constants.MAIN_PATH + Constants.USER_SIGNOUT_PATH,
+      path = "/" + ROOT_PATH + Constants.USER_SIGNOUT_PATH,
       method = HttpMethod.POST,
       tags = {"User"},
-      requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = RequestUserModel.class)}),
+      requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = UserRequestModel.class)}),
       responses = {
         @OpenApiResponse(status = "200"),
         @OpenApiResponse(
@@ -73,40 +81,13 @@ public class UserSigninController extends Controller {
             content = {@OpenApiContent(from = Result.class)})
       })
   public void logout(final Context ctx) {
-    final RequestUserModel userModel = validateBody(ctx, RequestUserModel.class);
+    final UserRequestModel userModel = validateBodyAndAuth(ctx, UserRequestModel.class);
     if (userModel == null) {
       return;
     }
     final Result result = manager.signoutUser(userModel);
     if (this.resultIsIn2xxAndHandle(result, ctx)) {
       ctx.status(200);
-    }
-  }
-
-  @OpenApi(
-      summary = "Create user",
-      operationId = "createUser",
-      path = "/" + Constants.MAIN_PATH + Constants.USER_CREATION_PATH,
-      method = HttpMethod.POST,
-      tags = {"User"},
-      requestBody = @OpenApiRequestBody(content = {@OpenApiContent(from = RequestUserModel.class)}),
-      responses = {
-        @OpenApiResponse(status = "201"),
-        @OpenApiResponse(
-            status = "400",
-            content = {@OpenApiContent(from = Result.class)}),
-        @OpenApiResponse(
-            status = "405",
-            content = {@OpenApiContent(from = Result.class)})
-      })
-  public void createUser(final Context ctx) {
-    final RequestUserModel userModel = validateBody(ctx, RequestUserModel.class);
-    if (userModel == null) {
-      return;
-    }
-    final Result result = manager.addUser(userModel);
-    if (this.resultIsIn2xxAndHandle(result, ctx)) {
-      ctx.status(201);
     }
   }
 }
