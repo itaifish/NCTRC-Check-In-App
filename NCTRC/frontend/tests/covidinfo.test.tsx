@@ -81,3 +81,4 @@ describe('COVIDErrorScreen elements', () => {
     })
    
 });
+jest.useFakeTimers(); 

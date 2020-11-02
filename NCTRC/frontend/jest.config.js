@@ -6,15 +6,17 @@
 // };
 
 module.exports = {
-  collectCoverage: true,
-  coverageDirectory: './build/test/coverage/',
-  coverageReporters: ['html', 'json', 'text-summary'],
-  collectCoverageFrom: [
-    './app/**/*.{ts,tsx,js,jsx}',
-    '!**/node_modules/**',
-    '!**/vendor/**',
-    '!**/amplify/**',
-  ],
+  //testRegex: "/*.test.tsx$",
+ collectCoverage: true,
+ coverageThreshold: {
+  "global": {
+  "branches": 0,
+  "functions": 0,
+  "lines": 0,
+  "statements": 0
+  }
+ },
+ moduleDirectories: ["node_modules", "src"],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   preset: 'react-native',
   transformIgnorePatterns: [

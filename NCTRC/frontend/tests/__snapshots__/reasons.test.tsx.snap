@@ -1,0 +1,305 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Reasons renders Reasons render 1`] = `
+<RCTSafeAreaView
+  emulateUnlessSupported={true}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#FFFFFF",
+      "flex": 1,
+    }
+  }
+>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignSelf": "flex-start",
+        "opacity": 1,
+      }
+    }
+  >
+    <Image
+      source={
+        Object {
+          "testUri": "../../../assets/backbutton.png",
+        }
+      }
+      style={
+        Object {
+          "height": 75,
+          "width": 75,
+        }
+      }
+    />
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignSelf": "center",
+        "marginTop": -40,
+        "opacity": 1,
+      }
+    }
+  >
+    <Image
+      source={
+        Object {
+          "testUri": "../../../assets/NCTRClogo.png",
+        }
+      }
+      style={
+        Object {
+          "height": 150,
+          "width": 150,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "height": "100%",
+        "justifyContent": "center",
+        "width": "100%",
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "grey",
+          "fontSize": 15,
+          "margin": 10,
+        }
+      }
+    >
+      What is the reason for your visit?
+    </Text>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#884633",
+          "borderRadius": 9,
+          "height": 60,
+          "margin": 10,
+          "opacity": 1,
+          "width": 230,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "white",
+            "fontSize": 15,
+            "marginTop": 18,
+          }
+        }
+      >
+        Employee
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#884633",
+          "borderRadius": 9,
+          "height": 60,
+          "margin": 10,
+          "opacity": 1,
+          "width": 230,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "white",
+            "fontSize": 15,
+            "marginTop": 18,
+          }
+        }
+      >
+        Client
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#884633",
+          "borderRadius": 9,
+          "height": 60,
+          "margin": 10,
+          "opacity": 1,
+          "width": 230,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "white",
+            "fontSize": 15,
+            "marginTop": 18,
+          }
+        }
+      >
+        Volunteer
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#884633",
+          "borderRadius": 9,
+          "height": 60,
+          "margin": 10,
+          "opacity": 1,
+          "width": 230,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "white",
+            "fontSize": 15,
+            "marginTop": 18,
+          }
+        }
+      >
+        Guest
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#884633",
+          "borderRadius": 9,
+          "height": 60,
+          "margin": 10,
+          "opacity": 1,
+          "width": 230,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "white",
+            "fontSize": 15,
+            "marginTop": 18,
+          }
+        }
+      >
+        Professional
+      </Text>
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#884633",
+          "borderRadius": 9,
+          "height": 60,
+          "margin": 10,
+          "opacity": 1,
+          "width": 230,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "white",
+            "fontSize": 15,
+            "marginTop": 18,
+          }
+        }
+      >
+        Grason
+      </Text>
+    </View>
+  </View>
+</RCTSafeAreaView>
+`;
