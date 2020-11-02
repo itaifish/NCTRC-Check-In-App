@@ -16,6 +16,12 @@ module.exports = {
   "statements": 0
   }
  },
+ reporters: [
+  "default",
+  ["./node_modules/jest-html-reporter", {
+      "pageTitle": "Test Report"
+  }]
+],
  moduleDirectories: ["node_modules", "src"],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   preset: 'react-native',

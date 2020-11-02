@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1604312705062" clover="3.2.0">
-  <project timestamp="1604312705063" name="All files">
+<coverage generated="1604331429054" clover="3.2.0">
+  <project timestamp="1604331429054" name="All files">
     <metrics statements="179" coveredstatements="90" conditionals="30" coveredconditionals="7" methods="72" coveredmethods="20" elements="281" coveredelements="117" complexity="0" loc="179" ncloc="179" packages="4" files="17" classes="17"/>
     <package name="frontend">
       <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
@@ -31,39 +31,39 @@
       <file name="handlers.tsx" path="/Users/sarahbost 1/Desktop/NCTRC-Check-In-App/NCTRC/frontend/handler/handlers.tsx">
         <metrics statements="34" coveredstatements="31" conditionals="8" coveredconditionals="7" methods="7" coveredmethods="7"/>
         <line num="10" count="9" type="stmt"/>
-        <line num="13" count="6" type="stmt"/>
-        <line num="18" count="6" type="cond" truecount="1" falsecount="1"/>
+        <line num="13" count="10" type="stmt"/>
+        <line num="18" count="10" type="cond" truecount="1" falsecount="1"/>
         <line num="19" count="0" type="stmt"/>
-        <line num="21" count="6" type="stmt"/>
-        <line num="22" count="6" type="stmt"/>
-        <line num="23" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="10" type="stmt"/>
+        <line num="22" count="10" type="stmt"/>
+        <line num="23" count="10" type="cond" truecount="2" falsecount="0"/>
         <line num="25" count="0" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
         <line num="31" count="9" type="stmt"/>
-        <line num="34" count="5" type="stmt"/>
-        <line num="35" count="5" type="stmt"/>
-        <line num="36" count="5" type="stmt"/>
+        <line num="34" count="4" type="stmt"/>
+        <line num="35" count="4" type="stmt"/>
+        <line num="36" count="4" type="stmt"/>
         <line num="40" count="9" type="stmt"/>
         <line num="43" count="1" type="stmt"/>
         <line num="44" count="1" type="stmt"/>
         <line num="45" count="1" type="stmt"/>
         <line num="49" count="9" type="stmt"/>
-        <line num="52" count="1" type="stmt"/>
-        <line num="53" count="1" type="stmt"/>
-        <line num="54" count="1" type="stmt"/>
+        <line num="52" count="3" type="stmt"/>
+        <line num="53" count="3" type="stmt"/>
+        <line num="54" count="3" type="stmt"/>
         <line num="59" count="9" type="stmt"/>
-        <line num="62" count="5" type="stmt"/>
-        <line num="63" count="5" type="stmt"/>
-        <line num="64" count="5" type="stmt"/>
+        <line num="62" count="7" type="stmt"/>
+        <line num="63" count="7" type="stmt"/>
+        <line num="64" count="7" type="stmt"/>
         <line num="67" count="9" type="stmt"/>
         <line num="70" count="4" type="stmt"/>
         <line num="71" count="4" type="stmt"/>
         <line num="72" count="4" type="stmt"/>
         <line num="75" count="9" type="stmt"/>
-        <line num="76" count="16" type="stmt"/>
-        <line num="81" count="16" type="cond" truecount="4" falsecount="0"/>
-        <line num="82" count="5" type="stmt"/>
-        <line num="84" count="11" type="stmt"/>
+        <line num="76" count="19" type="stmt"/>
+        <line num="81" count="19" type="cond" truecount="4" falsecount="0"/>
+        <line num="82" count="14" type="stmt"/>
+        <line num="84" count="5" type="stmt"/>
       </file>
     </package>
     <package name="frontend.screens">

@@ -1,5 +1,6 @@
 
 import React from "react";
+import { TouchableOpacity } from 'react-native'; 
 import  HomeScreen from '../screens/HomeScreen';
 import { shallow, configure } from 'enzyme'; 
 import Adapter from 'enzyme-adapter-react-16';
