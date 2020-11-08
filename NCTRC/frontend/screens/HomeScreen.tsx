@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Image, Button, TouchableOpacity } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList, AppScreens } from '../Index';
+import { AuthStackParamList, AppScreens } from '../index';
 type HomeScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.Home>;
 import { styles } from './Styles';
 interface HomeScreenProps {

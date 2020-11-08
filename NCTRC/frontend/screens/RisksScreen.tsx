@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList, AppScreens } from '../Index';
+import { AuthStackParamList, AppScreens } from '../index';
 import { components } from '../domain/domain';
 import { createAndSigninUser } from '../handler/handlers';
 import { styles } from './Styles';

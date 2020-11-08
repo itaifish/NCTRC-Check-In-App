@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ScrollView, Text, View, Button, Image, TextInput, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList, AppScreens } from '../Index';
+import { AuthStackParamList, AppScreens } from '../index';
 import { RadioButton } from 'react-native-paper';
 import { checkUserExists, signinUser } from '../handler/handlers';
 import { components } from '../domain/domain';
