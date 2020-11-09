@@ -6,9 +6,21 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
 
 1. Prerequisites
 
-   - This setup guide is made with the assumption that you are hosting the backend on an AWS EC2 instance. If this is not the case, you will have to alter your methodology accordingly
+   - This setup guide is made with the assumption that you are hosting the backend on an AWS EC2 instance and that you have an AWS account. If this is not the case, you will have to alter your methodology accordingly
 
 2. Installing
+
+   0. Create User account for DynamoDB
+
+      - Instructions based on the tutorial found [here](https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/signup-create-iam-user.html)
+
+      - Follow the above tutorial. The username can be anything, but make sure the access type is **Programmatic access**
+
+      - On the next page it will ask you to create a group. Once again, the group name can be anything, but make sure that you check **AmazonDynamoDBFullAccess**
+
+      - Go ahead and create the user, you don't need to change any more settings
+
+      - It will bring you to a user page with Access key ID and secret. Go ahead and jot those down, youll need them in a bit
 
    1. Login to your AWS account and spin up an EC2 Instance in Ubuntu version 18.04. Default settings are fine, and the instance can be as lightweight as you want (micro/nano).
 
@@ -101,7 +113,7 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
 
       - Create a database.properties file with the aws dynamodb authkeyId and secretAccessKey
         `nano database.properties`
-      - Paste into it the following format:
+      - Paste into it the following format, using the credentials provided in step 0:
 
       ```bash
          accessKeyId=ACCESS_KEY_ID_HERE
@@ -111,7 +123,13 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
       - Return to the main directory of the backend
         `cd ~/NCTRC-Check-In-App/NCTRC/backend`
 
-3. Running locally
+      - Verify that everything works with `mvn verify`
+
+   7. Test Run
+
+3. Running
+   1. Whenever you make a code change, you can rebuild with `mvn clean install`
+   2. After that finishes, `./run.sh` should start up the server no problem
 4. Warranty
 
 ## Testing
