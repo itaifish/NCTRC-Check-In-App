@@ -23,11 +23,14 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
    4. Install Java 12 JDK
 
       - Head over to [here](https://jdk.java.net/archive/) and scroll down to java 12.0.2, right click on Linux 64-bit tar.gz and click copy link address (as of the time of this writing, the most updated link is [this](https://download.java.net/java/GA/jdk12.0.2/e482c34c86bd4bf8b56c0b35558996b9/10/GPL/openjdk-12.0.2_linux-x64_bin.tar.gz)
-      - run `wget https://download.java.net/java/GA/jdk12.0.2/e482c34c86bd4bf8b56c0b35558996b9/10/GPL/openjdk-12.0.2_linux-x64_bin.tar.gz`, replacing the URL with whatever your updated URL is if they have updated it since
-      - unpack it `tar xvf openjdk-12.0.2_linux-x64_bin.tar.gz`
+      - run
+        `wget https://download.java.net/java/GA/jdk12.0.2/e482c34c86bd4bf8b56c0b35558996b9/10/GPL/openjdk-12.0.2_linux-x64_bin.tar.gz`, replacing the URL with whatever your updated URL is if they have updated it since
+      - unpack it
+        `tar xvf openjdk-12.0.2_linux-x64_bin.tar.gz`
       - now we are setting the java home and path:
 
-        - Run: `sudo nano ~/.bash_profile`
+        - Run
+          `sudo nano ~/.bash_profile`
         - Paste in
 
           ```bash
@@ -35,13 +38,25 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
           export PATH=$JAVA_HOME/bin:$PATH
           ```
 
-        - Reload the terminal `source ~/.bash_profile`
-        - Now you should see Java 12 as the response to `java -version`
+        - Reload the terminal
+          `source ~/.bash_profile`
+        - Now you should see Java 12 as the response to
+          `java -version`
 
-   4½ Configure git user
+   5. Configure git user
 
-   5. Repo Setup
+      - Generate the SSH keys, make sure to replace the example email with your github email
+        `ssh-keygen -t ed25519 -C "your_email@example.com"`
+      - Hit enter to keep the defaults through all the options (no need for a password but if you want one that is fine)
+      - We now want to upload the public key generated to github
+        - Run and copy the output of
+          `cat /home/ubuntu/.ssh/id_ed25519.pub`
+        - Create a new SSH key on github and paste the result in the box asking for the key
+        - See [Here](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account) for additional help
+
+   6. Repo Setup
       - Clone the repo. As of the writing of this document the repo is owned by Fisherswamp, so the command to clone is `git clone git@github.com:Fisherswamp/NCTRC-Check-In-App.git`
+      - You should now see a folder called 'NCTRC-Check-In-App'
 
 3. Running locally
 4. Warranty
