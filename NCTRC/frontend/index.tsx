@@ -10,7 +10,7 @@ import CovidInformationScreen, { InfoParams } from './screens/CovidInformationSc
 import ReasonsScreen from './screens/ReasonScreen';
 import RisksScreen, { RisksParams } from './screens/RisksScreen';
 import SignInLandingScreen from './screens/SignInLandingScreen';
-import SignInScreen from './screens/SignInScreen';
+import SignInScreen, { VisitorType } from './screens/SignInScreen';
 
 export enum AppScreens {
     Home = 'Home',
@@ -38,7 +38,7 @@ export type AuthStackParamList = {
     Reason: undefined;
     Risks: RisksParams;
     SignInLanding: undefined;
-    SignIn: undefined;
+    SignIn: VisitorType;
 };
 
 const AuthStack = createStackNavigator<AuthStackParamList>();

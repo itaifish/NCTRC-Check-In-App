@@ -124,6 +124,11 @@ export const styles = StyleSheet.create({
         marginRight: 25, 
         marginLeft: 25,
         fontSize: 15
-    }
+    }, 
+    signature: {
+        flex: 1,
+        borderColor: '#000033',
+        borderWidth: 1,
+      },
 
 });
