@@ -101,13 +101,15 @@ public class DatabaseManager implements DatabaseManagerInterface {
     final Table timelineTable = this.database.getTable(this.databaseConstants.TIMELINE_TABLE);
     timelineTable.waitForActive();
     final ItemCollection<QueryOutcome> outcomeItemCollection =
-        timelineTable.query(new KeyAttribute("email", userRequestModel.getEmail()));
+        timelineTable.query(new KeyAttribute("userEmail", userRequestModel.getEmail()));
     outcomeItemCollection.forEach(
         item -> {
           timelineTable.deleteItem(
-              new PrimaryKey(
-                  "id", item.getString("id"), "signinTime", item.getString("signinTime")));
+              new PrimaryKey("userEmail", item.getString("userEmail"), "id", item.getString("id")));
         });
+    final Table signedInTable = this.database.getTable(this.databaseConstants.SIGNED_IN_TABLE);
+    signedInTable.waitForActive();
+    signedInTable.deleteItem(new PrimaryKey("email", userRequestModel.getEmail()));
   }
 
   /**

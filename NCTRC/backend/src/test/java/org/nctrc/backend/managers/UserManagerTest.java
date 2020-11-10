@@ -156,17 +156,17 @@ public class UserManagerTest {
           public void addUser(NewUserRequestModel userRequestModel) {}
 
           @Override
-          public SigninTimeIdPair signinUser(SigninRequestModel signinRequestModel)
+          public SigninEmailIdPair signinUser(SigninRequestModel signinRequestModel)
               throws InterruptedException {
-            return new SigninTimeIdPair(
+            return new SigninEmailIdPair(
                 UUID.randomUUID().toString(), Utility.nowToFullIso8601String());
           }
 
           @Override
-          public void signOutUser(SigninTimeIdPair signInTimeAndId) throws InterruptedException {}
+          public void signOutUser(SigninEmailIdPair signInTimeAndId) throws InterruptedException {}
 
           @Override
-          public void signOutUser(SigninTimeIdPair signInTimeAndId, String signoutTime)
+          public void signOutUser(SigninEmailIdPair signInTimeAndId, String signoutTime)
               throws InterruptedException {}
 
           @Override
@@ -180,7 +180,7 @@ public class UserManagerTest {
           }
 
           @Override
-          public Map<UserRequestModel, SigninTimeIdPair> getAllUsersWhoAreSignedInDatabase()
+          public Map<UserRequestModel, SigninEmailIdPair> getAllUsersWhoAreSignedInDatabase()
               throws InterruptedException {
             return new HashMap<>();
           }

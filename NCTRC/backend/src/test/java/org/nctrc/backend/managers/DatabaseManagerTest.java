@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.nctrc.backend.config.DatabaseConstants;
-import org.nctrc.backend.model.internal.SigninTimeIdPair;
+import org.nctrc.backend.model.internal.SigninEmailIdPair;
 import org.nctrc.backend.model.request.NewUserRequestModel;
 import org.nctrc.backend.model.request.SigninDataRequestModel;
 import org.nctrc.backend.model.request.SigninRequestModel;
@@ -37,7 +37,7 @@ public class DatabaseManagerTest {
     } catch (InterruptedException e) {
       fail(e);
     }
-    SigninTimeIdPair singinKey = null;
+    SigninEmailIdPair singinKey = null;
     // Create user and sign them in
     try {
       databaseManger.addUser(newUserRequestModel);
