@@ -12,11 +12,11 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
 
 2. Installing
 
-1. Clone this repository
-2. Navigate to the frontend folder
-3. Run npm init
-4. Navigate to the backend folder
-5. 
+   1. Clone this repository
+   2. Navigate to the frontend folder
+   3. Run npm init
+   4. Navigate to the backend folder
+   5. 
   
 
 3. Running
