@@ -6,10 +6,18 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
 
 1. Prerequisites
 
-   - This setup guide is made with the assumption that you are hosting the backend on an AWS EC2 instance and that you have an AWS account. If this is not the case, you will have to alter your methodology accordingly
+   - [Node 12 LTS or later](https://nodejs.org/en/download/) 
+   - [Java 12.0.2](https://jdk.java.net/archive/)
+   - [Maven 3.6.2 or later](https://maven.apache.org/download.cgi)
 
 2. Installing
-   
+
+1. Clone this repository
+2. Navigate to the frontend folder
+3. Run npm init
+4. Navigate to the backend folder
+5. 
+  
 
 3. Running
    1. Backend
@@ -29,13 +37,22 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
 1. How to run tests
    - Frontend:
      1. Navigate to frontend folder
-     2. Run `npx jest`
+     2. Run `npx jest` or equivalently `npm test`
    - Backend
-2. Other test commands
+     1.  Navigate to the backend folder
+     2. `mvn test`
+2. Collecting test coverage:
+   - Frontend: 
+      1. Automatically collected with `npx jest` or its equivalents
+   - Backend:
+      1. `mvn install`
+      2. Reports found in `target/site/jacoco/index.html`
 
 ## Deployment
 
 1. Deployment Steps
+   
+   - This setup guide is made with the assumption that you are hosting the backend on an AWS EC2 instance and that you have an AWS account. If this is not the case, you will have to alter your methodology accordingly
 
    0. Create User account for DynamoDB
 
@@ -172,8 +189,13 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
    - Where
    - Access
 3. Pre-production environments
+   - No pre-production environments
 4. Components of the app
+   - Database: DynamoDB
+      
+   - Repo:
 4. CI/CD?
+   - Neither are implemented
 
 ## Technologies Used
 
@@ -187,8 +209,9 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
 ## Contributing
 
 1. Resources to access
-   - If you
+   - If you wish to contribute to this project please contact the NCTRC about contributing to their Check-In App. 
 2. Standards
+   - Each member should follow the Google Code style whenever applicable. The recommended linter is eslint. A maven plugin will be automatically added to format the code into the correct codestyle, and it is recommended but not required that team members install the google-java-format plugin which can be found here for InteliJ and here for Eclipse. More information can be found on Google’s GitHub Page.
 
 ## Authors
 
@@ -199,3 +222,5 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
 ## License
 
 ## Acknowledgements
+
+- We would like to mention our mentor, Benjamin Pollack, and professor, Jeff Terrel, for helping us build out this project. 
