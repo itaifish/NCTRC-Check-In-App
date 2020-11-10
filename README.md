@@ -2,6 +2,8 @@
 
 This project is the repository for the North Carolina Theraputic Riding Cetner Check-In App. The NCTRC must track who comes onto the property at all times for record tracking as well as COVID-19 contact tracing.
 
+Additionally, it is assumed you have installed the expo client to simulate the react-native project. Expo Client requires Node 12 LTS or higher. If you already have Node 12 installed, just run `npm install -g expo-cli` to install the Expo client globally.
+
 ## Getting Started
 
 1. Prerequisites
@@ -144,8 +146,16 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
    7. Test Run
 
 3. Running
-   1. Whenever you make a code change, you can rebuild with `mvn clean install`
-   2. After that finishes, `./run.sh` should start up the server no problem
+   1. Backend
+      - Whenever you make a code change, you can rebuild with `mvn clean install`
+      - After that finishes, `./run.sh` should start up the server no problem
+   
+   2. Frontend
+      - navigate to the frontend folder of the cloned repo
+      - run `npm start` to start your react-native project
+      - the expo client will give instructions that you can follow depending on where you would like to run your app (i.e. browser, phone, etc.)
+   
+   
 4. Warranty
 
 ## Testing
