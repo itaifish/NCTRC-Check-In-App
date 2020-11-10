@@ -14,10 +14,9 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
 
    1. Clone this repository
    2. Navigate to the frontend folder
-   3. Run npm init
+   3. Run `npm init`
    4. Navigate to the backend folder
-   5. 
-  
+   5. Run `mvn install`
 
 3. Running
    1. Backend
@@ -29,8 +28,8 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
       - run `npm start` to start your react-native project
       - the expo client will give instructions that you can follow depending on where you would like to run your app (i.e. browser, phone, etc.)
    
-   
 4. Warranty
+- As of Novermber 5, 2020. The test suite found in this repository was found to be functioning. 
 
 ## Testing
 
@@ -186,14 +185,13 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
          - Verify that everything works with `mvn verify`
       
 2. Production system
-   - Where
-   - Access
+   - Where: AWS
+   - Access: A new developer can only get access by contacting NCTRC and getting permission. 
 3. Pre-production environments
    - No pre-production environments
 4. Components of the app
    - Database: DynamoDB
-      
-   - Repo:
+   - Repository
 4. CI/CD?
    - Neither are implemented
 
@@ -220,6 +218,8 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
 - Daniel Evora: integration of frontend and backend, integration testing
 
 ## License
+
+- Copyright NCTRC 2020. All Rights Reserved. Uploaded with their permission to show off the work of the developers. Contact them @ info@nctrcriders.org or on their website https://www.nctrcriders.org/contact if you wish to use this code.
 
 ## Acknowledgements
 
