@@ -22,7 +22,23 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
 
       - It will bring you to a user page with Access key ID and secret. Go ahead and jot those down, youll need them in a bit
 
-   1. Login to your AWS account and spin up an EC2 Instance in Ubuntu version 18.04. Default settings are fine, and the instance can be as lightweight as you want (micro/nano).
+   1. Login to your AWS account and spin up an EC2 Instance in Ubuntu version 18.04 (Ubuntu 20 should also work, but it has only been tested with 18). Default settings are fine, and the instance can be as lightweight as you want (micro/nano).
+
+      - Now we will open up the ports for the server
+
+        - Click on the instance ID and navigate to the security tab
+
+        - Click on the link under security groups
+
+        - Click Edit inbound rules
+
+        - Click Add Rule
+        - Set the rule type to be custom TCP and the port range to be 6600
+        - Set the Source to be anywhere
+        - Click Add Rule
+        - Set the rule type to be custom TCP and the port range to be 6700
+        - Set the Source to be anywhere
+        - Click save Rules
 
    2. SSH into your instance and update it
 
