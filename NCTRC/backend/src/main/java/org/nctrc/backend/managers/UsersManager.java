@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.config.DatabaseConstants;
 import org.nctrc.backend.model.internal.DayTimeline;
-import org.nctrc.backend.model.internal.SigninTimeIdPair;
+import org.nctrc.backend.model.internal.SigninEmailIdPair;
 import org.nctrc.backend.model.request.NewUserRequestModel;
 import org.nctrc.backend.model.request.SigninDataRequestModel;
 import org.nctrc.backend.model.request.SigninRequestModel;
@@ -54,7 +54,7 @@ public class UsersManager {
       logger.warn("Unable to load users from database: " + e.toString());
     }
     try {
-      final Map<UserRequestModel, SigninTimeIdPair> usersSignedIn =
+      final Map<UserRequestModel, SigninEmailIdPair> usersSignedIn =
           databaseManager.getAllUsersWhoAreSignedInDatabase();
       usersSignedIn
           .keySet()
@@ -79,9 +79,9 @@ public class UsersManager {
               && signinData.getYesQuestion() == null) {
 
             try {
-              final SigninTimeIdPair signInTimeAndId =
+              final SigninEmailIdPair signInEmailAndId =
                   databaseManager.signinUser(signinRequestModel);
-              signinTimeLine.signUserIn(user, signInTimeAndId);
+              signinTimeLine.signUserIn(user, signInEmailAndId);
               this.currentCapacity++;
               return new Result(200, "Success");
             } catch (InterruptedException e) {
@@ -106,9 +106,9 @@ public class UsersManager {
     // those code runs if a user tries to signin but there is an error
     try {
       // Sign user in and then out
-      final SigninTimeIdPair signInTimeAndId = databaseManager.signinUser(signinRequestModel);
+      final SigninEmailIdPair signinEmailIdPair = databaseManager.signinUser(signinRequestModel);
       databaseManager.signOutUser(
-          signInTimeAndId, Utility.failedSignedoutTimeToFullIso8601String());
+          signinEmailIdPair, Utility.failedSignedoutTimeToFullIso8601String());
     } catch (Exception e) {
       logger.warn("Error signing user in/out: " + e.toString());
       // do nothing, already returning due to result
@@ -120,8 +120,9 @@ public class UsersManager {
     if (users.contains(user)) {
       if (signinTimeLine.isUserSignedIn(user)) {
         try {
-          final SigninTimeIdPair signInId = signinTimeLine.getUserSigninTimeAndId(user);
-          this.databaseManager.signOutUser(signInId);
+          final SigninEmailIdPair userSigninEmailAndId =
+              signinTimeLine.getUserSigninEmailAndId(user);
+          this.databaseManager.signOutUser(userSigninEmailAndId);
           signinTimeLine.signUserOut(user);
           this.currentCapacity--;
           return new Result(200, "Success");

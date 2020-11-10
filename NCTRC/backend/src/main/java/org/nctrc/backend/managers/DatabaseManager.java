@@ -6,8 +6,10 @@ import com.amazonaws.services.dynamodbv2.document.AttributeUpdate;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
+import com.amazonaws.services.dynamodbv2.document.KeyAttribute;
 import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
 import com.amazonaws.services.dynamodbv2.document.PutItemOutcome;
+import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
 import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.spec.GetItemSpec;
@@ -27,12 +29,10 @@ import java.util.Set;
 import java.util.UUID;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import org.apache.commons.lang3.time.DateUtils;
-import org.joda.time.DateTime;
 import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.config.DatabaseConfigInformation;
 import org.nctrc.backend.config.DatabaseConstants;
-import org.nctrc.backend.model.internal.SigninTimeIdPair;
+import org.nctrc.backend.model.internal.SigninEmailIdPair;
 import org.nctrc.backend.model.request.NewUserRequestModel;
 import org.nctrc.backend.model.request.SigninRequestModel;
 import org.nctrc.backend.model.request.UserRequestModel;
@@ -100,22 +100,13 @@ public class DatabaseManager implements DatabaseManagerInterface {
     this.createTableIfNotExist(this.databaseConstants.TIMELINE_TABLE);
     final Table timelineTable = this.database.getTable(this.databaseConstants.TIMELINE_TABLE);
     timelineTable.waitForActive();
-    final ItemCollection<ScanOutcome> outcomeItemCollection = timelineTable.scan();
-    final List<Item> timelinesWithUserToDelete = new ArrayList<>();
+    final ItemCollection<QueryOutcome> outcomeItemCollection =
+        timelineTable.query(new KeyAttribute("email", userRequestModel.getEmail()));
     outcomeItemCollection.forEach(
         item -> {
-          if (userRequestModel.getEmail().equals(item.getString("userEmail"))) {
-            timelinesWithUserToDelete.add(item);
-          }
-        });
-    timelinesWithUserToDelete.forEach(
-        timeLineToDelete -> {
           timelineTable.deleteItem(
               new PrimaryKey(
-                  "id",
-                  timeLineToDelete.getString("id"),
-                  "signinTime",
-                  timeLineToDelete.getString("signinTime")));
+                  "id", item.getString("id"), "signinTime", item.getString("signinTime")));
         });
   }
 
@@ -126,18 +117,25 @@ public class DatabaseManager implements DatabaseManagerInterface {
    * @return String of uuid for signin/signout to be found later
    * @throws InterruptedException
    */
-  public SigninTimeIdPair signinUser(final SigninRequestModel signinRequestModel)
+  public SigninEmailIdPair signinUser(final SigninRequestModel signinRequestModel)
       throws InterruptedException {
     this.createTableIfNotExist(this.databaseConstants.TIMELINE_TABLE);
+    this.createTableIfNotExist(this.databaseConstants.SIGNED_IN_TABLE);
     final Table timelineTable = this.database.getTable(this.databaseConstants.TIMELINE_TABLE);
     timelineTable.waitForActive();
+    final Table signedInTable = this.database.getTable(this.databaseConstants.SIGNED_IN_TABLE);
+    signedInTable.waitForActive();
+    // Sign in user to timeline table
     final Item newTimelineItem = new Item();
     final String id = UUID.randomUUID().toString();
+    final String email = signinRequestModel.getUser().getEmail();
+    final String firstName = signinRequestModel.getUser().getFirstName();
+    final String lastName = signinRequestModel.getUser().getLastName();
     final String signinTime = Utility.nowToFullIso8601String();
-    newTimelineItem.withPrimaryKey("id", id, "signinTime", signinTime);
-    newTimelineItem.with("userEmail", signinRequestModel.getUser().getEmail());
-    newTimelineItem.with("firstName", signinRequestModel.getUser().getFirstName());
-    newTimelineItem.with("lastName", signinRequestModel.getUser().getLastName());
+    newTimelineItem.withPrimaryKey("userEmail", email, "id", id);
+    newTimelineItem.with("firstName", firstName);
+    newTimelineItem.with("lastName", lastName);
+    newTimelineItem.with("signinTime", signinTime);
     newTimelineItem.with("temperature", signinRequestModel.getSigninData().getTemperature());
     if (signinRequestModel.getSigninData().getYesQuestion() != null) {
       newTimelineItem.with("yesQuestion", signinRequestModel.getSigninData().getYesQuestion());
@@ -149,22 +147,39 @@ public class DatabaseManager implements DatabaseManagerInterface {
       logger.error("Unable to add new user with error: " + e.toString());
       throw new InterruptedException("Unable to add new user with error: " + e.toString());
     }
-    return new SigninTimeIdPair(id, signinTime);
+    // Create entry in signed in users, point to newest timeline
+    final Item newSignedInItem = new Item();
+    newSignedInItem.withPrimaryKey("email", email);
+    newSignedInItem.with("id", id);
+    newSignedInItem.with("firstName", firstName);
+    newSignedInItem.with("lastName", lastName);
+    try {
+      final PutItemOutcome outcome = signedInTable.putItem(newSignedInItem);
+      logger.debug("New User inserted into database:\n" + outcome.getPutItemResult());
+    } catch (Exception e) {
+      logger.error("Unable to add new user with error: " + e.toString());
+      throw new InterruptedException("Unable to add new user with error: " + e.toString());
+    }
+
+    return new SigninEmailIdPair(id, email);
   }
 
-  public void signOutUser(final SigninTimeIdPair signInTimeAndId) throws InterruptedException {
-    signOutUser(signInTimeAndId, Utility.nowToFullIso8601String());
+  public void signOutUser(final SigninEmailIdPair signinEmailIdPair) throws InterruptedException {
+    signOutUser(signinEmailIdPair, Utility.nowToFullIso8601String());
   }
 
-  public void signOutUser(final SigninTimeIdPair signInTimeAndId, final String signoutTime)
+  public void signOutUser(final SigninEmailIdPair signinEmailIdPair, final String signoutTime)
       throws InterruptedException {
     final Table timelineTable = this.database.getTable(this.databaseConstants.TIMELINE_TABLE);
+    final Table signedInTable = this.database.getTable(this.databaseConstants.SIGNED_IN_TABLE);
     timelineTable.waitForActive();
     timelineTable.updateItem(
         new UpdateItemSpec()
             .withPrimaryKey(
-                "id", signInTimeAndId.getId(), "signinTime", signInTimeAndId.getSigninTime())
+                "userEmail", signinEmailIdPair.getEmail(), "id", signinEmailIdPair.getId())
             .withAttributeUpdate(new AttributeUpdate("signoutTime").put(signoutTime)));
+    signedInTable.waitForActive();
+    signedInTable.deleteItem(new PrimaryKey("email", signinEmailIdPair.getEmail()));
   }
 
   public int loadMaxCapacity() throws InterruptedException {
@@ -211,29 +226,24 @@ public class DatabaseManager implements DatabaseManagerInterface {
     return users;
   }
 
-  public Map<UserRequestModel, SigninTimeIdPair> getAllUsersWhoAreSignedInDatabase()
+  public Map<UserRequestModel, SigninEmailIdPair> getAllUsersWhoAreSignedInDatabase()
       throws InterruptedException {
-    createTableIfNotExist(this.databaseConstants.TIMELINE_TABLE);
-    final Table timelineTable = this.database.getTable(this.databaseConstants.TIMELINE_TABLE);
-    timelineTable.waitForActive();
-    final ItemCollection<ScanOutcome> outcomeItemCollection = timelineTable.scan();
-    final Map<UserRequestModel, SigninTimeIdPair> usersStillSignedIn = new HashMap<>();
-    outcomeItemCollection.forEach(
-        item -> {
-          final DateTime signinTime = DateTime.parse(item.getString("signinTime"));
-          final long yesterday = DateUtils.addDays(new Date(), -1).getTime();
-          if (signinTime.isAfter(yesterday)) {
-            if (item.getString("signoutTime") == null) {
-              usersStillSignedIn.put(
+    createTableIfNotExist(this.databaseConstants.SIGNED_IN_TABLE);
+    final Table signInTable = this.database.getTable(this.databaseConstants.SIGNED_IN_TABLE);
+    final Map<UserRequestModel, SigninEmailIdPair> signedInUsers = new HashMap<>();
+    signInTable.waitForActive();
+    signInTable
+        .scan()
+        .forEach(
+            item -> {
+              signedInUsers.put(
                   new UserRequestModel(
                       item.getString("firstName"),
                       item.getString("lastName"),
-                      item.getString("userEmail")),
-                  new SigninTimeIdPair(item.getString("id"), item.getString("signinTime")));
-            }
-          }
-        });
-    return usersStillSignedIn;
+                      item.getString("email")),
+                  new SigninEmailIdPair(item.getString("id"), item.getString("email")));
+            });
+    return signedInUsers;
   }
 
   private void createTableIfNotExist(final String tableName) {
