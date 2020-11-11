@@ -6,7 +6,7 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
 
 1. Prerequisites
 
-   - [Node 12 LTS or later](https://nodejs.org/en/download/) 
+   - [Node 12 LTS or later](https://nodejs.org/en/download/)
    - [Java 12.0.2](https://jdk.java.net/archive/)
    - [Maven 3.6.2 or later](https://maven.apache.org/download.cgi)
 
@@ -19,17 +19,20 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
    5. Run `mvn install`
 
 3. Running
+
    1. Backend
+
       - Whenever you make a code change, you can rebuild with `mvn clean install`
       - After that finishes, `./run.sh` should start up the server no problem
-   
+
    2. Frontend
       - navigate to the frontend folder of the cloned repo
       - run `npm start` to start your react-native project
       - the expo client will give instructions that you can follow depending on where you would like to run your app (i.e. browser, phone, etc.)
-   
+
 4. Warranty
-- As of Novermber 5, 2020. The test suite found in this repository was found to be functioning. 
+
+- As of Novermber 5, 2020. The test suite found in this repository was found to be functioning.
 
 ## Testing
 
@@ -38,32 +41,32 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
      1. Navigate to frontend folder
      2. Run `npx jest` or equivalently `npm test`
    - Backend
-     1.  Navigate to the backend folder
+     1. Navigate to the backend folder
      2. `mvn test`
 2. Collecting test coverage:
-   - Frontend: 
-      1. Automatically collected with `npx jest` or its equivalents
+   - Frontend:
+     1. Automatically collected with `npx jest` or its equivalents
    - Backend:
-      1. `mvn install`
-      2. Reports found in `target/site/jacoco/index.html`
+     1. `mvn install`
+     2. Reports found in `target/site/jacoco/index.html`
 
 ## Deployment
 
 1. Deployment Steps
-   
+
    - This setup guide is made with the assumption that you are hosting the backend on an AWS EC2 instance and that you have an AWS account. If this is not the case, you will have to alter your methodology accordingly
 
-   0. Create User account for DynamoDB
+   1. Create User account for DynamoDB
 
-         - Instructions based on the tutorial found [here](https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/signup-create-iam-user.html)
+      - Instructions based on the tutorial found [here](https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/signup-create-iam-user.html)
 
-         - Follow the above tutorial. The username can be anything, but make sure the access type is **Programmatic access**
+      - Follow the above tutorial. The username can be anything, but make sure the access type is **Programmatic access**
 
-         - On the next page it will ask you to create a group. Once again, the group name can be anything, but make sure that you check **AmazonDynamoDBFullAccess**
+      - On the next page it will ask you to create a group. Once again, the group name can be anything, but make sure that you check **AmazonDynamoDBFullAccess**
 
-         - Go ahead and create the user, you don't need to change any more settings
+      - Go ahead and create the user, you don't need to change any more settings
 
-         - It will bring you to a user page with Access key ID and secret. Go ahead and jot those down, youll need them in a bit
+      - It will bring you to a user page with Access key ID and secret. Go ahead and jot those down, youll need them in a bit
 
       1. Login to your AWS account and spin up an EC2 Instance in Ubuntu version 18.04 (Ubuntu 20 should also work, but it has only been tested with 18). Default settings are fine, and the instance can be as lightweight as you want (micro/nano).
 
@@ -76,10 +79,10 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
            - Click Edit inbound rules
 
            - Click Add Rule
-           - Set the rule type to be custom TCP and the port range to be 6600
+           - Set the rule type to be HTTP
            - Set the Source to be anywhere
            - Click Add Rule
-           - Set the rule type to be custom TCP and the port range to be 6700
+           - Set the rule type to be HTTPS
            - Set the Source to be anywhere
            - Click save Rules
 
@@ -183,16 +186,46 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
            `cd ~/NCTRC-Check-In-App/NCTRC/backend`
 
          - Verify that everything works with `mvn verify`
-      
+
+      7. Set up caddy
+
+      - Run the following commands to install caddy:
+
+      ```bash
+        echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" | sudo tee -a /etc/apt/sources.list.d/caddy-fury.list
+        sudo apt update
+        sudo apt install caddy
+      ```
+
+      - This should automatically install and run caddy for you. To confirm type
+        `caddy version`
+      - Assuming this works, we want to now edit the caddy file
+
+      ```bash
+        cd /etc/caddy/
+        sudo nano Caddyfile
+      ```
+
+      - Delete everything in the file and replace it with:
+
+      ```bash
+      nctrcapp.org
+      reverse_proxy localhost:6600
+      ```
+
+      - Save the file and type
+        `caddy reload`
+      - Great! Caddy should now point all requests from https://yoururl.org/ (currently https://nctrcapp.org/) to localhost:660 (what the java backend is hosting on)
+
 2. Production system
    - Where: AWS
-   - Access: A new developer can only get access by contacting NCTRC and getting permission. 
+   - Access: A new developer can only get access by contacting NCTRC and getting permission.
 3. Pre-production environments
    - No pre-production environments
 4. Components of the app
    - Database: DynamoDB
    - Repository
-4. CI/CD?
+5. CI/CD?
    - Neither are implemented
 
 ## Technologies Used
@@ -207,7 +240,7 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
 ## Contributing
 
 1. Resources to access
-   - If you wish to contribute to this project please contact the NCTRC about contributing to their Check-In App. 
+   - If you wish to contribute to this project please contact the NCTRC about contributing to their Check-In App.
 2. Standards
    - Each member should follow the Google Code style whenever applicable. The recommended linter is eslint. A maven plugin will be automatically added to format the code into the correct codestyle, and it is recommended but not required that team members install the google-java-format plugin which can be found here for InteliJ and here for Eclipse. More information can be found on Google’s GitHub Page.
 
@@ -223,4 +256,4 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
 
 ## Acknowledgements
 
-- We would like to mention our mentor, Benjamin Pollack, and professor, Jeff Terrel, for helping us build out this project. 
+- We would like to mention our mentor, Benjamin Pollack, and professor, Jeff Terrel, for helping us build out this project.
