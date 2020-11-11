@@ -189,33 +189,33 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
 
       7. Set up caddy
 
-      - Run the following commands to install caddy:
+         - Run the following commands to install caddy:
 
-      ```bash
-        echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" | sudo tee -a /etc/apt/sources.list.d/caddy-fury.list
-        sudo apt update
-        sudo apt install caddy
-      ```
+         ```bash
+           echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" | sudo tee -a /etc/apt/sources.list.d/caddy-fury.list
+           sudo apt update
+           sudo apt install caddy
+         ```
 
-      - This should automatically install and run caddy for you. To confirm type
-        `caddy version`
-      - Assuming this works, we want to now edit the caddy file
+         - This should automatically install and run caddy for you. To confirm type
+           `caddy version`
+         - Assuming this works, we want to now edit the caddy file
 
-      ```bash
-        cd /etc/caddy/
-        sudo nano Caddyfile
-      ```
+         ```bash
+           cd /etc/caddy/
+           sudo nano Caddyfile
+         ```
 
-      - Delete everything in the file and replace it with:
+         - Delete everything in the file and replace it with:
 
-      ```bash
-      nctrcapp.org
-      reverse_proxy localhost:6600
-      ```
+         ```bash
+         nctrcapp.org
+         reverse_proxy localhost:6600
+         ```
 
-      - Save the file and type
-        `caddy reload`
-      - Great! Caddy should now point all requests from https://yoururl.org/ (currently https://nctrcapp.org/) to localhost:660 (what the java backend is hosting on)
+         - Save the file and type
+           `caddy reload`
+         - Great! Caddy should now point all requests from https://yoururl.org/ (currently https://nctrcapp.org/) to localhost:6600 (what the java backend is hosting on)
 
 2. Production system
    - Where: AWS
