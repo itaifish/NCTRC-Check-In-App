@@ -25,6 +25,8 @@ public interface DatabaseManagerInterface {
   public Map<UserRequestModel, SigninEmailIdPair> getAllUsersWhoAreSignedInDatabase()
       throws InterruptedException;
 
+  public boolean verifyPin(final String pin) throws InterruptedException;
+
   public void setMaxCapacity(final int newMaxCapacity) throws InterruptedException;
 
   public void removeUser(UserRequestModel userModel) throws InterruptedException;

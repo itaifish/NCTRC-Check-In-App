@@ -59,6 +59,11 @@ public class UserManagerTest {
         }
 
         @Override
+        public boolean verifyPin(String pin) throws InterruptedException {
+          return false;
+        }
+
+        @Override
         public void setMaxCapacity(int newMaxCapacity) throws InterruptedException {}
 
         @Override
@@ -183,6 +188,11 @@ public class UserManagerTest {
           public Map<UserRequestModel, SigninEmailIdPair> getAllUsersWhoAreSignedInDatabase()
               throws InterruptedException {
             return new HashMap<>();
+          }
+
+          @Override
+          public boolean verifyPin(String pin) throws InterruptedException {
+            return false;
           }
 
           @Override

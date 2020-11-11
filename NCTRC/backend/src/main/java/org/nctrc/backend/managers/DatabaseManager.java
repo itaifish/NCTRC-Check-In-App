@@ -248,6 +248,18 @@ public class DatabaseManager implements DatabaseManagerInterface {
     return signedInUsers;
   }
 
+  public boolean verifyPin(final String pin) throws InterruptedException {
+    createTableIfNotExist(this.databaseConstants.CONFIG_TABLE);
+    final Table configTable = this.database.getTable(this.databaseConstants.CONFIG_TABLE);
+    configTable.waitForActive();
+    final Item item =
+        configTable.getItem(
+            new PrimaryKey(
+                this.databaseConstants.CONFIG_PRIMARY_KEY,
+                this.databaseConstants.CONFIG_PIN_NUMBER));
+    return pin.equals(item.getString(this.databaseConstants.CONFIG_VALUE));
+  }
+
   private void createTableIfNotExist(final String tableName) {
     if (this.tablesThatExist.contains(tableName)) {
       return;
@@ -273,6 +285,12 @@ public class DatabaseManager implements DatabaseManagerInterface {
                     this.databaseConstants.CONFIG_PRIMARY_KEY,
                     this.databaseConstants.CONFIG_MAX_CAPACITY)
                 .with(this.databaseConstants.CONFIG_VALUE, databaseConstants.DEFAULT_MAX_CAPACITY));
+        table.putItem(
+            new Item()
+                .withPrimaryKey(
+                    this.databaseConstants.CONFIG_PRIMARY_KEY,
+                    this.databaseConstants.CONFIG_PIN_NUMBER)
+                .with(this.databaseConstants.CONFIG_VALUE, "1234"));
       }
       this.tablesThatExist.add(tableName);
       logger.debug("Create new table " + tableName);

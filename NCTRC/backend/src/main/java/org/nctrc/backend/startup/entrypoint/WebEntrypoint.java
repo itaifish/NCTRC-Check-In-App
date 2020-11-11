@@ -77,6 +77,9 @@ public class WebEntrypoint implements AppEntrypoint {
                           path(
                               Constants.ADMIN_USERS_PATH,
                               () -> post(this.adminController::getAllUsers));
+                          path(
+                              Constants.ADMIN_PIN_VALIDATE_PATH,
+                              () -> post(this.adminController::validatePin));
                         });
                   });
             })

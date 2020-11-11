@@ -18,6 +18,8 @@ public final class Constants {
 
   public static final String ADMIN_USERS_PATH = "users";
 
+  public static final String ADMIN_PIN_VALIDATE_PATH = "pinValidate";
+
   public static final String USER_SIGNIN_PATH = "signin";
 
   public static final String USER_SIGNOUT_PATH = "signout";

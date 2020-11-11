@@ -12,6 +12,7 @@ import javax.inject.Singleton;
 import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.managers.DatabaseManagerInterface;
 import org.nctrc.backend.managers.UsersManager;
+import org.nctrc.backend.model.request.PinValidationRequestModel;
 import org.nctrc.backend.model.request.UpdateMaxCapacityRequestModel;
 import org.nctrc.backend.model.response.Result;
 import org.nctrc.backend.model.response.UserListResponse;
@@ -118,6 +119,39 @@ public class AdminController extends Controller {
       final Result failedResult = new Result(401, "Unauthorized");
       ctx.status(failedResult.getStatusCode());
       ctx.json(failedResult);
+    }
+  }
+
+  @OpenApi(
+      summary = "Validate User's Pin",
+      operationId = "validatePin",
+      path = "/" + ROOT_PATH + Constants.ADMIN_PATH + Constants.ADMIN_PIN_VALIDATE_PATH,
+      method = HttpMethod.POST,
+      tags = {"Admin"},
+      requestBody =
+          @OpenApiRequestBody(content = {@OpenApiContent(from = PinValidationRequestModel.class)}),
+      responses = {
+        @OpenApiResponse(
+            status = "200",
+            content = {@OpenApiContent(from = UserListResponse.class)}),
+      })
+  public void validatePin(final Context ctx) {
+    final PinValidationRequestModel pinValidationRequestModel =
+        validateBodyAndAuth(ctx, PinValidationRequestModel.class);
+    if (pinValidationRequestModel == null) {
+      return;
+    }
+    try {
+      if (databaseManager.verifyPin(pinValidationRequestModel.getPin())) {
+        ctx.status(200);
+      } else {
+        final Result failedResult = new Result(401, "Unauthorized");
+        ctx.status(failedResult.getStatusCode());
+        ctx.json(failedResult);
+      }
+    } catch (InterruptedException e) {
+      ctx.status(500);
+      ctx.json(new Result(500, "Was unable to write to database"));
     }
   }
 }

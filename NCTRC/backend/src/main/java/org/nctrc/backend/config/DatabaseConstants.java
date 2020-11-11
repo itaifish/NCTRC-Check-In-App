@@ -26,6 +26,8 @@ public class DatabaseConstants {
 
   public final String CONFIG_MAX_CAPACITY = "maxCapacity";
 
+  public final String CONFIG_PIN_NUMBER = "pin";
+
   public final String CONFIG_VALUE = "value";
 
   public final int DEFAULT_MAX_CAPACITY = 10;
