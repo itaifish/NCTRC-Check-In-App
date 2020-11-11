@@ -71,6 +71,12 @@ public class WebEntrypoint implements AppEntrypoint {
                           path(
                               Constants.ADMIN_UPDATE_CAPACITY_PATH,
                               () -> post(this.adminController::updateMaxCapacity));
+                          path(
+                              Constants.ADMIN_LOGGED_IN_PATH,
+                              () -> post(this.adminController::getLoggedInUsers));
+                          path(
+                              Constants.ADMIN_USERS_PATH,
+                              () -> post(this.adminController::getAllUsers));
                         });
                   });
             })
