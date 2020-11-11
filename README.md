@@ -215,7 +215,7 @@ This project is the repository for the North Carolina Theraputic Riding Cetner C
 
       - Save the file and type
         `caddy reload`
-      - Great! Caddy should now point all requests from https://yoururl.org/ (currently https://nctrcapp.org/) to localhost:660 (what the java backend is hosting on)
+      - Great! Caddy should now point all requests from https://yoururl.org/ (currently https://nctrcapp.org/) to localhost:6600 (what the java backend is hosting on)
 
 2. Production system
    - Where: AWS
