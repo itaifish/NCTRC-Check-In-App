@@ -7,6 +7,8 @@ import { checkUserExists, signinUser } from '../handler/handlers';
 import { components } from '../domain/domain';
 import { styles } from './Styles';
 
+const feverTemperature = 100.4; 
+
 type CovidInformationScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.CovidInformation>;
 export type InfoParams = {
     firstName: string;
@@ -119,7 +121,7 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                             navigation.navigate(AppScreens.CovidError, {
                                 reason: yesQuestion,
                             });
-                        } else if (temperature >= 100.4) {
+                        } else if (temperature >= feverTemperature) {
                             const feverUser: components["schemas"]["SigninRequestModel"] = {
                                 user: userToCreate,
                                 signinData: { temperature: temperature, yesQuestion: yesQuestion },
