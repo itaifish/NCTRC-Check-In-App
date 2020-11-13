@@ -1,4 +1,4 @@
 {
   "app_name": "nctrc-checkin",
-  "base_url": "https://evilte.ch:6700"
+  "base_url": "http://nctrcapp.org:6600/"
 }

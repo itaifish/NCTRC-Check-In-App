@@ -24,9 +24,6 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
                 </TouchableOpacity>
                 <View style={styles.homeDiv}></View>
                 <Button color='#884633'title="Sign in as Admin"onPress={() => navigation.navigate(AppScreens.AdminPass)} />
-                <Button color='#884633'title="Sign in as Admin"onPress={() => navigation.navigate(AppScreens.Risks, {firstName: "", lastName: "", 
-    email: "",
-    tempurature: 10})} />
 
             </View>
        </SafeAreaView>

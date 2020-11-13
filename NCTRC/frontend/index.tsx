@@ -11,6 +11,9 @@ import ReasonsScreen from './screens/ReasonScreen';
 import RisksScreen, { RisksParams } from './screens/RisksScreen';
 import SignInLandingScreen from './screens/SignInLandingScreen';
 import SignInScreen, { VisitorType } from './screens/SignInScreen';
+import ChangePinScreen from './screens/ChangePinScreen';
+import MaxCapacityScreen from './screens/MaxCapacityScreen';
+import ContactTraceScreen from './screens/ContactTraceScreen';
 
 export enum AppScreens {
     Home = 'Home',
@@ -24,6 +27,9 @@ export enum AppScreens {
     Risks = 'Risks',
     SignInLanding = 'SignInLanding',
     SignIn = 'SignIn',
+    ChangePin = 'ChangePin',
+    MaxCapacity = 'MaxCapacity',
+    ContactTrace = 'ContactTrace'
 }
 
 export type AuthStackParamList = {
@@ -39,6 +45,9 @@ export type AuthStackParamList = {
     Risks: RisksParams;
     SignInLanding: undefined;
     SignIn: VisitorType;
+    MaxCapacity: undefined; 
+    ChangePin: undefined; 
+    ContactTrace: undefined; 
 };
 
 const AuthStack = createStackNavigator<AuthStackParamList>();
@@ -56,6 +65,9 @@ const AuthFlowNavigator: React.FunctionComponent = () => {
             <AuthStack.Screen name={AppScreens.Risks} component={RisksScreen} />
             <AuthStack.Screen name={AppScreens.SignInLanding} component={SignInLandingScreen} />
             <AuthStack.Screen name={AppScreens.SignIn} component={SignInScreen} />
+            <AuthStack.Screen name={AppScreens.ChangePin} component={ChangePinScreen} />
+            <AuthStack.Screen name={AppScreens.MaxCapacity} component={MaxCapacityScreen} />
+            <AuthStack.Screen name={AppScreens.ContactTrace} component={ContactTraceScreen} />
         </AuthStack.Navigator>
     );
 };

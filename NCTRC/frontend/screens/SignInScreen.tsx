@@ -30,8 +30,10 @@ const SignInScreen: React.FunctionComponent<SignInScreenProps> = (props) => {
                      <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 150, height: 150 }}></Image>
                 </TouchableOpacity> 
             <View style={styles.homeContainer}>
+                <TextInput style={styles.textInput} value={firstName} onChangeText={(text) => setFirstName(text)} placeholder="First Name" />
+                <TextInput style={styles.textInput} value={lastName} onChangeText={(text) => setLastName(text)} placeholder="Last Name" />
                 <TextInput style={styles.textInput} value={email} onChangeText={(text) => setEmail(text)} placeholder="Email Address" />
-                <TouchableOpacity style={styles.smallButton}onPress={() => navigation.navigate(AppScreens.CovidInformation, { firstName: "", lastName: "", email: email, type: type })}><Text style={styles.buttonText}>
+                <TouchableOpacity style={styles.smallButton}onPress={() => navigation.navigate(AppScreens.CovidInformation, { firstName: firstName, lastName: lastName, email: email, type: type })}><Text style={styles.buttonText}>
                 Sign In
                  </Text>  
                 </TouchableOpacity>

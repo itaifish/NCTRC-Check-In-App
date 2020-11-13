@@ -22,41 +22,19 @@ const AdminPortalScreen: React.FunctionComponent<AdminPortalScreenProps> = (prop
                      <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 150, height: 150 }}></Image>
                 </TouchableOpacity> 
             <View style={styles.homeContainer}>
-                <DataTable>
-                    <DataTable.Header>
-                        <DataTable.Title>Name</DataTable.Title>
-                        <DataTable.Title>Email</DataTable.Title>
-                        <DataTable.Title>Check In</DataTable.Title>
-                        <DataTable.Title>Check Out</DataTable.Title>
-                        <DataTable.Title>Risk Form</DataTable.Title>
-                        <DataTable.Title>Questions/Concerns</DataTable.Title>
-                    </DataTable.Header>
-
-                    <DataTable.Row>
-                        <DataTable.Cell>Sarah Bost</DataTable.Cell>
-                        <DataTable.Cell>sbost@unc.edu</DataTable.Cell>
-                        <DataTable.Cell>10/12/2020 8:50 AM</DataTable.Cell>
-                        <DataTable.Cell>10/12/2020 10:15 AM</DataTable.Cell>
-                        <DataTable.Cell>Signed Risk Form</DataTable.Cell>
-                        <DataTable.Cell>No concerns!</DataTable.Cell>
-                    </DataTable.Row>
-                    <DataTable.Row>
-                        <DataTable.Cell>Daniel Evora</DataTable.Cell>
-                        <DataTable.Cell>daniel@unc.edu</DataTable.Cell>
-                        <DataTable.Cell>10/12/2020 10:30 AM</DataTable.Cell>
-                        <DataTable.Cell>10/12/2020 11:45 AM</DataTable.Cell>
-                        <DataTable.Cell>Signed Risk Form</DataTable.Cell>
-                        <DataTable.Cell>Want to be notified of any covid case</DataTable.Cell>
-                    </DataTable.Row>
-                    <DataTable.Row>
-                        <DataTable.Cell>Itai Rivkin-Fish</DataTable.Cell>
-                        <DataTable.Cell>itai@unc.edu</DataTable.Cell>
-                        <DataTable.Cell>10/12/2020 10:30 AM</DataTable.Cell>
-                        <DataTable.Cell>10/12/2020 5:00 PM</DataTable.Cell>
-                        <DataTable.Cell>Signed Risk Form</DataTable.Cell>
-                        <DataTable.Cell>No concerns</DataTable.Cell>
-                    </DataTable.Row>
-                </DataTable>
+            <TouchableOpacity style={styles.solidButton}onPress={() => navigation.navigate(AppScreens.ContactTrace)}><Text style={styles.buttonText}>
+                Contact Trace
+                 </Text>  
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.solidButton}onPress={() => navigation.navigate(AppScreens.ChangePin)}><Text style={styles.buttonText}>
+                Change Pin
+                 </Text>  
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.solidButton}onPress={() => navigation.navigate(AppScreens.MaxCapacity)}><Text style={styles.buttonText}>
+                Update Max Capacity
+                 </Text>  
+                </TouchableOpacity>
+            
             </View>
         </SafeAreaView>
     );

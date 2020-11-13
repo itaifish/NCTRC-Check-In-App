@@ -44,6 +44,10 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                  <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 150, height: 150 }}></Image>
             </TouchableOpacity> 
         <View>
+                <Text style={styles.covidQuestion}>First Name</Text>
+                <TextInput style={styles.textInput} placeholder={firstName} editable={false} />
+                <Text style={styles.covidQuestion}>Last Name</Text>
+                <TextInput style={styles.textInput} placeholder={lastName} editable={false} />
                 <Text style={styles.covidQuestion}>Email</Text>
                 <TextInput style={styles.textInput} placeholder={email} editable={false} />
                 <Text style={styles.covidQuestion}>
