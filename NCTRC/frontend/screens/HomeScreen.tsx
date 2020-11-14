@@ -1,16 +1,20 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View, Image, Button, TouchableOpacity } from 'react-native'
+import React, {useState} from 'react';
+import { SafeAreaView, Platform, StyleSheet, Text, View, Image, Button, TouchableOpacity, DatePickerIOSComponent, DatePickerIOSBase } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList, AppScreens } from '../index';
 type HomeScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.Home>;
 import { styles } from './Styles';
+
 interface HomeScreenProps {
     navigation: HomeScreenNavigationProps;
 }
 
+
+
+
 const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
     let { navigation } = props;
-    return (
+      return (
         <SafeAreaView style={styles.container}>
             <View style={styles.homeContainer}>
                 <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 300, height: 300 }}></Image>

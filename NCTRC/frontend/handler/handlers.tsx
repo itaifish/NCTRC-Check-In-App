@@ -64,7 +64,16 @@ export const deleteUser = async (
   return await sendRequest(url, method,  JSON.stringify(userRequestModel));
 };
 
+//updateMax 
 export const updateMaxCapacity = async (
+  updateMaxCapacityRequestModel: components["schemas"]["UpdateMaxCapacityRequestModel"]
+): Promise<components["schemas"]["Result"] | number> => {
+  const url = `${config.base_url}/api/admin/capacity`;
+  const method = "POST";
+  return await sendRequest(url, method,  JSON.stringify(updateMaxCapacityRequestModel));
+};
+
+export const getLoggedInUsers = async (
   updateMaxCapacityRequestModel: components["schemas"]["UpdateMaxCapacityRequestModel"]
 ): Promise<components["schemas"]["Result"] | number> => {
   const url = `${config.base_url}/api/admin/capacity`;
