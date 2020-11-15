@@ -7,14 +7,19 @@ import io.javalin.plugin.openapi.annotations.OpenApiContent;
 import io.javalin.plugin.openapi.annotations.OpenApiRequestBody;
 import io.javalin.plugin.openapi.annotations.OpenApiResponse;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.nctrc.backend.config.Constants;
 import org.nctrc.backend.managers.DatabaseManagerInterface;
 import org.nctrc.backend.managers.UsersManager;
 import org.nctrc.backend.model.request.PinValidationRequestModel;
+import org.nctrc.backend.model.request.SigninsBetweenRequest;
 import org.nctrc.backend.model.request.UpdateMaxCapacityRequestModel;
 import org.nctrc.backend.model.response.Result;
+import org.nctrc.backend.model.response.TimelineInstance;
+import org.nctrc.backend.model.response.TimelineListResponse;
 import org.nctrc.backend.model.response.UserListResponse;
 
 @Singleton
@@ -125,16 +130,12 @@ public class AdminController extends Controller {
   @OpenApi(
       summary = "Validate User's Pin",
       operationId = "validatePin",
-      path = "/" + ROOT_PATH + Constants.ADMIN_PATH + Constants.ADMIN_PIN_VALIDATE_PATH,
+      path = "/" + ROOT_PATH + Constants.ADMIN_PATH + Constants.ADMIN_PIN_PATH,
       method = HttpMethod.POST,
       tags = {"Admin"},
       requestBody =
           @OpenApiRequestBody(content = {@OpenApiContent(from = PinValidationRequestModel.class)}),
-      responses = {
-        @OpenApiResponse(
-            status = "200",
-            content = {@OpenApiContent(from = UserListResponse.class)}),
-      })
+      responses = {@OpenApiResponse(status = "200")})
   public void validatePin(final Context ctx) {
     final PinValidationRequestModel pinValidationRequestModel =
         validateBodyAndAuth(ctx, PinValidationRequestModel.class);
@@ -152,6 +153,75 @@ public class AdminController extends Controller {
     } catch (InterruptedException e) {
       ctx.status(500);
       ctx.json(new Result(500, "Was unable to write to database"));
+    }
+  }
+
+  @OpenApi(
+      summary = "Change the Pin",
+      operationId = "changePin",
+      path = "/" + ROOT_PATH + Constants.ADMIN_PATH + Constants.ADMIN_PIN_PATH,
+      method = HttpMethod.PUT,
+      tags = {"Admin"},
+      requestBody =
+          @OpenApiRequestBody(content = {@OpenApiContent(from = PinValidationRequestModel.class)}),
+      responses = {
+        @OpenApiResponse(
+            status = "200",
+            content = {@OpenApiContent(from = UserListResponse.class)}),
+      })
+  public void changePin(final Context ctx) {
+    final PinValidationRequestModel pinValidationRequestModel =
+        validateBodyAndAuth(ctx, PinValidationRequestModel.class);
+    if (pinValidationRequestModel == null) {
+      return;
+    }
+    try {
+      databaseManager.changePin(pinValidationRequestModel.getPin());
+      ctx.status(200);
+    } catch (InterruptedException e) {
+      ctx.status(500);
+      ctx.json(new Result(500, "Was unable to write to database"));
+    }
+  }
+
+  @OpenApi(
+      summary = "Get All Signins between two dates",
+      operationId = "getSigninsBetween",
+      path = "/" + ROOT_PATH + Constants.ADMIN_PATH + Constants.ADMIN_SIGNINS_PATH,
+      method = HttpMethod.POST,
+      tags = {"Admin"},
+      requestBody =
+          @OpenApiRequestBody(content = {@OpenApiContent(from = SigninsBetweenRequest.class)}),
+      responses = {
+        @OpenApiResponse(
+            status = "200",
+            content = {@OpenApiContent(from = TimelineListResponse.class)}),
+        @OpenApiResponse(
+            status = "400",
+            content = {@OpenApiContent(from = Result.class)}),
+      })
+  public void getSigninsBetween(final Context ctx) {
+    final SigninsBetweenRequest signinsBetweenRequest =
+        validateBodyAndAuth(ctx, SigninsBetweenRequest.class);
+    if (signinsBetweenRequest == null) {
+      return;
+    }
+    try {
+      final Date startTime = signinsBetweenRequest.getStartTime();
+      final Date endTime = signinsBetweenRequest.getEndTime();
+      if (startTime.after(endTime)) {
+        final Result errorResult = new Result(400, "Start time must be before end time");
+        ctx.status(errorResult.getStatusCode());
+        ctx.json(errorResult);
+        return;
+      }
+      final List<TimelineInstance> timelines =
+          databaseManager.getSigninsBetween(startTime, endTime);
+      ctx.status(200);
+      ctx.json(timelines);
+    } catch (final InterruptedException e) {
+      ctx.status(500);
+      ctx.json(new Result(500, "Was unable to write to database: " + e.toString()));
     }
   }
 }

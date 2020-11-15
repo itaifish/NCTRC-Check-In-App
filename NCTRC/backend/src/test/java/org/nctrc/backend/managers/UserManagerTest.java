@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import org.nctrc.backend.model.request.SigninDataRequestModel;
 import org.nctrc.backend.model.request.SigninRequestModel;
 import org.nctrc.backend.model.request.UserRequestModel;
 import org.nctrc.backend.model.response.Result;
+import org.nctrc.backend.model.response.TimelineInstance;
 import org.nctrc.backend.model.response.UserExistsResult;
 import org.nctrc.backend.utility.Utility;
 
@@ -59,9 +61,18 @@ public class UserManagerTest {
         }
 
         @Override
+        public List<TimelineInstance> getSigninsBetween(Date begin, Date end)
+            throws InterruptedException {
+          return null;
+        }
+
+        @Override
         public boolean verifyPin(String pin) throws InterruptedException {
           return false;
         }
+
+        @Override
+        public void changePin(String newPin) throws InterruptedException {}
 
         @Override
         public void setMaxCapacity(int newMaxCapacity) throws InterruptedException {}
@@ -76,7 +87,8 @@ public class UserManagerTest {
   void testUserManager() {
     final UserRequestModel usera = new UserRequestModel("itai", "fish", "itai@fish");
     final UserRequestModel userb = new UserRequestModel("itai", "fish", "jimmy@fish");
-    final SigninDataRequestModel signinDataRequestModel = new SigninDataRequestModel(null, 100.1);
+    final SigninDataRequestModel signinDataRequestModel =
+        new SigninDataRequestModel(null, 100.1, "");
     final NewUserRequestModel user1 = new NewUserRequestModel(usera, "", signinDataRequestModel);
     final NewUserRequestModel user2 = new NewUserRequestModel(userb, "", signinDataRequestModel);
     final SigninRequestModel userfoo = new SigninRequestModel(signinDataRequestModel, usera);
@@ -106,7 +118,7 @@ public class UserManagerTest {
       users.add(new UserRequestModel("itai", "fish" + i, "itai@fish" + i));
     }
     final SigninDataRequestModel signinDataRequestModel =
-        new SigninDataRequestModel(null, Constants.FEVER_TEMPERATURE - 0.5);
+        new SigninDataRequestModel(null, Constants.FEVER_TEMPERATURE - 0.5, "");
     Result lastResult = new Result(200, "Dummy Information");
     for (int i = 0; i < users.size(); i++) {
       final UserRequestModel userRequestModel = users.get(i);
@@ -125,14 +137,14 @@ public class UserManagerTest {
   void testSigninData() {
     final UserRequestModel userTooHot = new UserRequestModel("..", "iam", "toohot@gmail.com");
     final SigninDataRequestModel tooHotData =
-        new SigninDataRequestModel(null, Constants.FEVER_TEMPERATURE + 0.5);
+        new SigninDataRequestModel(null, Constants.FEVER_TEMPERATURE + 0.5, "");
     final NewUserRequestModel newUserTooHot = new NewUserRequestModel(userTooHot, "", tooHotData);
     final Result result = usersManager.createAndSigninUser(newUserTooHot);
     assertFalse(isOkay(result));
     assertEquals(412, result.getStatusCode());
     final UserRequestModel userSaysYes = new UserRequestModel("..", "isaid", "yes@gmail.com");
     final SigninDataRequestModel yesData =
-        new SigninDataRequestModel("I said yes lmao", Constants.FEVER_TEMPERATURE - 0.5);
+        new SigninDataRequestModel("I said yes lmao", Constants.FEVER_TEMPERATURE - 0.5, "");
     final NewUserRequestModel newUserYes = new NewUserRequestModel(userSaysYes, "", yesData);
     final Result result2 = usersManager.createAndSigninUser(newUserYes);
     assertFalse(isOkay(result2));
@@ -142,7 +154,7 @@ public class UserManagerTest {
   @Test
   void testDeleteUser() {
     final UserRequestModel user1 = new UserRequestModel("user1", "isme", "user1@gmail.com");
-    final SigninDataRequestModel validSigninModel = new SigninDataRequestModel(null, 99);
+    final SigninDataRequestModel validSigninModel = new SigninDataRequestModel(null, 99, "");
     final NewUserRequestModel newUserRequestModel =
         new NewUserRequestModel(user1, "", validSigninModel);
     Result result = usersManager.createAndSigninUser(newUserRequestModel);
@@ -191,9 +203,18 @@ public class UserManagerTest {
           }
 
           @Override
+          public List<TimelineInstance> getSigninsBetween(Date begin, Date end)
+              throws InterruptedException {
+            return null;
+          }
+
+          @Override
           public boolean verifyPin(String pin) throws InterruptedException {
             return false;
           }
+
+          @Override
+          public void changePin(String newPin) throws InterruptedException {}
 
           @Override
           public void setMaxCapacity(int newMaxCapacity) throws InterruptedException {}

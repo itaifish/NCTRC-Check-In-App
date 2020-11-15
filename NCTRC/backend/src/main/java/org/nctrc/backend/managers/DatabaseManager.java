@@ -17,6 +17,7 @@ import com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec;
 import com.amazonaws.services.dynamodbv2.model.ResourceInUseException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -34,8 +35,10 @@ import org.nctrc.backend.config.DatabaseConfigInformation;
 import org.nctrc.backend.config.DatabaseConstants;
 import org.nctrc.backend.model.internal.SigninEmailIdPair;
 import org.nctrc.backend.model.request.NewUserRequestModel;
+import org.nctrc.backend.model.request.SigninDataRequestModel;
 import org.nctrc.backend.model.request.SigninRequestModel;
 import org.nctrc.backend.model.request.UserRequestModel;
+import org.nctrc.backend.model.response.TimelineInstance;
 import org.nctrc.backend.utility.Utility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -139,6 +142,7 @@ public class DatabaseManager implements DatabaseManagerInterface {
     newTimelineItem.with("lastName", lastName);
     newTimelineItem.with("signinTime", signinTime);
     newTimelineItem.with("temperature", signinRequestModel.getSigninData().getTemperature());
+    newTimelineItem.with("visitorType", signinRequestModel.getSigninData().getVisitorType());
     if (signinRequestModel.getSigninData().getYesQuestion() != null) {
       newTimelineItem.with("yesQuestion", signinRequestModel.getSigninData().getYesQuestion());
     }
@@ -248,6 +252,51 @@ public class DatabaseManager implements DatabaseManagerInterface {
     return signedInUsers;
   }
 
+  @Override
+  public List<TimelineInstance> getSigninsBetween(final Date begin, final Date end)
+      throws InterruptedException {
+    createTableIfNotExist(this.databaseConstants.TIMELINE_TABLE);
+    final Table timeline = this.database.getTable(this.databaseConstants.TIMELINE_TABLE);
+    final Map<String, Object> expressionAttributeValues = new HashMap<>();
+    expressionAttributeValues.put(":start", Utility.dateToFullIso8601String(begin));
+    expressionAttributeValues.put(":end", Utility.dateToFullIso8601String(end));
+    timeline.waitForActive();
+    final ItemCollection<ScanOutcome> items =
+        timeline.scan("signinTime BETWEEN :start AND :end", null, expressionAttributeValues);
+    final List<TimelineInstance> timelineInstances = new ArrayList<>();
+    items.forEach(
+        item -> {
+          final UserRequestModel user =
+              new UserRequestModel(
+                  item.getString("firstName"),
+                  item.getString("lastName"),
+                  item.getString("userEmail"));
+          final SigninDataRequestModel signinData =
+              new SigninDataRequestModel(
+                  item.getString("yesQuestion"),
+                  item.getDouble("temperature"),
+                  item.getString("visitorType"));
+          Date signinTime = null;
+          Date signoutTime = null;
+          final String startString = item.getString("signinTime");
+          final String endString = item.getString("signoutTime");
+          try {
+            signinTime = Utility.stringToDate(startString);
+            signoutTime = Utility.stringToDate(endString);
+          } catch (ParseException e) {
+            logger.warn(
+                "Unable to parse '"
+                    + startString
+                    + "' and/or '"
+                    + endString
+                    + "' as a date: "
+                    + e.toString());
+          }
+          timelineInstances.add(new TimelineInstance(user, signinData, signinTime, signoutTime));
+        });
+    return timelineInstances;
+  }
+
   public boolean verifyPin(final String pin) throws InterruptedException {
     createTableIfNotExist(this.databaseConstants.CONFIG_TABLE);
     final Table configTable = this.database.getTable(this.databaseConstants.CONFIG_TABLE);
@@ -258,6 +307,16 @@ public class DatabaseManager implements DatabaseManagerInterface {
                 this.databaseConstants.CONFIG_PRIMARY_KEY,
                 this.databaseConstants.CONFIG_PIN_NUMBER));
     return pin.equals(item.getString(this.databaseConstants.CONFIG_VALUE));
+  }
+
+  public void changePin(final String newPin) throws InterruptedException {
+    createTableIfNotExist(this.databaseConstants.CONFIG_TABLE);
+    final Table configTable = this.database.getTable(this.databaseConstants.CONFIG_TABLE);
+    configTable.waitForActive();
+    configTable.updateItem(
+        new PrimaryKey(
+            this.databaseConstants.CONFIG_PRIMARY_KEY, this.databaseConstants.CONFIG_PIN_NUMBER),
+        new AttributeUpdate(this.databaseConstants.CONFIG_VALUE).put(newPin));
   }
 
   private void createTableIfNotExist(final String tableName) {

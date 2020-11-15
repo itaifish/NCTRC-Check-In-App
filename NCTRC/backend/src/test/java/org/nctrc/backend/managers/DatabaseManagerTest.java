@@ -22,7 +22,7 @@ public class DatabaseManagerTest {
   void testDatabaseManager() {
 
     final UserRequestModel testUser = new UserRequestModel("Ben?", "Meadows?", "@gmail.com?");
-    final SigninDataRequestModel signinData = new SigninDataRequestModel(null, 98.5);
+    final SigninDataRequestModel signinData = new SigninDataRequestModel(null, 98.5, "");
     final NewUserRequestModel newUserRequestModel =
         new NewUserRequestModel(testUser, "signature", signinData);
     int currentDatabaseUsers = 0;
