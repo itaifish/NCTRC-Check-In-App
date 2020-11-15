@@ -5,22 +5,83 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "preprocess": "node ./preprocessing/LoadDomainTypes.js",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "react-native",
+    "verbose": true,
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-navigation|react-navigation-redux-helpers|@react-navigation/.*)"
+    ],
+    "setupFiles": [
+      "./jestSetup.js"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx"
+    ]
   },
   "dependencies": {
+    "@expo/vector-icons": "^10.2.1",
+    "@qdivision/react-native-signature-capture": "^0.4.10",
+    "@react-native-community/datetimepicker": "^3.0.4",
+    "@react-native-community/masked-view": "^0.1.10",
+    "@react-navigation/native": "^5.8.0",
+    "@react-navigation/stack": "^5.10.0",
+    "@testing-library/react": "^11.1.0",
+    "@types/enzyme": "^3.10.8",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "@types/node-fetch": "^2.5.7",
+    "@types/react-native-calendar-picker": "^7.0.0",
+    "@types/react-native-signature-capture": "^0.4.1",
+    "@types/react-test-renderer": "^16.9.3",
+    "bootstrap": "^4.5.3",
+    "enzyme-adapter-react-16": "^1.15.5",
     "expo": "~39.0.2",
+    "expo-font": "^8.3.0",
     "expo-status-bar": "~1.0.2",
-    "react": "16.13.1",
+    "jest": "^26.6.3",
+    "jest-html-reporter": "^3.3.0",
+    "node-fetch": "^2.6.1",
+    "react": "^16.13.1",
+    "react-bootstrap": "^1.4.0",
     "react-dom": "16.13.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.2.tar.gz",
-    "react-native-web": "~0.13.12"
+    "react-hook-pin-input": "^0.1.1",
+    "react-native": "^0.63.3",
+    "react-native-animation-library": "0.0.8",
+    "react-native-calendar-picker": "^7.0.3",
+    "react-native-confirmation-code-field": "^6.5.0",
+    "react-native-gesture-handler": "^1.8.0",
+    "react-native-modal-datetime-picker": "^9.1.0",
+    "react-native-paper": "^4.2.0",
+    "react-native-pin-code": "^0.5.3",
+    "react-native-popup-dialog": "^0.18.3",
+    "react-native-screens": "^2.11.0",
+    "react-native-signature-canvas": "^3.2.0",
+    "react-native-signature-pad": "^0.1.0",
+    "react-native-simple-pin": "0.0.3",
+    "react-native-web": "~0.13.12",
+    "react-navigation": "^4.4.2",
+    "react-test-renderer": "^17.0.1"
   },
   "devDependencies": {
-    "react-native-web": "~0.13.7",
+    "@manifoldco/swagger-to-ts": "^2.1.0",
+    "@types/isomorphic-fetch": "0.0.35",
+    "@types/jest": "^26.0.14",
     "@types/react": "~16.9.35",
     "@types/react-dom": "~16.9.8",
     "@types/react-native": "~0.63.2",
-    "typescript": "~3.9.5"
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-15": "^1.4.2",
+    "react-native-web": "~0.13.7",
+    "react-testing-library": "^8.0.1",
+    "ts-jest": "^26.4.1",
+    "typescript": "^3.9.7"
   },
   "private": true
 }
