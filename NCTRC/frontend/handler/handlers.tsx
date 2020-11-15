@@ -73,12 +73,12 @@ export const updateMaxCapacity = async (
   return await sendRequest(url, method,  JSON.stringify(updateMaxCapacityRequestModel));
 };
 
-export const getLoggedInUsers = async (
-  updateMaxCapacityRequestModel: components["schemas"]["UpdateMaxCapacityRequestModel"]
+export const validatePin = async (
+  PinValidationRequestModel: components["schemas"]["PinValidationRequestModel"]
 ): Promise<components["schemas"]["Result"] | number> => {
-  const url = `${config.base_url}/api/admin/capacity`;
+  const url = `${config.base_url}/api/admin/pinValidate`;
   const method = "POST";
-  return await sendRequest(url, method,  JSON.stringify(updateMaxCapacityRequestModel));
+  return await sendRequest(url, method,  JSON.stringify(PinValidationRequestModel));
 };
 
 const sendRequest = async (url: string, method: string, body: string) : Promise<components["schemas"]["Result"] | number> => {
@@ -93,3 +93,5 @@ const sendRequest = async (url: string, method: string, body: string) : Promise<
     return await result.json();
   }
 }
+
+

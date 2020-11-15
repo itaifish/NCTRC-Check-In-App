@@ -128,7 +128,7 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                         } else if (temperature >= feverTemperature) {
                             const feverUser: components["schemas"]["SigninRequestModel"] = {
                                 user: userToCreate,
-                                signinData: { temperature: temperature, yesQuestion: yesQuestion },
+                                signinData: { temperature: temperature, yesQuestion: "temperature" },
                             };
                             signinUser(feverUser); 
                             navigation.navigate(AppScreens.CovidError, {
@@ -145,7 +145,7 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                                           signinUser(returningUser).then(
                                               (response) => {
                                                   console.log(response); 
-                                                  if(response ==200) {
+                                                  if(response ==200 || response == 201) {
                                                     navigation.navigate(AppScreens.SignInLanding);
                                                   } else if (response == 409) {
                                                     navigation.navigate(AppScreens.CovidError, {reason: "the center is currently at maximum capacity."});                   

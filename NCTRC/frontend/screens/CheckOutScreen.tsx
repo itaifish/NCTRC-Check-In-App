@@ -25,6 +25,7 @@ const CheckOutScreen: React.FunctionComponent<CheckOutScreenProps> = (props) => 
                  <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 150, height: 150 }}></Image>
             </TouchableOpacity> 
         <View style={styles.homeContainer}>
+            <Text></Text>
                 <TextInput  style={styles.textInput} value={firstName} onChangeText={(text) => setFirstName(text)} placeholder="Name" />
                 <TextInput  style={styles.textInput} value={lastName} onChangeText={(text) => setLastName(text)} placeholder="Name" />
                 <TextInput  style={styles.textInput} value={email} onChangeText={(text) => setEmail(text)} placeholder="Email Address" />

@@ -5,6 +5,7 @@ import { AuthStackParamList, AppScreens } from '../index';
 import Dialog, { DialogContent } from 'react-native-popup-dialog';
 type ChangePinScreenScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.ChangePin>;
 import { styles } from './Styles';
+import { validatePin } from './../handler/handlers'
 interface ChangePinScreenProps {
     navigation: ChangePinScreenScreenNavigationProps;
 }
@@ -12,11 +13,11 @@ interface ChangePinScreenProps {
 const ChangePinScreen: React.FunctionComponent<ChangePinScreenProps> = (props) => {
     let { navigation } = props;
     //call backend to get this 
-    let oldPin = '1234';
     let [confirmOldPink, setConfirmOldPin ] = useState(''); 
     let [newPin, setNewPin ] = useState(''); 
     let [confirmNewPin, setConfirmNewPin ] = useState(''); 
     let [dialogueBox, setDialogueBox ] = useState(false); 
+    let [errorBox, setErrorBox ] = useState(false); 
 
     return (
         <SafeAreaView style={styles.container}>
@@ -39,14 +40,42 @@ const ChangePinScreen: React.FunctionComponent<ChangePinScreenProps> = (props) =
                 </TouchableOpacity>
                 </DialogContent>
                 </Dialog>
+                <Dialog visible={errorBox}>
+                <DialogContent>
+                    <Text>An error occured when changing the pin. Please try again. Ensure you have entered the correct old pin, the new pin is 4 characters, and the new pin and the confirmed pin are the same.</Text>
+                    <TouchableOpacity style={styles.smallButton}onPress={() => setErrorBox(false)}>
+                            <Text style={styles.buttonText}>
+                    Close
+                 </Text>  
+                </TouchableOpacity>
+                </DialogContent>
+                </Dialog>
                 <Text style={styles.covidQuestion}>Old Pin</Text>
                 <TextInput style={styles.textInput} onChangeText={(text) => setConfirmOldPin(text)} placeholder="Old Pin" />
-                <Text style={styles.covidQuestion}>New Pin</Text>
+                <Text style={styles.covidQuestion}>New 4 Character Pin</Text>
                 <TextInput style={styles.textInput} onChangeText={(text) => setNewPin(text)} placeholder="New Pin" />
-                <Text style={styles.covidQuestion}>Confirm Pin</Text>
+                <Text style={styles.covidQuestion}>Confirm New Pin</Text>
                 <TextInput style={styles.textInput} onChangeText={(text) => setConfirmNewPin(text)} placeholder="Confirm New Pin" />
                 <TouchableOpacity style={styles.smallButton}onPress={() => {
-                    setDialogueBox(true); 
+                    validatePin({pin: confirmOldPink}).then(
+                        (res) => {
+                            console.log(res)
+                            if(res!=200) {
+                                 setErrorBox(true); 
+                            }
+                        }
+                    )
+                    if(newPin != confirmNewPin) {
+                        setErrorBox(true); 
+                        return; 
+                    } else if (newPin.length != 4) {
+                        setErrorBox(true); 
+                        return;
+                    } else {
+                        //CALL TO BACKEND TO CHANGE PIN
+                        setDialogueBox(true); 
+                    }
+                   
                 }}><Text style={styles.buttonText}>
                 Set Pin
                  </Text>  

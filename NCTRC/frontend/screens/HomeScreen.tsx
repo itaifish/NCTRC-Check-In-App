@@ -10,10 +10,9 @@ interface HomeScreenProps {
 }
 
 
-
-
 const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
     let { navigation } = props;
+
       return (
         <SafeAreaView style={styles.container}>
             <View style={styles.homeContainer}>

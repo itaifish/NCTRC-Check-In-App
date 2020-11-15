@@ -59,7 +59,7 @@ const RisksScreen: React.FunctionComponent<RisksScreenProps> = (props) => {
                         createAndSigninUser(newUser).then(
                             (response) => {
                                 console.log(response); 
-                                if(response ==200) {
+                                if(response ==200 || response == 201) {
                                   navigation.navigate(AppScreens.SignInLanding);
                                 } else if (response == 409) {
                                     navigation.navigate(AppScreens.CovidError, {reason: "the center is currently at maximum capacity."});                   

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Button, Image, TextInput, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList, AppScreens } from '../index';
 import { styles } from './Styles';
 import CodePin from 'react-native-pin-code';
+import { validatePin } from './../handler/handlers'; 
 
 
 type AdminPasswordScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.AdminPass>;
@@ -12,10 +13,6 @@ interface AdminPasswordScreenProps {
 }
 const AdminPassScreen: React.FunctionComponent<AdminPasswordScreenProps> = (props) => {
     const { navigation } = props;
-
-    //temporarily 1234, need to call from handler 
-    var adminCode = '1234'; 
-
     return (
         <SafeAreaView style={styles.container}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.pop()}>
@@ -27,7 +24,20 @@ const AdminPassScreen: React.FunctionComponent<AdminPasswordScreenProps> = (prop
 
 
         <View style={styles.homeContainer}>
-                <CodePin code={adminCode} 
+                <CodePin 
+                numeber={4}
+                checkPinCode={(code,callback)=> {
+                    console.log(code); 
+                    validatePin({pin: code}).then(
+                        (res) => {
+                            if(res==200) {
+                                callback(true); 
+                            } else {
+                                callback(false); 
+                            }
+                        }
+                    )
+                }}
                 success={() => navigation.navigate(AppScreens.AdminPortal)} 
                 text="Enter Admin Password" 
                 error="Incorrect Password" 

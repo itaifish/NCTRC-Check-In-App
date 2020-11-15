@@ -11,7 +11,6 @@ interface ReasonScreenProps {
 
 const ReasonScreen: React.FunctionComponent<ReasonScreenProps> = (props) => {
     let { navigation } = props;
-    let [visitorType, setVisitorType] = useState('');
     return (
         <SafeAreaView style={styles.container}>
             <TouchableOpacity style={styles.backButton} onPress={() => navigation.pop()}>

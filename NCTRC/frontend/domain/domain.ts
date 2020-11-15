@@ -23,5 +23,7 @@ export interface components {
       userExists?: boolean;
     };
     UpdateMaxCapacityRequestModel: { maxCapacity?: number };
+    PinValidationRequestModel: { pin?: string };
+    UserListResponse: { users: [components["schemas"]["UserRequestModel"]]}
   };
 }
