@@ -5,7 +5,7 @@ import { AuthStackParamList, AppScreens } from '../index';
 import Dialog, { DialogContent } from 'react-native-popup-dialog';
 type ChangePinScreenScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.ChangePin>;
 import { styles } from './Styles';
-import { validatePin } from './../handler/handlers'
+import { validatePin, changePin } from './../handler/handlers'
 interface ChangePinScreenProps {
     navigation: ChangePinScreenScreenNavigationProps;
 }
@@ -62,6 +62,7 @@ const ChangePinScreen: React.FunctionComponent<ChangePinScreenProps> = (props) =
                             console.log(res)
                             if(res!=200) {
                                  setErrorBox(true); 
+                                 return; 
                             }
                         }
                     )
@@ -72,8 +73,19 @@ const ChangePinScreen: React.FunctionComponent<ChangePinScreenProps> = (props) =
                         setErrorBox(true); 
                         return;
                     } else {
-                        //CALL TO BACKEND TO CHANGE PIN
-                        setDialogueBox(true); 
+                        changePin({pin: newPin}).then(
+                            (res) => {
+                                console.log(res)
+                                if(res!=200) {
+                                     setErrorBox(true); 
+                                     return; 
+                                } else {
+                                    setDialogueBox(true); 
+                                    return; 
+                                }
+                            }
+                        )
+                        
                     }
                    
                 }}><Text style={styles.buttonText}>

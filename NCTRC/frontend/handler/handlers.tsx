@@ -22,7 +22,6 @@ export const checkUserExists = async (
     const data: components["schemas"]["UserExistsResult"] = await response.json();
     return data.userExists || false;
   } catch (error) {
-    console.log(error);
     return false;
   }
 };
@@ -76,9 +75,30 @@ export const updateMaxCapacity = async (
 export const validatePin = async (
   PinValidationRequestModel: components["schemas"]["PinValidationRequestModel"]
 ): Promise<components["schemas"]["Result"] | number> => {
-  const url = `${config.base_url}/api/admin/pinValidate`;
+  const url = `${config.base_url}/api/admin/pin`;
   const method = "POST";
   return await sendRequest(url, method,  JSON.stringify(PinValidationRequestModel));
+};
+
+export const changePin = async (PinValidationRequestModel: components["schemas"]["PinValidationRequestModel"]): Promise<components["schemas"]["Result"] | number> => {
+  const url = `${config.base_url}/api/admin/pin`;
+  const method = "PUT";
+  return await sendRequest(url, method,  JSON.stringify(PinValidationRequestModel));
+};
+
+export const getSignIns = async (SigninsBetweenRequestModel: components["schemas"]["SigninsBetweenRequest"]): Promise<components["schemas"]["TimelineListResponse"] | number> => {
+  const url = `${config.base_url}/api/admin/signins`;
+  const method = "POST";
+  const result = await fetch(url, {
+    method: method,
+    headers: { auth: auth.auth_key },
+    body: JSON.stringify(SigninsBetweenRequestModel),
+  });
+  if(result.status != 200) {
+    return result.status;
+  } else {
+    return await result.json();
+  }
 };
 
 const sendRequest = async (url: string, method: string, body: string) : Promise<components["schemas"]["Result"] | number> => {

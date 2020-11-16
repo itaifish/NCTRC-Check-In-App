@@ -5,7 +5,6 @@ import { AuthStackParamList, AppScreens } from '../index';
 type ContactTraceScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.ContactTrace>;
 import { styles } from './Styles';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { updateMaxCapacity } from '../handler/handlers';
 
 interface ContactTraceScreenProps {
     navigation: ContactTraceScreenNavigationProps;
@@ -14,17 +13,21 @@ interface ContactTraceScreenProps {
 const ContactTraceScreen: React.FunctionComponent<ContactTraceScreenProps> = (props) => {
     let { navigation } = props;
     const [startDate, setStartDate] = useState(new Date());
+    const [startString, setStartString] = useState(startDate.toUTCString());
     const [endDate, setEndDate] = useState(new Date());
+    const [endString, setEndString] = useState(endDate.toUTCString());
     let [show, setShow] = useState(true);
     show=true; 
     const onChangeStart = (event, selectedDate) => {
-      const currentDate = selectedDate || startDate;
+      let currentDate = selectedDate || startDate;
       setStartDate(currentDate);
+      setStartString(currentDate.toUTCString())
       setShow(Platform.OS === 'ios' ? true : false);
     };
     const onChangeEnd = (event, selectedDate) => {
-      const currentDate = selectedDate || endDate;
+      let currentDate = selectedDate || endDate;
       setEndDate(currentDate);
+      setEndString(currentDate.toUTCString())
       setShow(Platform.OS === 'ios' ? true : false);
     };
   
@@ -79,7 +82,10 @@ const ContactTraceScreen: React.FunctionComponent<ContactTraceScreenProps> = (pr
         />
       )}
     </View> 
-    <TouchableOpacity style={styles.solidButton}onPress={() => navigation.navigate(AppScreens.ContactList, {startDate: startDate, endDate: endDate})}><Text style={styles.buttonText}>
+    <TouchableOpacity style={styles.solidButton}onPress={() => {
+      
+      navigation.navigate(AppScreens.ContactList, {startString: startString, endString: endString})}
+      }><Text style={styles.buttonText}>
                 Submit
                  </Text>  
                 </TouchableOpacity>

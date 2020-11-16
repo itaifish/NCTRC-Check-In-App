@@ -6,7 +6,7 @@
 export interface components {
   schemas: {
     Result: { statusCode?: number; information?: string };
-    SigninDataRequestModel: { yesQuestion?: string; temperature?: number };
+    SigninDataRequestModel: { yesQuestion?: string; temperature?: number; visitorType?: string };
     SigninRequestModel: {
       signinData?: components["schemas"]["SigninDataRequestModel"];
       user?: components["schemas"]["UserRequestModel"];
@@ -23,7 +23,19 @@ export interface components {
       userExists?: boolean;
     };
     UpdateMaxCapacityRequestModel: { maxCapacity?: number };
+    UserListResponse: {
+      users: [components["schemas"]["UserRequestModel"]]
+    }; 
     PinValidationRequestModel: { pin?: string };
-    UserListResponse: { users: [components["schemas"]["UserRequestModel"]]}
+    SigninsBetweenRequest: { startTime: string; endTime: string }, 
+    TimelineInstance: {
+      user: components["schemas"]["UserRequestModel"]; 
+      signinData: components["schemas"]["SigninDataRequestModel"]; 
+      signinTime: string; 
+      signoutTime: string; 
+    }
+    TimelineListResponse: {
+      users: [components["schemas"]["TimelineInstance"]]
+    }
   };
 }

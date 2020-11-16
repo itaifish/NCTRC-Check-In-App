@@ -119,7 +119,7 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                             console.log(yesQuestion);
                             const exposedUser: components["schemas"]["SigninRequestModel"] = {
                                 user: userToCreate,
-                                signinData: { temperature: temperature, yesQuestion: yesQuestion },
+                                signinData: { temperature: temperature, yesQuestion: yesQuestion, visitorType: type },
                             };
                             signinUser(exposedUser); 
                             navigation.navigate(AppScreens.CovidError, {
@@ -128,7 +128,7 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                         } else if (temperature >= feverTemperature) {
                             const feverUser: components["schemas"]["SigninRequestModel"] = {
                                 user: userToCreate,
-                                signinData: { temperature: temperature, yesQuestion: "temperature" },
+                                signinData: { temperature: temperature, yesQuestion: "temperature", visitorType: type },
                             };
                             signinUser(feverUser); 
                             navigation.navigate(AppScreens.CovidError, {
@@ -140,7 +140,7 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                                     if(res) {
                                         let returningUser: components["schemas"]["SigninRequestModel"] = {
                                             user: userToCreate,
-                                            signinData: { temperature: temperature },
+                                            signinData: { temperature: temperature, visitorType: type },
                                           }
                                           signinUser(returningUser).then(
                                               (response) => {
@@ -156,7 +156,7 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                                           )
                                           
                                     } else {
-                                        navigation.navigate(AppScreens.Risks, {firstName:firstName, lastName:lastName, email: email, tempurature:temperature})
+                                        navigation.navigate(AppScreens.Risks, {firstName:firstName, lastName:lastName, email: email, tempurature:temperature, visitorType: type})
                                     }
                                 }
                             )

@@ -25,7 +25,7 @@ const AdminPassScreen: React.FunctionComponent<AdminPasswordScreenProps> = (prop
 
         <View style={styles.homeContainer}>
                 <CodePin 
-                numeber={4}
+                number={4}
                 checkPinCode={(code,callback)=> {
                     console.log(code); 
                     validatePin({pin: code}).then(

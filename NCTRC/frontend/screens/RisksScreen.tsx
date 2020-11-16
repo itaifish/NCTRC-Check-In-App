@@ -18,12 +18,13 @@ export type RisksParams = {
     lastName: string; 
     email: string;
     tempurature: number;
+    visitorType: string; 
 };
 
 const RisksScreen: React.FunctionComponent<RisksScreenProps> = (props) => {
     let { navigation, route } = props;
     let { params } = route;
-    let { firstName, lastName, email, tempurature } = params;
+    let { firstName, lastName, email, tempurature, visitorType } = params;
     let [signature, setSign] = useState(""); 
     
     return (
@@ -53,7 +54,7 @@ const RisksScreen: React.FunctionComponent<RisksScreenProps> = (props) => {
                               lastName: lastName,
                               email: email,
                             },
-                            signinData: { temperature: tempurature },
+                            signinData: { temperature: tempurature, visitorType: visitorType },
                             signature: signature,
                           };
                         createAndSigninUser(newUser).then(

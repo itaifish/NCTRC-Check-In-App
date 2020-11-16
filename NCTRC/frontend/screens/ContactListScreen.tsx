@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { SafeAreaView, Text, View, Button, Image, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList, AppScreens } from '../index';
 import { styles } from './Styles';
+import { getSignIns } from '../handler/handlers';
 
 type ContactListScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.ContactList>;
 interface ContactListScreenProps {
@@ -11,18 +12,18 @@ interface ContactListScreenProps {
 }
 
 export type DateParams = {
-    startDate: Date;
-    endDate: Date;
+    startString: string;
+    endString: string;
 }
 
 const ContactListScreen: React.FunctionComponent<ContactListScreenProps> = (props) => {
     let { navigation, route } = props;
     let { params } = route;
-    let { startDate, endDate } = params;
-    let startTime = startDate.toString();
-    let endTime = endDate.toString();
+    let { startString, endString } = params;
+    getSignIns({startTime: startString, endTime: endString}).then(
+      ).catch(
 
-    console.log(startDate);
+      )
     return (
         <SafeAreaView style={styles.container}>
             <TouchableOpacity style={styles.backButton} onPress={() => navigation.pop()}>
@@ -31,9 +32,9 @@ const ContactListScreen: React.FunctionComponent<ContactListScreenProps> = (prop
                 <TouchableOpacity style={styles.logo} onPress={() => navigation.popToTop()}>
                      <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 150, height: 150 }}></Image>
                 </TouchableOpacity> 
-                <Text>{startTime}</Text>
-                <Text>{endTime}</Text>
-
+                <Text>{startString}</Text>
+                <View>
+            </View>
         </SafeAreaView>
     );
 };
