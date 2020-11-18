@@ -11,7 +11,7 @@ export interface components {
       signinData?: components["schemas"]["SigninDataRequestModel"];
       user?: components["schemas"]["UserRequestModel"];
     };
-    UserRequestModel: { firstName?: string; lastName?: string; email?: string };
+    UserRequestModel: { firstName: string; lastName: string; email: string };
     NewUserRequestModel: {
       user?: components["schemas"]["UserRequestModel"];
       signature?: string;
@@ -24,7 +24,7 @@ export interface components {
     };
     UpdateMaxCapacityRequestModel: { maxCapacity?: number };
     UserListResponse: {
-      users: [components["schemas"]["UserRequestModel"]]
+      users: Array<components["schemas"]["UserRequestModel"]>
     }; 
     PinValidationRequestModel: { pin?: string };
     SigninsBetweenRequest: { startTime: string; endTime: string }, 

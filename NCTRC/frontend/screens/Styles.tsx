@@ -156,6 +156,12 @@ export const styles = StyleSheet.create({
     row: { 
         height: 40, 
         backgroundColor: '#ffff' 
+    }, 
+    title: {
+        color: '#884633', 
+        alignSelf: 'center',
+        margin: 15,
+        fontSize: 25, 
     }
 
 });

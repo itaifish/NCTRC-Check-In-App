@@ -86,6 +86,22 @@ export const changePin = async (PinValidationRequestModel: components["schemas"]
   return await sendRequest(url, method,  JSON.stringify(PinValidationRequestModel));
 };
 
+export const getLoggednUsers = async (): Promise<components["schemas"]["UserListResponse"]> => {
+  const url = `${config.base_url}/api/admin/loggedin`;
+  const method = "POST";
+  const result = await fetch(url, {
+    method: method,
+    headers: { auth: auth.auth_key },
+  });
+  return new Promise((resolve, reject) => {
+    if(result.status > 200) {
+      return reject(new Error('result.status'));
+    } else {
+      return resolve(result.json())
+    }
+  })
+};
+
 export const getSignIns = async (SigninsBetweenRequestModel: components["schemas"]["SigninsBetweenRequest"]): Promise<components["schemas"]["TimelineListResponse"]> => {
   const url = `${config.base_url}/api/admin/signins`;
   const method = "POST";

@@ -47,7 +47,7 @@ const ContactTraceScreen: React.FunctionComponent<ContactTraceScreenProps> = (pr
                      <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 150, height: 150 }}></Image>
                 </TouchableOpacity> 
                 <View>
-                  <Text>Start Date</Text>
+                  <Text style={styles.title}>Start Date</Text>
       
       <View>
       <Button onPress={showMode} title="" />
@@ -64,7 +64,7 @@ const ContactTraceScreen: React.FunctionComponent<ContactTraceScreenProps> = (pr
         />
       )}
     </View> 
-    <Text>End Date</Text>
+    <Text style={styles.title}>End Date</Text>
   
                 <View>
       
