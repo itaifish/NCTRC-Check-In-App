@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, Text, View, Button, Image, TextInput, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, View, Button, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList, AppScreens } from '../index';
 import { RadioButton } from 'react-native-paper';
@@ -34,9 +34,13 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
     let [covidTest, setCovidTest] = React.useState('');
     let [temperature, setTemperature] = React.useState(0);
     let yesQuestion = ""; 
+    let keyboardVerticalOffset = Platform.OS === 'ios' ? 100 : 0;
+
 
     return (
         <ScrollView style={styles.scrollContainer}>
+                            <KeyboardAvoidingView behavior={"padding"}>
+
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.pop()}>
                  <Image source={require('./../assets/backbutton.png')} style={{ width: 75, height: 75 }}></Image>
             </TouchableOpacity> 
@@ -168,6 +172,8 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                      </Text>  
                 </TouchableOpacity>
             </View>
+            </KeyboardAvoidingView>
+
             </ScrollView>
     );
 };

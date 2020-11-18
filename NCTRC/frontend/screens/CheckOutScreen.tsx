@@ -24,7 +24,7 @@ const CheckOutScreen: React.FunctionComponent<CheckOutScreenProps> = (props) => 
             <TouchableOpacity style={styles.logo} onPress={() => navigation.popToTop()}>
                  <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 150, height: 150 }}></Image>
             </TouchableOpacity> 
-        <View style={styles.homeContainer}>
+        <View style={styles.inputContainer}>
             <Text></Text>
                 <TextInput  style={styles.textInput} value={firstName} onChangeText={(text) => setFirstName(text)} placeholder="Name" />
                 <TextInput  style={styles.textInput} value={lastName} onChangeText={(text) => setLastName(text)} placeholder="Name" />

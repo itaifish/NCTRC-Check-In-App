@@ -1,4 +1,5 @@
 import React from 'react';
+import { LogBox } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './screens/HomeScreen';
 import AdminPasswordScreen from './screens/AdminPasswordScreen';
@@ -15,6 +16,11 @@ import ChangePinScreen from './screens/ChangePinScreen';
 import MaxCapacityScreen from './screens/MaxCapacityScreen';
 import ContactTraceScreen from './screens/ContactTraceScreen';
 import ContactListScreen, {DateParams} from './screens/ContactListScreen';
+
+LogBox.ignoreLogs([
+    'Require cycle:',
+    'componentWillReceiveProps has been renamed'
+])
 
 export enum AppScreens {
     Home = 'Home',

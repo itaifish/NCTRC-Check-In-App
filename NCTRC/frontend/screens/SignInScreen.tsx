@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View, Button, Image, TextInput, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, Button, Image, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList, AppScreens } from '../index';
 import { styles } from './Styles';
@@ -29,14 +29,16 @@ const SignInScreen: React.FunctionComponent<SignInScreenProps> = (props) => {
                 <TouchableOpacity style={styles.logo} onPress={() => navigation.popToTop()}>
                      <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 150, height: 150 }}></Image>
                 </TouchableOpacity> 
-            <View style={styles.homeContainer}>
-                <TextInput style={styles.textInput} value={firstName} onChangeText={(text) => setFirstName(text)} placeholder="First Name" />
+            <View style={styles.inputContainer}>
+                <KeyboardAvoidingView>
+                <TextInput  style={styles.textInput} value={firstName} onChangeText={(text) => setFirstName(text)} placeholder="First Name" />
                 <TextInput style={styles.textInput} value={lastName} onChangeText={(text) => setLastName(text)} placeholder="Last Name" />
                 <TextInput style={styles.textInput} value={email} onChangeText={(text) => setEmail(text)} placeholder="Email Address" />
                 <TouchableOpacity style={styles.smallButton}onPress={() => navigation.navigate(AppScreens.CovidInformation, { firstName: firstName, lastName: lastName, email: email, type: type })}><Text style={styles.buttonText}>
                 Sign In
                  </Text>  
                 </TouchableOpacity>
+                </KeyboardAvoidingView>
             </View>
         </SafeAreaView>
     );

@@ -19,7 +19,7 @@ const ReasonScreen: React.FunctionComponent<ReasonScreenProps> = (props) => {
             <TouchableOpacity style={styles.logo} onPress={() => navigation.popToTop()}>
                 <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 150, height: 150 }}></Image>
             </TouchableOpacity>
-            <View style={styles.homeContainer}>
+            <View style={styles.inputContainer}>
                 <Text style={styles.question}>What is the reason for your visit?</Text>
 
                 <TouchableOpacity style={styles.reasonButton} onPress={() => navigation.navigate(AppScreens.SignIn, {type: "Client"})}><Text style={styles.buttonText}>

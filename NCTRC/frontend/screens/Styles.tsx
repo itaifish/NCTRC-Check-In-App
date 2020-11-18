@@ -15,12 +15,21 @@ export const styles = StyleSheet.create({
     home: {
         fontSize: 20,
     },
+    inputContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        marginBottom: 120, 
+    },
     homeContainer: {
         alignItems: 'center',
         justifyContent: 'center',
         flex: 1,
         width: '100%',
         height: '100%',
+        marginBottom: 50, 
     },
     solidButton: {
         backgroundColor: '#884633',
@@ -44,7 +53,8 @@ export const styles = StyleSheet.create({
         marginTop: 18,
     },
     backButton: {
-        alignSelf: 'flex-start'
+        alignSelf: 'flex-start',
+        margin: 20
     }, 
     logo: {
         marginTop: -40, 
@@ -125,10 +135,27 @@ export const styles = StyleSheet.create({
         marginLeft: 25,
         fontSize: 15
     }, 
-    signature: {
-        flex: 1,
-        borderColor: '#000033',
-        borderWidth: 1,
-      },
+    tableContainer: { 
+        flex: 1, 
+        padding: 16, 
+        paddingTop: 30, 
+        backgroundColor: '#fff' 
+    },
+    header: { 
+        height: 50, 
+        backgroundColor: 'lightgrey' 
+    },
+    text: {
+        textAlign: 'center', 
+        fontWeight: '300', 
+        color: '#884633' 
+    },
+    dataWrapper: { 
+        marginTop: -1 
+    },
+    row: { 
+        height: 40, 
+        backgroundColor: '#ffff' 
+    }
 
 });

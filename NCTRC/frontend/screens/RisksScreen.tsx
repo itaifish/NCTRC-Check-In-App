@@ -5,7 +5,7 @@ import { AuthStackParamList, AppScreens } from '../index';
 import { components } from '../domain/domain';
 import { createAndSigninUser } from '../handler/handlers';
 import { styles } from './Styles';
-
+import Signature from 'react-native-signature-canvas';
 
 type RisksScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.Risks>;
 
@@ -25,7 +25,8 @@ const RisksScreen: React.FunctionComponent<RisksScreenProps> = (props) => {
     let { navigation, route } = props;
     let { params } = route;
     let { firstName, lastName, email, tempurature, visitorType } = params;
-    let [signature, setSign] = useState(""); 
+    let [signature, setSign] = useState(''); 
+   
     
     return (
         <ScrollView style={styles.scrollContainer}>

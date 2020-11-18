@@ -5,9 +5,8 @@ import { AuthStackParamList, AppScreens } from '../index';
 import { styles } from './Styles';
 import CodePin from 'react-native-pin-code';
 import { validatePin } from './../handler/handlers'; 
-
-
 type AdminPasswordScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.AdminPass>;
+
 interface AdminPasswordScreenProps {
     navigation: AdminPasswordScreenNavigationProps;
 }
@@ -22,18 +21,17 @@ const AdminPassScreen: React.FunctionComponent<AdminPasswordScreenProps> = (prop
                  <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 150, height: 150 }}></Image>
             </TouchableOpacity> 
 
-
         <View style={styles.homeContainer}>
                 <CodePin 
                 number={4}
-                checkPinCode={(code,callback)=> {
+                checkPinCode={(code, callback)=> {
                     console.log(code); 
                     validatePin({pin: code}).then(
                         (res) => {
                             if(res==200) {
-                                callback(true); 
+                                callback(true)
                             } else {
-                                callback(false); 
+                                callback(false)
                             }
                         }
                     )
@@ -43,10 +41,11 @@ const AdminPassScreen: React.FunctionComponent<AdminPasswordScreenProps> = (prop
                 error="Incorrect Password" 
                 obfuscation={true}
                 autoFocusFirst={true}
-                containerStyle={{marginTop: -300}}
+                containerStyle={{marginTop: -400, alignItems: 'center'}}
+                containerPinStyle={{height: 200, width: 500}}
                 errorStyle={{ color: '#884633', marginBottom: 30}}
                 textStyle={{ textAlign: 'center', color: '#884633', fontSize: 20, marginBottom: 30 }}
-                pinStyle={{'height': 60 }}
+                pinStyle={{height: 100}}
                 />
             </View>
             

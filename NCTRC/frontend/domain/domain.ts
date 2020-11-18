@@ -35,7 +35,7 @@ export interface components {
       signoutTime: string; 
     }
     TimelineListResponse: {
-      users: [components["schemas"]["TimelineInstance"]]
+      users: Array<components["schemas"]["TimelineInstance"]>
     }
   };
 }

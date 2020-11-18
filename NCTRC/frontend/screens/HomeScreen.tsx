@@ -9,7 +9,6 @@ interface HomeScreenProps {
     navigation: HomeScreenNavigationProps;
 }
 
-
 const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
     let { navigation } = props;
 
