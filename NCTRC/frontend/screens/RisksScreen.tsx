@@ -54,8 +54,8 @@ const RisksScreen: React.FunctionComponent<RisksScreenProps> = (props) => {
                 {error && <Text style={styles.errorMessage}>{errorMessage}</Text>}
                 <TouchableOpacity style={styles.smallButton}
                     onPress={() => {
-                        if(signature != firstName + " " + lastName) {
-                            setErrorMessage("Please enter a valild email.")
+                        if(signature ==='') {
+                            setErrorMessage("Please enter your name.")
                             setError(true);
                         } else {
                         let newUser: components["schemas"]["NewUserRequestModel"] = {

@@ -24,13 +24,13 @@ const ContactTraceScreen: React.FunctionComponent<ContactTraceScreenProps> = (pr
    
     show=true; 
     const onChangeStart = (event, selectedDate) => {
-      let currentDate = selectedDate || startDate;
+      let currentDate = selectedDate;
       setStartDate(currentDate);
       setStartString(currentDate.toUTCString())
       setShow(Platform.OS === 'ios' ? true : false);
     };
     const onChangeEnd = (event, selectedDate) => {
-      let currentDate = selectedDate || endDate;
+      let currentDate = selectedDate;
       setEndDate(currentDate);
       setEndString(currentDate.toUTCString())
       setShow(Platform.OS === 'ios' ? true : false);
