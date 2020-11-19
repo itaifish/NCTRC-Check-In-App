@@ -4,31 +4,31 @@ public class SigninStatus {
   /*
   This String tracks the uuid of the most recent signin request to sign out of
    */
-  private SigninTimeIdPair signInTimeAndId;
+  private SigninEmailIdPair signInEmailAndId;
 
   public SigninStatus() {
-    this.signInTimeAndId = null;
+    this.signInEmailAndId = null;
   }
 
   public boolean isSignedIn() {
-    return this.signInTimeAndId != null;
+    return this.signInEmailAndId != null;
   }
 
-  public SigninTimeIdPair getSignInTimeAndId() {
-    return signInTimeAndId;
+  public SigninEmailIdPair getSignInEmailAndId() {
+    return signInEmailAndId;
   }
 
-  public void setSignedIn(final SigninTimeIdPair signInTimeAndId) {
+  public void setSignedIn(final SigninEmailIdPair signinEmailIdPair) {
     if (this.isSignedIn()) {
       throw new IllegalStateException("Can't sign in when already signed in");
     }
-    this.signInTimeAndId = signInTimeAndId;
+    this.signInEmailAndId = signinEmailIdPair;
   }
 
   public void setSignedOut() {
     if (!this.isSignedIn()) {
       throw new IllegalStateException("Can't sign out when already signed out");
     }
-    this.signInTimeAndId = null;
+    this.signInEmailAndId = null;
   }
 }

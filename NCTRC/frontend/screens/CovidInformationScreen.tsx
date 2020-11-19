@@ -33,9 +33,35 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
     let [gatherings, setGatherings] = React.useState('');
     let [covidTest, setCovidTest] = React.useState('');
     let [temperature, setTemperature] = React.useState(0);
+    let [signature, setSignature] = React.useState('');
     let yesQuestion = ""; 
     let [error, setError] = useState(false);
     let [errorMessage, setErrorMessage] = useState("");
+
+    const questions: [string, (value: string) => void, string][] = [
+        ["Within the past 24 hours have you or anyone in your household experienced any of the following symptoms: fever (over 100.4 F), sore or dry throat, shortness of breath, chest congestion, cough, loss of taste or sense of smell, sneezing, and/or rash?", (value: string) => {setSymptoms(value)}, symptoms],
+        ["Have you traveled out of the country or out of the state within the past 14 days?",  (value: string) => {setTraveled(value)}, traveled],
+        ["Have you attended an event or gathering of more than 25 people at any point in the last 14 days?", (value: string) => {setGatherings(value)}, gatherings],
+        ["Within the past 14 days, have you received a positive test result for COVID-19 or are you awaiting test results for COVID-19?", (value: string) => {setCovidTest(value)}, covidTest],
+
+    ];
+    
+    const questionsJSX: JSX.Element[] = [];
+    questions.forEach((question, index) => {
+        questionsJSX.push(
+            <View key={index}>
+                <Text style={styles.covidQuestion}>{question[0]}</Text>
+                <RadioButton.Group onValueChange={question[1]} value={question[2]}>
+                    <View style={styles.radioContainer}>
+                            <Text style={styles.radioText}>Yes</Text>
+                            <RadioButton.Android color="#884633" value="yes"/>
+                            <Text style={styles.radioText}>No</Text>
+                            <RadioButton.Android color="#884633" value="no" />
+                    </View>
+                </RadioButton.Group>
+            </View>
+        );
+    });
 
     return (
         <ScrollView style={styles.scrollContainer}>
@@ -54,48 +80,7 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                 <TextInput style={styles.textInput} placeholder={lastName} editable={false} />
                 <Text style={styles.covidQuestion}>Email</Text>
                 <TextInput style={styles.textInput} placeholder={email} editable={false} />
-                <Text style={styles.covidQuestion}>
-                    Within the past 24 hours have you or anyone in your household experienced any of the following symptoms: fever (over 100.4 F), sore or dry throat, shortness of breath, chest congestion, cough, loss of taste or sense of smell, sneezing, and/or rash?
-                </Text>
-                
-                <RadioButton.Group onValueChange={value => setSymptoms(value)} value={symptoms}>
-                <View style={styles.radioContainer}>
-                            <Text style={styles.radioText}>Yes</Text>
-                            <RadioButton.Android color="#884633" value="yes"/>
-                            <Text style={styles.radioText}>No</Text>
-                            <RadioButton.Android color="#884633" value="no" />
-                    </View>
-                </RadioButton.Group>
-                
-                <View>
-                <Text style={styles.covidQuestion}>Have you traveled out of the country or out of the state within the past 14 days?</Text>
-                <RadioButton.Group onValueChange={value => setTraveled(value)} value={traveled}>
-                    <View style={styles.radioContainer}>
-                            <Text style={styles.radioText}>Yes</Text>
-                            <RadioButton.Android color="#884633" value="yes"/>
-                            <Text style={styles.radioText}>No</Text>
-                            <RadioButton.Android color="#884633" value="no" />
-                    </View>
-                </RadioButton.Group>
-                </View>
-                <Text style={styles.covidQuestion}>Have you attended an event or gathering of more than 25 people at any point in the last 14 days?</Text>
-                <RadioButton.Group onValueChange={value => setGatherings(value)} value={gatherings}>
-                <View style={styles.radioContainer}>
-                            <Text style={styles.radioText}>Yes</Text>
-                            <RadioButton.Android color="#884633" value="yes"/>
-                            <Text style={styles.radioText}>No</Text>
-                            <RadioButton.Android color="#884633" value="no" />
-                    </View>
-                </RadioButton.Group>
-                <Text  style={styles.covidQuestion}>Within the past 14 days, have you received a positive test result for COVID-19 or are you awaiting test results for COVID-19?</Text>
-                <RadioButton.Group onValueChange={value => setCovidTest(value)} value={covidTest}>
-                <View style={styles.radioContainer}>
-                            <Text style={styles.radioText}>Yes</Text>
-                            <RadioButton.Android color="#884633" value="yes"/>
-                            <Text style={styles.radioText}>No</Text>
-                            <RadioButton.Android color="#884633" value="no" />
-                    </View>
-                </RadioButton.Group>
+                {questionsJSX}
                 <Text style={styles.covidQuestion}>What is your temperature?</Text>
                 <TextInput style={styles.textInput} onChangeText={(number) => setTemperature(Number(number))} />
                 <Text style={styles.covidQuestion}>Is there anything else you would like to share? Questions, concerns, etc.</Text>

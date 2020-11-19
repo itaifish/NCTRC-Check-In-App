@@ -3,6 +3,7 @@ package org.nctrc.backend.startup.entrypoint;
 import static io.javalin.apibuilder.ApiBuilder.delete;
 import static io.javalin.apibuilder.ApiBuilder.path;
 import static io.javalin.apibuilder.ApiBuilder.post;
+import static io.javalin.apibuilder.ApiBuilder.put;
 
 import com.google.inject.Inject;
 import io.javalin.Javalin;
@@ -71,6 +72,23 @@ public class WebEntrypoint implements AppEntrypoint {
                           path(
                               Constants.ADMIN_UPDATE_CAPACITY_PATH,
                               () -> post(this.adminController::updateMaxCapacity));
+                          path(
+                              Constants.ADMIN_LOGGED_IN_PATH,
+                              () -> post(this.adminController::getLoggedInUsers));
+                          path(
+                              Constants.ADMIN_USERS_PATH,
+                              () -> post(this.adminController::getAllUsers));
+                          path(
+                              Constants.ADMIN_PIN_PATH,
+                              () -> {
+                                post(this.adminController::validatePin);
+                                put(this.adminController::changePin);
+                              });
+                          path(
+                              Constants.ADMIN_SIGNINS_PATH,
+                              () -> {
+                                post(this.adminController::getSigninsBetween);
+                              });
                         });
                   });
             })
