@@ -21,6 +21,9 @@ const SignInScreen: React.FunctionComponent<SignInScreenProps> = (props) => {
     let [firstName, setFirstName] = useState('');
     let [lastName, setLastName] = useState('');
     let [email, setEmail] = useState('');
+    let [error, setError] = useState(false);
+    let [errorMessage, setErrorMessage] = useState("");
+
     return (
         <SafeAreaView style={styles.container}>
              <TouchableOpacity style={styles.backButton} onPress={() => navigation.pop()}>
@@ -34,7 +37,19 @@ const SignInScreen: React.FunctionComponent<SignInScreenProps> = (props) => {
                 <TextInput  style={styles.textInput} value={firstName} onChangeText={(text) => setFirstName(text)} placeholder="First Name" />
                 <TextInput style={styles.textInput} value={lastName} onChangeText={(text) => setLastName(text)} placeholder="Last Name" />
                 <TextInput style={styles.textInput} value={email} onChangeText={(text) => setEmail(text)} placeholder="Email Address" />
-                <TouchableOpacity style={styles.smallButton}onPress={() => navigation.navigate(AppScreens.CovidInformation, { firstName: firstName, lastName: lastName, email: email, type: type })}><Text style={styles.buttonText}>
+                {error && <Text style={styles.errorMessage}>{errorMessage}</Text>}
+                <TouchableOpacity style={styles.smallButton}onPress={() => {
+                    if(firstName === '' || lastName === '') {
+                        setErrorMessage("Please enter your name.")
+                        setError(true);
+                    } else if (email.search("@") == -1 || email.search("@") == 0 || email.search(".") == -1) {
+                        setErrorMessage("Please enter a valild email.")
+                        setError(true);
+                    } else {
+                        navigation.navigate(AppScreens.CovidInformation, { firstName: firstName, lastName: lastName, email: email, type: type })
+                    }
+                   }}>
+                <Text style={styles.buttonText}>
                 Sign In
                  </Text>  
                 </TouchableOpacity>

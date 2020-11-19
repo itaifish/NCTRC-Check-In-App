@@ -14,11 +14,14 @@ interface ContactTraceScreenProps {
 
 const ContactTraceScreen: React.FunctionComponent<ContactTraceScreenProps> = (props) => {
     let { navigation } = props;
-    const [startDate, setStartDate] = useState(new Date());
-    const [startString, setStartString] = useState(startDate.toUTCString());
-    const [endDate, setEndDate] = useState(new Date());
-    const [endString, setEndString] = useState(endDate.toUTCString());
+    let [startDate, setStartDate] = useState(new Date());
+    let [startString, setStartString] = useState(startDate.toUTCString());
+    let [endDate, setEndDate] = useState(new Date());
+    let [endString, setEndString] = useState(endDate.toUTCString());
     let [show, setShow] = useState(true);
+    let [error, setError] = useState(false);
+    let [errorMessage, setErrorMessage] = useState("");
+   
     show=true; 
     const onChangeStart = (event, selectedDate) => {
       let currentDate = selectedDate || startDate;
@@ -83,7 +86,13 @@ const ContactTraceScreen: React.FunctionComponent<ContactTraceScreenProps> = (pr
         />
       )}
     </View> 
+    {error && <Text style={styles.errorMessage}>{errorMessage}</Text>}
     <TouchableOpacity style={styles.solidButton}onPress={() => {
+      if(startDate > endDate) {
+
+          setErrorMessage("Start date must come before the end date")
+          setError(true); 
+      } else {
       let tableData: string[][] = [];
       getSignIns({startTime: startString, endTime: endString})
       .then(
@@ -120,7 +129,7 @@ const ContactTraceScreen: React.FunctionComponent<ContactTraceScreenProps> = (pr
         });
 
       
-      }}><Text style={styles.buttonText}>
+      }}}><Text style={styles.buttonText}>
                 Submit
                  </Text>  
                 </TouchableOpacity>

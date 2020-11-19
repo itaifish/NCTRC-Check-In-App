@@ -34,8 +34,8 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
     let [covidTest, setCovidTest] = React.useState('');
     let [temperature, setTemperature] = React.useState(0);
     let yesQuestion = ""; 
-    let keyboardVerticalOffset = Platform.OS === 'ios' ? 100 : 0;
-
+    let [error, setError] = useState(false);
+    let [errorMessage, setErrorMessage] = useState("");
 
     return (
         <ScrollView style={styles.scrollContainer}>
@@ -100,8 +100,19 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                 <TextInput style={styles.textInput} onChangeText={(number) => setTemperature(Number(number))} />
                 <Text style={styles.covidQuestion}>Is there anything else you would like to share? Questions, concerns, etc.</Text>
                 <TextInput style={styles.textInput} onChangeText={(text) => setConcerns(text)} />
+                {error && <Text style={styles.errorMessage}>{errorMessage}</Text>}
                 <TouchableOpacity style={styles.smallButton}
                     onPress={() => {
+
+                
+                        if(temperature < 85 || temperature > 103) {
+                            setErrorMessage("Please enter a valid temperature")
+                            setError(true);
+                        } else if (traveled === '' || symptoms === '' || gatherings === '' || covidTest === '') {
+                                setErrorMessage("Please answer all the questions")
+                                setError(true);
+                        } else {
+                                
         
                         let userToCreate: components["schemas"]["UserRequestModel"] = {
                                 firstName: firstName, 
@@ -166,7 +177,7 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                             )
 
                        }
-                    }}>
+                    }}}>
                     <Text style={styles.buttonText}>
                     Submit
                      </Text>  

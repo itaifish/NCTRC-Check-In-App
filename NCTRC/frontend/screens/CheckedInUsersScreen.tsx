@@ -20,8 +20,6 @@ export type CheckedInParams = {
 };
 
 
-
-
 const CheckedInUsersScreen: React.FunctionComponent<CheckedInUsersScreenProps> = (props) => {
     let ex: components["schemas"]["UserRequestModel"] = {
         firstName: "",
