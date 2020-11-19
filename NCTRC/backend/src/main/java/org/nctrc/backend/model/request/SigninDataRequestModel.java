@@ -9,12 +9,16 @@ public class SigninDataRequestModel {
 
   private final double temperature;
 
+  private final String visitorType;
+
   @JsonCreator
   public SigninDataRequestModel(
       @JsonProperty("yesQuestion") final String yesQuestion,
-      @JsonProperty("temperature") final double temperature) {
+      @JsonProperty("temperature") final double temperature,
+      @JsonProperty("visitorType") final String visitorType) {
     this.yesQuestion = yesQuestion;
     this.temperature = temperature;
+    this.visitorType = visitorType;
   }
 
   public String getYesQuestion() {
@@ -23,5 +27,9 @@ public class SigninDataRequestModel {
 
   public double getTemperature() {
     return temperature;
+  }
+
+  public String getVisitorType() {
+    return visitorType;
   }
 }

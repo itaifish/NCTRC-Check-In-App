@@ -20,9 +20,13 @@ public class DatabaseConstants {
 
   public final String TIMELINE_TABLE = "timeline";
 
+  public final String SIGNED_IN_TABLE = "signedin";
+
   public final String CONFIG_PRIMARY_KEY = "name";
 
   public final String CONFIG_MAX_CAPACITY = "maxCapacity";
+
+  public final String CONFIG_PIN_NUMBER = "pin";
 
   public final String CONFIG_VALUE = "value";
 
@@ -51,10 +55,16 @@ public class DatabaseConstants {
         new DatabaseConfigInformation(
             this.TIMELINE_TABLE,
             Arrays.asList(
-                new KeySchemaElement("id", KeyType.HASH),
-                new KeySchemaElement("signinTime", KeyType.RANGE)),
+                new KeySchemaElement("userEmail", KeyType.HASH),
+                new KeySchemaElement("id", KeyType.RANGE)),
             Arrays.asList(
-                new AttributeDefinition("id", ScalarAttributeType.S),
-                new AttributeDefinition("signinTime", ScalarAttributeType.S))));
+                new AttributeDefinition("userEmail", ScalarAttributeType.S),
+                new AttributeDefinition("id", ScalarAttributeType.S))));
+    TABLE_CONFIG.put(
+        this.SIGNED_IN_TABLE,
+        new DatabaseConfigInformation(
+            this.SIGNED_IN_TABLE,
+            Collections.singletonList(new KeySchemaElement("email", KeyType.HASH)),
+            Collections.singletonList(new AttributeDefinition("email", ScalarAttributeType.S))));
   }
 }

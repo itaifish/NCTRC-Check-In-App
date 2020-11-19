@@ -33,9 +33,10 @@ public class DayTimeline {
     }
   }
 
-  public void signUserIn(final UserRequestModel userModel, final SigninTimeIdPair signInTimeAndId) {
+  public void signUserIn(
+      final UserRequestModel userModel, final SigninEmailIdPair signinEmailIdPair) {
     if (userExists(userModel)) {
-      usersStatus.get(userModel).setSignedIn(signInTimeAndId);
+      usersStatus.get(userModel).setSignedIn(signinEmailIdPair);
     } else {
       throw new IllegalArgumentException("User " + userModel + " does not exist");
     }
@@ -53,8 +54,8 @@ public class DayTimeline {
     return usersStatus.containsKey(userModel);
   }
 
-  public SigninTimeIdPair getUserSigninTimeAndId(final UserRequestModel userModel) {
-    return usersStatus.get(userModel).getSignInTimeAndId();
+  public SigninEmailIdPair getUserSigninEmailAndId(final UserRequestModel userModel) {
+    return usersStatus.get(userModel).getSignInEmailAndId();
   }
 
   public void removeUser(final UserRequestModel userModel) {
