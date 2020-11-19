@@ -58,7 +58,7 @@ const ContactTraceScreen: React.FunctionComponent<ContactTraceScreenProps> = (pr
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
-          timeZoneOffsetInMinutes={0}
+          timeZoneOffsetInMinutes={-(new Date().getTimezoneOffset())}
           value={startDate}
           mode='datetime'
           display="default"
@@ -77,7 +77,7 @@ const ContactTraceScreen: React.FunctionComponent<ContactTraceScreenProps> = (pr
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
-          timeZoneOffsetInMinutes={0}
+          timeZoneOffsetInMinutes={-(new Date().getTimezoneOffset())}
           value={endDate}
           mode='datetime'
           display="default"

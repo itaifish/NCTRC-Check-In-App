@@ -46,7 +46,7 @@ const SignInScreen: React.FunctionComponent<SignInScreenProps> = (props) => {
                         setErrorMessage("Please enter a valild email.")
                         setError(true);
                     } else {
-                        navigation.navigate(AppScreens.CovidInformation, { firstName: firstName, lastName: lastName, email: email, type: type })
+                        navigation.navigate(AppScreens.CovidInformation, { firstName: firstName.trim(), lastName: lastName.trim(), email: email.trim(), type: type })
                     }
                    }}>
                 <Text style={styles.buttonText}>

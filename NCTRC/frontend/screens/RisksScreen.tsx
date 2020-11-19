@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-native';
+import { SafeAreaView, ScrollView, TextInput, Text, View, Button, Image, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList, AppScreens } from '../index';
 import { components } from '../domain/domain';
@@ -26,10 +26,13 @@ const RisksScreen: React.FunctionComponent<RisksScreenProps> = (props) => {
     let { params } = route;
     let { firstName, lastName, email, tempurature, visitorType } = params;
     let [signature, setSign] = useState(''); 
-   
+    let [error, setError] = useState(false); 
+    let [errorMessage, setErrorMessage] = useState(""); 
+
     
     return (
         <ScrollView style={styles.scrollContainer}>
+            <KeyboardAvoidingView behavior={"padding"}>
              <TouchableOpacity style={styles.backButton} onPress={() => navigation.pop()}>
                      <Image source={require('./../assets/backbutton.png')} style={{ width: 75, height: 75 }}></Image>
                 </TouchableOpacity> 
@@ -45,10 +48,16 @@ const RisksScreen: React.FunctionComponent<RisksScreenProps> = (props) => {
                 <Text style={styles.riskDoc}>I agree to stay home and/or cancel my services should I have personally exhibited or have been in contact with someone who has presented with illness within the previous 24 hours to 2 weeks, including; cough, sneezing, fever, chest congestion or additional signs of potential spread of any virus or bacteria/disease. In addition, I will follow the recommendations of my provider once I have notified them of these risks in regards to my future services or attendance during this pandemic.</Text>
                 <Text style={styles.riskDoc}>NC Therapeutic Riding Center will engage in regular cleaning and sanitizing of the facility, horse tack, grooming supplies and office, doors, and frequently touched areas in-between clients and on a daily basis as recommended by the CDC for the safety of clients, employees, volunteers and horses.</Text>
                 <Text style={styles.riskDoc}>I am signing under my own free will and agree to follow these and hold harmless all individuals associated with or through my services acquired from NC Therapeutic Riding Center.</Text>
-                <Text style={styles.riskDoc}>BY SIGNING BELOW, I CONFIRM THAT I HAVE READ AND UNDERSTAND THIS DOCUMENT.</Text>
+                <Text style={styles.riskDoc}>By typing my name below, I CONFIRM THAT I HAVE READ AND UNDERSTAND THIS DOCUMENT.</Text>
+                <TextInput style={styles.textInput} onChangeText={(text) => setSign(text)} placeholder="Please type your name to confirm" />
                 <Text style={styles.riskDoc}>*In the event that the undersigned is under the age of 18, the signature of a parent or guardian is required.</Text>
+                {error && <Text style={styles.errorMessage}>{errorMessage}</Text>}
                 <TouchableOpacity style={styles.smallButton}
                     onPress={() => {
+                        if(signature != firstName + " " + lastName) {
+                            setErrorMessage("Please enter a valild email.")
+                            setError(true);
+                        } else {
                         let newUser: components["schemas"]["NewUserRequestModel"] = {
                             user: {
                               firstName: firstName,
@@ -69,7 +78,7 @@ const RisksScreen: React.FunctionComponent<RisksScreenProps> = (props) => {
                                   navigation.navigate(AppScreens.CovidError, {reason: "we are unable to check you in at this time."});
                                 }
                             }); 
-                    }}
+                    }}}
                     >
                     
                     <Text style={styles.buttonText}>
@@ -77,6 +86,8 @@ const RisksScreen: React.FunctionComponent<RisksScreenProps> = (props) => {
                      </Text>  
                 </TouchableOpacity>
             </View>
+            </KeyboardAvoidingView>
+
         </ScrollView>
     );
 };
