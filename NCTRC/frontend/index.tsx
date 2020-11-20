@@ -1,4 +1,5 @@
 import React from 'react';
+import { LogBox } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './screens/HomeScreen';
 import AdminPasswordScreen from './screens/AdminPasswordScreen';
@@ -15,6 +16,13 @@ import ChangePinScreen from './screens/ChangePinScreen';
 import MaxCapacityScreen from './screens/MaxCapacityScreen';
 import ContactTraceScreen from './screens/ContactTraceScreen';
 import ContactListScreen, {DateParams} from './screens/ContactListScreen';
+import CheckoutOptionsScreen from './screens/CheckoutOptionsScreen';
+import CheckedInUsersScreen, {CheckedInParams} from './screens/CheckedInUsersScreen';
+
+LogBox.ignoreLogs([
+    'Require cycle:',
+    'componentWillReceiveProps has been renamed'
+])
 
 export enum AppScreens {
     Home = 'Home',
@@ -31,7 +39,9 @@ export enum AppScreens {
     ChangePin = 'ChangePin',
     MaxCapacity = 'MaxCapacity',
     ContactTrace = 'ContactTrace',
-    ContactList = 'ContactList'
+    ContactList = 'ContactList',
+    CheckoutOptions = 'CheckoutOptions', 
+    CheckedInUsers = 'CheckedInUsers'
 }
 
 export type AuthStackParamList = {
@@ -50,7 +60,9 @@ export type AuthStackParamList = {
     MaxCapacity: undefined; 
     ChangePin: undefined; 
     ContactTrace: undefined; 
-    ContactList: DateParams
+    ContactList: DateParams,
+    CheckoutOptions: undefined,
+    CheckedInUsers: CheckedInParams
 };
 
 const AuthStack = createStackNavigator<AuthStackParamList>();
@@ -72,7 +84,8 @@ const AuthFlowNavigator: React.FunctionComponent = () => {
             <AuthStack.Screen name={AppScreens.MaxCapacity} component={MaxCapacityScreen} />
             <AuthStack.Screen name={AppScreens.ContactTrace} component={ContactTraceScreen} />
             <AuthStack.Screen name={AppScreens.ContactList} component={ContactListScreen} />
-
+            <AuthStack.Screen name={AppScreens.CheckoutOptions} component={CheckoutOptionsScreen} />
+            <AuthStack.Screen name={AppScreens.CheckedInUsers} component={CheckedInUsersScreen} />
         </AuthStack.Navigator>
     );
 };

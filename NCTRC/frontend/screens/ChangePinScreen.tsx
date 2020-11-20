@@ -5,14 +5,13 @@ import { AuthStackParamList, AppScreens } from '../index';
 import Dialog, { DialogContent } from 'react-native-popup-dialog';
 type ChangePinScreenScreenNavigationProps = StackNavigationProp<AuthStackParamList, AppScreens.ChangePin>;
 import { styles } from './Styles';
-import { validatePin } from './../handler/handlers'
+import { validatePin, changePin } from './../handler/handlers'
 interface ChangePinScreenProps {
     navigation: ChangePinScreenScreenNavigationProps;
 }
 
 const ChangePinScreen: React.FunctionComponent<ChangePinScreenProps> = (props) => {
     let { navigation } = props;
-    //call backend to get this 
     let [confirmOldPink, setConfirmOldPin ] = useState(''); 
     let [newPin, setNewPin ] = useState(''); 
     let [confirmNewPin, setConfirmNewPin ] = useState(''); 
@@ -29,8 +28,7 @@ const ChangePinScreen: React.FunctionComponent<ChangePinScreenProps> = (props) =
                      <Image source={require('./../assets/NCTRClogo.png')} style={{ width: 150, height: 150 }}></Image>
                 </TouchableOpacity> 
                 <View style={styles.homeContainer}>
-                <Text>Change Pin</Text>
-                <Dialog visible={dialogueBox}>
+                <Dialog visible={dialogueBox} style={styles.dialogueBox}>
                 <DialogContent>
                     <Text>Pin has been successfully changed!</Text>
                     <TouchableOpacity style={styles.smallButton}onPress={() => setDialogueBox(false)}>
@@ -40,8 +38,8 @@ const ChangePinScreen: React.FunctionComponent<ChangePinScreenProps> = (props) =
                 </TouchableOpacity>
                 </DialogContent>
                 </Dialog>
-                <Dialog visible={errorBox}>
-                <DialogContent>
+                <Dialog visible={errorBox} style={{backgroundColor: '#F7F7F8'}}>
+                <DialogContent style={{backgroundColor: '#F7F7F8'}}>
                     <Text>An error occured when changing the pin. Please try again. Ensure you have entered the correct old pin, the new pin is 4 characters, and the new pin and the confirmed pin are the same.</Text>
                     <TouchableOpacity style={styles.smallButton}onPress={() => setErrorBox(false)}>
                             <Text style={styles.buttonText}>
@@ -57,11 +55,13 @@ const ChangePinScreen: React.FunctionComponent<ChangePinScreenProps> = (props) =
                 <Text style={styles.covidQuestion}>Confirm New Pin</Text>
                 <TextInput style={styles.textInput} onChangeText={(text) => setConfirmNewPin(text)} placeholder="Confirm New Pin" />
                 <TouchableOpacity style={styles.smallButton}onPress={() => {
+
                     validatePin({pin: confirmOldPink}).then(
                         (res) => {
                             console.log(res)
                             if(res!=200) {
                                  setErrorBox(true); 
+                                 return; 
                             }
                         }
                     )
@@ -72,8 +72,19 @@ const ChangePinScreen: React.FunctionComponent<ChangePinScreenProps> = (props) =
                         setErrorBox(true); 
                         return;
                     } else {
-                        //CALL TO BACKEND TO CHANGE PIN
-                        setDialogueBox(true); 
+                        changePin({pin: newPin}).then(
+                            (res) => {
+                                console.log(res)
+                                if(res!=200) {
+                                     setErrorBox(true); 
+                                     return; 
+                                } else {
+                                    setDialogueBox(true); 
+                                    return; 
+                                }
+                            }
+                        )
+                        
                     }
                    
                 }}><Text style={styles.buttonText}>

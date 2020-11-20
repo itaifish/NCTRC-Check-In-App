@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, Text, View, Button, Image, TextInput, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, View, Button, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AuthStackParamList, AppScreens } from '../index';
 import { RadioButton } from 'react-native-paper';
@@ -35,6 +35,8 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
     let [temperature, setTemperature] = React.useState(0);
     let [signature, setSignature] = React.useState('');
     let yesQuestion = ""; 
+    let [error, setError] = useState(false);
+    let [errorMessage, setErrorMessage] = useState("");
 
     const questions: [string, (value: string) => void, string][] = [
         ["Within the past 24 hours have you or anyone in your household experienced any of the following symptoms: fever (over 100.4 F), sore or dry throat, shortness of breath, chest congestion, cough, loss of taste or sense of smell, sneezing, and/or rash?", (value: string) => {setSymptoms(value)}, symptoms],
@@ -63,6 +65,8 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
 
     return (
         <ScrollView style={styles.scrollContainer}>
+                            <KeyboardAvoidingView behavior={"padding"}>
+
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.pop()}>
                  <Image source={require('./../assets/backbutton.png')} style={{ width: 75, height: 75 }}></Image>
             </TouchableOpacity> 
@@ -81,8 +85,19 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                 <TextInput style={styles.textInput} onChangeText={(number) => setTemperature(Number(number))} />
                 <Text style={styles.covidQuestion}>Is there anything else you would like to share? Questions, concerns, etc.</Text>
                 <TextInput style={styles.textInput} onChangeText={(text) => setConcerns(text)} />
+                {error && <Text style={styles.errorMessage}>{errorMessage}</Text>}
                 <TouchableOpacity style={styles.smallButton}
                     onPress={() => {
+
+                
+                        if(temperature < 85 || temperature > 103) {
+                            setErrorMessage("Please enter a valid temperature")
+                            setError(true);
+                        } else if (traveled === '' || symptoms === '' || gatherings === '' || covidTest === '') {
+                                setErrorMessage("Please answer all the questions")
+                                setError(true);
+                        } else {
+                                
         
                         let userToCreate: components["schemas"]["UserRequestModel"] = {
                                 firstName: firstName, 
@@ -104,7 +119,7 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                             console.log(yesQuestion);
                             const exposedUser: components["schemas"]["SigninRequestModel"] = {
                                 user: userToCreate,
-                                signinData: { temperature: temperature, yesQuestion: yesQuestion },
+                                signinData: { temperature: temperature, yesQuestion: yesQuestion, visitorType: type },
                             };
                             signinUser(exposedUser); 
                             navigation.navigate(AppScreens.CovidError, {
@@ -113,7 +128,7 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                         } else if (temperature >= feverTemperature) {
                             const feverUser: components["schemas"]["SigninRequestModel"] = {
                                 user: userToCreate,
-                                signinData: { temperature: temperature, yesQuestion: "temperature" },
+                                signinData: { temperature: temperature, yesQuestion: "temperature", visitorType: type },
                             };
                             signinUser(feverUser); 
                             navigation.navigate(AppScreens.CovidError, {
@@ -125,7 +140,7 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                                     if(res) {
                                         let returningUser: components["schemas"]["SigninRequestModel"] = {
                                             user: userToCreate,
-                                            signinData: { temperature: temperature },
+                                            signinData: { temperature: temperature, visitorType: type },
                                           }
                                           signinUser(returningUser).then(
                                               (response) => {
@@ -141,18 +156,20 @@ const CovidInformationScreen: React.FunctionComponent<CovidInformationScreenProp
                                           )
                                           
                                     } else {
-                                        navigation.navigate(AppScreens.Risks, {firstName:firstName, lastName:lastName, email: email, tempurature:temperature})
+                                        navigation.navigate(AppScreens.Risks, {firstName:firstName, lastName:lastName, email: email, tempurature:temperature, visitorType: type})
                                     }
                                 }
                             )
 
                        }
-                    }}>
+                    }}}>
                     <Text style={styles.buttonText}>
                     Submit
                      </Text>  
                 </TouchableOpacity>
             </View>
+            </KeyboardAvoidingView>
+
             </ScrollView>
     );
 };

@@ -9,7 +9,6 @@ interface HomeScreenProps {
     navigation: HomeScreenNavigationProps;
 }
 
-
 const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
     let { navigation } = props;
 
@@ -21,7 +20,7 @@ const HomeScreen: React.FunctionComponent<HomeScreenProps> = (props) => {
                 Check In
                  </Text>  
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.solidButton}onPress={() => navigation.navigate(AppScreens.CheckOut)}><Text style={styles.buttonText}>
+                <TouchableOpacity style={styles.solidButton}onPress={() => navigation.navigate(AppScreens.CheckoutOptions)}><Text style={styles.buttonText}>
                 Check Out
                  </Text>  
                 </TouchableOpacity>
