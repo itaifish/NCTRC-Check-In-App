@@ -1,7 +1,7 @@
 import React from 'react';
-import 'react-native/jest/setup';
+//import 'react-native/jest/setup';
 import { NavigationContainer } from '@react-navigation/native';
-import AuthFlowNavigator from './Index';
+import AuthFlowNavigator from './index';
 
 function App() {
     return (

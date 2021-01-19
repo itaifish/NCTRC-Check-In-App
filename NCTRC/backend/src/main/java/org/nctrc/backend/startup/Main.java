@@ -7,7 +7,7 @@ import org.nctrc.backend.startup.entrypoint.EntrypointType;
 
 public class Main {
 
-  public static void main(String[] args) {
+  public static void main(String args[]) {
     final Injector injector = Guice.createInjector(new MainModule());
     injector.getInstance(Startup.class).boot(EntrypointType.REST, args);
   }
