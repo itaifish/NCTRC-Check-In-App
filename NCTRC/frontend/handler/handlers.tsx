@@ -2,7 +2,7 @@ import { useColorScheme } from "react-native";
 import * as auth from "../config/auth.json";
 import * as config from "../config/config.json";
 import { components } from "../domain/domain";
-import fetch from "node-fetch";
+import fetch, { Headers } from "node-fetch";
 
 // FUNCTIONS TO HANDLE COMMUNICATION WITH THE BACKEND
 
