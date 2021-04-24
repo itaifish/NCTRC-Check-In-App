@@ -122,15 +122,25 @@ export const getSignIns = async (SigninsBetweenRequestModel: components["schemas
 };
 
 const sendRequest = async (url: string, method: string, body: string) : Promise<components["schemas"]["Result"] | number> => {
+  const headers: any = new Headers();
+  headers.append("auth", auth.auth_key);
   const result = await fetch(url, {
     method: method,
-    headers: { auth: auth.auth_key },
+    headers: headers,
     body: body,
+  }).catch(err => {
+    console.log(`Error in sendRequest:`, err);
+    console.error(err);
+    console.log("URL, String, Method: ", url, body, method);
   });
-  if(result.status >= 200 && result.status < 300) {
-    return result.status;
+  if(result) {
+    if(result.status >= 200 && result.status < 300) {
+      return result.status;
+    } else {
+      return result.json();
+    }
   } else {
-    return result.json();
+    throw new Error();
   }
 }
 
